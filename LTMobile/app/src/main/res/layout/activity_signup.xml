@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/screen_padding"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"></LinearLayout>
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Đăng ký"
+        android:textSize="38dp"
+        android:textStyle="bold"
+        android:textColor="#333"
+        android:layout_marginBottom="24dp"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/default_padding"
+        app:hintTextColor="@color/primary_color"
+        app:boxBackgroundColor="@color/white"
+        app:boxStrokeColor="@color/primary_color"
+        style="@style/LoginTextInputLayoutStyle"
+        app:errorEnabled="true"
+        app:errorIconDrawable="@null"
+        >
+        <EditText
+            android:id="@+id/inputEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            android:hint="Email"
+            android:textSize="20dp"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputFname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/default_padding"
+        app:hintTextColor="@color/primary_color"
+        app:boxBackgroundColor="@color/white"
+        app:boxStrokeColor="@color/primary_color"
+        style="@style/LoginTextInputLayoutStyle"
+        app:errorEnabled="true"
+        app:errorIconDrawable="@null"
+        >
+        <EditText
+            android:id="@+id/inputFname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Họ và Tên"
+            android:textSize="20dp"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/default_padding"
+        app:hintTextColor="@color/primary_color"
+        app:boxBackgroundColor="@color/white"
+        app:boxStrokeColor="@color/primary_color"
+        style="@style/LoginTextInputLayoutStyle"
+        app:passwordToggleEnabled="true"
+        app:errorEnabled="true"
+        app:errorIconDrawable="@null"
+        >
+        <EditText
+            android:id="@+id/inputPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:hint="Mật khẩu"
+            android:textSize="20dp"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputPassword2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/default_padding"
+        app:hintTextColor="@color/primary_color"
+        app:boxBackgroundColor="@color/white"
+        app:boxStrokeColor="@color/primary_color"
+        style="@style/LoginTextInputLayoutStyle"
+        app:passwordToggleEnabled="true"
+        app:errorEnabled="true"
+        app:errorIconDrawable="@null"
+        >
+        <EditText
+            android:id="@+id/inputPassword2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:hint="Nhập lại mật khẩu"
+            android:textSize="20dp"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btnSignup"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:layout_marginVertical="@dimen/default_padding"
+        android:text="Đăng ký"
+        android:textSize="20dp"
+        android:backgroundTint="@color/primary_color"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        ></LinearLayout>
+
+    <TextView
+        android:id="@+id/tvLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/default_padding"
+        android:layout_gravity="center"
+        android:text="Đã có tài khoản? Đăng nhập"
+        android:textSize="20dp"
+        android:textColor="@color/primary_color"
+        android:textStyle="bold"
+        />
+
+</LinearLayout>

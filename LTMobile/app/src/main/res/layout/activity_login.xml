@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/screen_padding"
+    tools:context=".MainActivity">
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/img1" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Đăng nhập"
+        android:textSize="38dp"
+        android:textStyle="bold"
+        android:textColor="#333"
+        android:layout_marginBottom="24dp"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/default_padding"
+        app:hintTextColor="@color/primary_color"
+        app:boxBackgroundColor="@color/white"
+        app:boxStrokeColor="@color/primary_color"
+        style="@style/LoginTextInputLayoutStyle"
+        app:errorEnabled="true"
+        app:errorIconDrawable="@null"
+        >
+        <EditText
+            android:id="@+id/inputEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            android:hint="Email"
+            android:textSize="20dp"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/default_padding"
+        app:hintTextColor="@color/primary_color"
+        app:boxBackgroundColor="@color/white"
+        app:boxStrokeColor="@color/primary_color"
+        app:passwordToggleEnabled="true"
+        style="@style/LoginTextInputLayoutStyle"
+        app:errorEnabled="true"
+        app:errorIconDrawable="@null"
+        >
+        <EditText
+            android:id="@+id/inputPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:hint="Mật khẩu"
+            android:textSize="20dp"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tvForgetPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:layout_marginVertical="@dimen/default_padding"
+        android:text="Quên mật khẩu?"
+        android:textSize="20dp"
+        android:textColor="@color/primary_color"
+        android:textStyle="bold"
+        />
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:layout_marginVertical="@dimen/default_padding"
+        android:text="Đăng nhập"
+        android:textSize="20dp"
+        android:backgroundTint="@color/primary_color"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        ></LinearLayout>
+
+    <TextView
+        android:id="@+id/tvSignup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/default_padding"
+        android:layout_gravity="center"
+        android:text="Chưa có tài khoản? Đăng ký"
+        android:textSize="20dp"
+        android:textColor="@color/primary_color"
+        android:textStyle="bold"
+        />
+
+</LinearLayout>
