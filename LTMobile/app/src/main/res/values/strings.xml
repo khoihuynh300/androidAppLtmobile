@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">LTMobile</string>
     <string name="input_null">Vui lòng nhập ô này</string>
+    <string name="password_not_equal_error">Mật khẩu nhập lại không chính xác</string>
 </resources>

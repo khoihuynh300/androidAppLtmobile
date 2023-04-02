@@ -5,14 +5,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ltmobile.Model.User;
 import com.example.ltmobile.R;
+import com.example.ltmobile.Utils.ServiceAPI;
+import com.example.ltmobile.Utils.SharedPrefManager;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.JsonObject;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
     Context context = this;
@@ -62,7 +74,38 @@ public class LoginActivity extends AppCompatActivity {
 
                 if(check){
                     //đăng nhập
-                    Toast.makeText(context, "Đăng nhập thành công", Toast.LENGTH_LONG).show();
+                    ServiceAPI.serviceapi.login(inputEmail.getText().toString().trim(),
+                            inputPassword.getText().toString().trim()).enqueue(new Callback<JsonObject>() {
+                        @Override
+                        public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                            if (response.isSuccessful()) {
+                                try {
+                                    JSONObject responseJson = new JSONObject(response.body().toString());
+                                    String message = responseJson.getString("message");
+                                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                                    if(responseJson.has("user")){
+                                        JSONObject userJson = responseJson.getJSONObject("user");
+                                        User user = new User(
+                                                userJson.getInt("userId"),
+                                                userJson.getString("email"),
+                                                userJson.getString("fullname"),
+                                                userJson.getString("avatar"),
+                                                userJson.getString("role"));
+                                        SharedPrefManager.getInstance(context).userLogin(user);
+                                        startActivity(new Intent(context, MainActivity.class));
+                                    }
+                                } catch (JSONException e) {
+                                    Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<JsonObject> call, Throwable t) {
+                            Log.e("TAG", t.toString());
+                            Toast.makeText(context, "failed connect API", Toast.LENGTH_LONG).show();
+                        }
+                    });
+
                 }
 
             }
