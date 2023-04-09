@@ -1,5 +1,6 @@
 package com.example.ltmobile.Utils;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -8,7 +9,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface ServiceAPI {
     ServiceAPI serviceapi = new Retrofit.Builder()
@@ -30,5 +33,9 @@ public interface ServiceAPI {
     @POST("signup/verify")
     Call<JsonObject> verifySignup(@Field("email") String email,@Field("fname") String fname , @Field("password") String password, @Field("otp") int otp);
 
+    @GET("inns")
+    Call<JsonArray> getAllInns();
 
+    @GET("inns/search")
+    Call<JsonArray> searchInns(@Query("address") String address, @Query("gtePrice") Double gtePrice, @Query("ltePrice") Double ltePrice);
 }
