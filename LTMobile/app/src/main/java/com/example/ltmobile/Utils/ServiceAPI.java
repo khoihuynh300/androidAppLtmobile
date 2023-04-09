@@ -1,20 +1,28 @@
 package com.example.ltmobile.Utils;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
+import org.json.JSONArray;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ServiceAPI {
     ServiceAPI serviceapi = new Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(Constant.ROOT_URL)
-//            .baseUrl("http://192.168.1.18:3000/")
+//            .baseUrl("http://192.168.1.24:3000/")
             .build()
             .create(ServiceAPI.class);
 
@@ -26,4 +34,9 @@ public interface ServiceAPI {
     @POST("signup")
     Call<JsonObject> signup(@Field("email") String email,@Field("fname") String fname , @Field("password") String password);
 
+    @GET("inns")
+    Call<JsonArray> getAllInns();
+
+    @GET("inns/search")
+    Call<JsonArray> searchInns(@Query("address") String address, @Query("gtePrice") Double gtePrice, @Query("ltePrice") Double ltePrice);
 }

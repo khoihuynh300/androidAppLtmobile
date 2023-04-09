@@ -97,6 +97,7 @@
                     android:layout_height="36dp">
 
                     <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/imageView"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:src="@mipmap/ic_launcher"/>
@@ -141,162 +142,200 @@
         android:layout_marginRight="1dp"
         android:layout_alignParentTop="true">
 
-        <LinearLayout
-            android:id="@+id/location"
+        <FrameLayout
             android:layout_width="320dp"
             android:layout_height="42.68dp"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:background="@drawable/location">
+            android:layout_marginTop="10dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="320dp"
+                android:layout_height="37.68dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+                <AutoCompleteTextView
+                    android:id="@+id/autoCompleteLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="none"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
-                android:id="@+id/frame_146"
-                android:layout_width="215dp"
-                android:layout_height="24dp"
-                android:orientation="horizontal"
-                android:layout_gravity="center"
-                android:clipToOutline="true"
-                android:layout_marginStart="20dp">
-
-                <RelativeLayout
-                    xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:id="@+id/icons_searc"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginEnd="10dp">
-
-                    <View
-                        android:id="@+id/icon"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentBottom="true"
-                        android:background="@drawable/baseline_search_24"
-                        />
-
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/txtlocation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:text="@string/location"
-                    android:textAppearance="@style/location"
-                    android:lineSpacingExtra="-4sp"
-                    android:gravity="center_horizontal|center_vertical"
-                    />
-
-            </LinearLayout>
-
-            <FrameLayout
-                android:id="@+id/group_2891"
-                android:layout_width="44dp"
+                android:id="@+id/location"
+                android:layout_width="320dp"
                 android:layout_height="42.68dp"
-                android:layout_marginStart="21dp"
-                android:clipToOutline="true"
-                android:background="#00000000">
-
-                <View
-                    android:id="@+id/ellipse_337"
-                    android:layout_width="5.67dp"
-                    android:layout_height="5.67dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="12.16dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="14.96dp"
-                    android:background="@drawable/ellipse_338"
-                    />
-
-                <View
-                    android:id="@+id/line_6"
-                    android:layout_width="10.93dp"
-                    android:layout_height="1.5dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="21.99dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="17dp"
-                    android:background="@drawable/line_7"
-                    />
-
-                <View
-                    android:id="@+id/line_7"
-                    android:layout_width="10.93dp"
-                    android:layout_height="1.5dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="12.16dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="26.17dp"
-                    android:background="@drawable/line_7"
-                    />
-
-                <View
-                    android:id="@+id/ellipse_338"
-                    android:layout_width="5.67dp"
-                    android:layout_height="5.67dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="26.75dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="23.78dp"
-                    android:background="@drawable/ellipse_338"
-                    />
-
-            </FrameLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/price"
-            android:layout_width="320dp"
-            android:layout_height="42.68dp"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/location">
-
-            <LinearLayout
-                android:id="@+id/frame_147"
-                android:layout_width="215dp"
-                android:layout_height="24dp"
                 android:orientation="horizontal"
-                android:layout_gravity="center"
-                android:layout_marginStart="20dp">
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/location">
 
-                <RelativeLayout
-                    xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:id="@+id/icons_price"
-                    android:layout_width="24dp"
+                <LinearLayout
+                    android:id="@+id/frame_146"
+                    android:layout_width="215dp"
                     android:layout_height="24dp"
-                    android:layout_marginEnd="10dp">
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    android:clipToOutline="true"
+                    android:layout_marginStart="20dp">
 
-                    <View
-                        android:id="@+id/iconprice"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentBottom="true"
-                        android:background="@drawable/baseline_attach_money_24"
+                    <RelativeLayout
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/icons_searc"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginEnd="10dp">
+
+                        <View
+                            android:id="@+id/icon"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentBottom="true"
+                            android:background="@drawable/baseline_search_24"
+                            />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/txtlocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:text="@string/location"
+                        android:textAppearance="@style/location"
+                        android:lineSpacingExtra="-4sp"
+                        android:gravity="center_horizontal|center_vertical"
                         />
 
-                </RelativeLayout>
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/txtprice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:text="@string/price"
-                    android:textAppearance="@style/location"
-                    android:lineSpacingExtra="-4sp"
-                    android:gravity="center_horizontal|center_vertical"
-                    />
+                <FrameLayout
+                    android:id="@+id/group_2891"
+                    android:layout_width="44dp"
+                    android:layout_height="42.68dp"
+                    android:layout_marginStart="21dp"
+                    android:clipToOutline="true"
+                    android:background="#00000000">
+
+                    <View
+                        android:id="@+id/ellipse_337"
+                        android:layout_width="5.67dp"
+                        android:layout_height="5.67dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="12.16dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="14.96dp"
+                        android:background="@drawable/ellipse_338"
+                        />
+
+                    <View
+                        android:id="@+id/line_6"
+                        android:layout_width="10.93dp"
+                        android:layout_height="1.5dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="21.99dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="17dp"
+                        android:background="@drawable/line_7"
+                        />
+
+                    <View
+                        android:id="@+id/line_7"
+                        android:layout_width="10.93dp"
+                        android:layout_height="1.5dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="12.16dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="26.17dp"
+                        android:background="@drawable/line_7"
+                        />
+
+                    <View
+                        android:id="@+id/ellipse_338"
+                        android:layout_width="5.67dp"
+                        android:layout_height="5.67dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="26.75dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="23.78dp"
+                        android:background="@drawable/ellipse_338"
+                        />
+
+                </FrameLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="320dp"
+            android:layout_height="42.68dp"
+            android:layout_marginTop="10dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="320dp"
+                android:layout_height="37.68dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+                <AutoCompleteTextView
+                    android:id="@+id/autoCompletePrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="none"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:id="@+id/price"
+                android:layout_width="320dp"
+                android:layout_height="42.68dp"
+                android:orientation="horizontal"
+                android:background="@drawable/location">
+
+                <LinearLayout
+                    android:id="@+id/frame_147"
+                    android:layout_width="215dp"
+                    android:layout_height="24dp"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="20dp">
+
+                    <RelativeLayout
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/icons_price"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginEnd="10dp">
+
+                        <View
+                            android:id="@+id/iconprice"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentBottom="true"
+                            android:background="@drawable/baseline_attach_money_24"
+                            />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/txtprice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:text="@string/price"
+                        android:textAppearance="@style/location"
+                        android:lineSpacingExtra="-4sp"
+                        android:gravity="center_horizontal|center_vertical"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </FrameLayout>
 
         <LinearLayout
             android:id="@+id/person"
@@ -355,18 +394,17 @@
 
                 <RelativeLayout
                     xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:id="@+id/filter"
+                    android:id="@+id/filterMinus"
                     android:layout_width="44dp"
                     android:layout_height="42.68dp">
 
-                    <RelativeLayout
-                        xmlns:android="http://schemas.android.com/apk/res/android"
+                    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                         android:id="@+id/remove"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_alignParentLeft="true"
-                        android:layout_marginLeft="10dp"
                         android:layout_alignParentTop="true"
+                        android:layout_marginLeft="10dp"
                         android:layout_marginTop="9.65dp"
                         android:clipToOutline="true">
 
@@ -374,14 +412,13 @@
                             android:id="@+id/vector"
                             android:layout_width="14dp"
                             android:layout_height="2dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentBottom="true"
                             android:layout_marginStart="5dp"
                             android:layout_marginEnd="5dp"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentTop="true"
-                            android:layout_alignParentBottom="true"
-                            android:src="@drawable/minus_person"
-                            />
+                            android:src="@drawable/minus_person" />
 
                     </RelativeLayout>
 
@@ -398,7 +435,7 @@
 
                 <RelativeLayout
                     xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:id="@+id/filter2"
+                    android:id="@+id/filterPlus"
                     android:layout_width="44dp"
                     android:layout_height="42.68dp">
 
@@ -468,59 +505,12 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/content">
 
-        <RelativeLayout
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/image"
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewListInn"
             android:layout_width="320dp"
-            android:layout_height="200dp"
+            android:layout_height="350dp"
             android:layout_marginTop="25dp"
-            android:layout_gravity="center_horizontal"
-            android:clipToOutline="true"
-            android:background="@drawable/image"
-            android:elevation="40dp">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/unsplash_fc"
-                android:layout_width="320dp"
-                android:layout_height="200dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:background="@drawable/cho_thue_phong_tro_thu_duc_3"
-                android:elevation="20dp"
-                app:shapeAppearanceOverlay="@style/RoundedSquare"/>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/frame_166"
-            android:layout_width="320dp"
-            android:layout_height="125dp"
-            android:layout_marginTop="230dp"
-            android:layout_gravity="center_horizontal">
-
-            <TextView
-                android:id="@+id/txtinn_price"
-                android:layout_width="320dp"
-                android:layout_height="20dp"
-                android:text="@string/inn_price"
-                android:textAppearance="@style/inn_price"
-                android:textStyle="bold"
-                android:lineSpacingExtra="-1sp"
-                android:gravity="center_vertical"
-                />
-
-            <TextView
-                android:id="@+id/txtcontent"
-                android:layout_width="314dp"
-                android:layout_height="105dp"
-                android:layout_marginTop="25dp"
-                android:text="@string/content_inn"
-                android:textAppearance="@style/content_inn"
-                android:gravity="center_vertical"
-                />
-
-        </RelativeLayout>
+            android:layout_gravity="center_horizontal" />
 
         <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
