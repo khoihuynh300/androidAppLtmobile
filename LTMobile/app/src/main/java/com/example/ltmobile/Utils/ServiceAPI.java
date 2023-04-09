@@ -4,25 +4,20 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import org.json.JSONArray;
-
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ServiceAPI {
     ServiceAPI serviceapi = new Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(Constant.ROOT_URL)
-//            .baseUrl("http://192.168.1.24:3000/")
+//            .baseUrl("http://192.168.1.18:3000/")
             .build()
             .create(ServiceAPI.class);
 
@@ -33,6 +28,10 @@ public interface ServiceAPI {
     @FormUrlEncoded
     @POST("signup")
     Call<JsonObject> signup(@Field("email") String email,@Field("fname") String fname , @Field("password") String password);
+
+    @FormUrlEncoded
+    @POST("signup/verify")
+    Call<JsonObject> verifySignup(@Field("email") String email,@Field("fname") String fname , @Field("password") String password, @Field("otp") int otp);
 
     @GET("inns")
     Call<JsonArray> getAllInns();

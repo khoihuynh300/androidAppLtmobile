@@ -2,11 +2,13 @@ package com.example.ltmobile.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -28,6 +30,10 @@ import retrofit2.Response;
 
 public class SignupActivity extends AppCompatActivity {
     Context context = this;
+    //KEY
+    public static final String KEY_EMAIL = "KEY_EMAIL";
+    public static final String KEY_FNAME = "KEY_FNAME";
+    public static final String KEY_PASSWORD = "KEY_PASSWORD";
     //View
     EditText inputEmail, inputFname, inputPassword, inputPassword2;
     TextInputLayout textInputEmail, textInputFname, textInputPassword, textInputPassword2;
@@ -94,6 +100,14 @@ public class SignupActivity extends AppCompatActivity {
                                     JSONObject responseJson = new JSONObject(response.body().toString());
                                     String message = responseJson.getString("message");
                                     Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                                    if(!responseJson.getBoolean("error")){
+                                        Intent intent = new Intent(context, VerifyOTPActivity.class);
+                                        intent.putExtra("action", "signup");
+                                        intent.putExtra(KEY_EMAIL, Email);
+                                        intent.putExtra(KEY_FNAME, Fname);
+                                        intent.putExtra(KEY_PASSWORD, Password);
+                                        startActivity(intent);
+                                    }
 
                                     // reset text
 
@@ -120,7 +134,7 @@ public class SignupActivity extends AppCompatActivity {
         String string = editText.getText().toString().trim();
         if(string == null || string.equals("")){
             textInputLayout.setError(context.getResources().getText(R.string.input_null));
-            editText.requestFocus();
+//            editText.requestFocus();
             return false;
         }
         else {
@@ -128,4 +142,5 @@ public class SignupActivity extends AppCompatActivity {
             return true;
         }
     }
+
 }
