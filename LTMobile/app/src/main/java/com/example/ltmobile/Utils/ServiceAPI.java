@@ -26,4 +26,9 @@ public interface ServiceAPI {
     @POST("signup")
     Call<JsonObject> signup(@Field("email") String email,@Field("fname") String fname , @Field("password") String password);
 
+    @FormUrlEncoded
+    @POST("signup/verify")
+    Call<JsonObject> verifySignup(@Field("email") String email,@Field("fname") String fname , @Field("password") String password, @Field("otp") int otp);
+
+
 }
