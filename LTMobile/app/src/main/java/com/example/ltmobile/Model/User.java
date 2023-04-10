@@ -4,14 +4,15 @@ import java.io.Serializable;
 
 public class User implements Serializable {
     private int userId;
-    private String email, fullname,avatar, role;
+    private String email, fullname,avatar, role, gender;
 
-    public User(int userId, String email, String fullname, String avatar, String role) {
+    public User(int userId, String email, String fullname, String gender, String avatar, String role) {
         this.userId = userId;
         this.email = email;
         this.fullname = fullname;
         this.avatar = avatar;
         this.role = role;
+        this.gender = gender;
     }
 
     public int getUserId() {
@@ -52,5 +53,13 @@ public class User implements Serializable {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }

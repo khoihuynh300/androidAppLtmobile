@@ -4,13 +4,17 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface ServiceAPI {
@@ -27,11 +31,23 @@ public interface ServiceAPI {
 
     @FormUrlEncoded
     @POST("signup")
-    Call<JsonObject> signup(@Field("email") String email,@Field("fname") String fname , @Field("password") String password);
+    Call<JsonObject> signup(@Field("email") String email,@Field("fname") String fname, @Field("gender") String gender , @Field("password") String password);
 
     @FormUrlEncoded
     @POST("signup/verify")
-    Call<JsonObject> verifySignup(@Field("email") String email,@Field("fname") String fname , @Field("password") String password, @Field("otp") int otp);
+    Call<JsonObject> verifySignup(@Field("email") String email,@Field("fname") String fname , @Field("gender") String gender ,@Field("password") String password, @Field("otp") int otp);
+
+    @Multipart
+    @POST("update-profile")
+    Call<JsonObject> updateWithImage(@Part("id") RequestBody id,
+                                     @Part("fname") RequestBody fname,
+                                     @Part("gender") RequestBody gender,
+                                     @Part MultipartBody.Part image);
+    @Multipart
+    @POST("update-profile")
+    Call<JsonObject> updateWithoutImage(@Part("id") RequestBody id,
+                                     @Part("fname") RequestBody fname,
+                                     @Part("gender") RequestBody gender);
 
     @GET("inns")
     Call<JsonArray> getAllInns();

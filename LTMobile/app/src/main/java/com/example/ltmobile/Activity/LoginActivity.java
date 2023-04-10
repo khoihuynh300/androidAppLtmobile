@@ -38,6 +38,10 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        if(SharedPrefManager.getInstance(context).isLoggedIn()){
+            finish();
+            startActivity(new Intent(context, MainActivity.class));
+        }
         connectView();
         eventHandle();
     }
@@ -89,6 +93,7 @@ public class LoginActivity extends AppCompatActivity {
                                                 userJson.getInt("userId"),
                                                 userJson.getString("email"),
                                                 userJson.getString("fullname"),
+                                                userJson.getString("gender"),
                                                 userJson.getString("avatar"),
                                                 userJson.getString("role"));
                                         SharedPrefManager.getInstance(context).userLogin(user);

@@ -42,6 +42,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
         if(action.equals("signup")){
             String Email = getIntent().getStringExtra(SignupActivity.KEY_EMAIL);
             String Fname = getIntent().getStringExtra(SignupActivity.KEY_FNAME);
+            String Gender = getIntent().getStringExtra(SignupActivity.KEY_GENDER);
             String Password = getIntent().getStringExtra(SignupActivity.KEY_PASSWORD);
 
             Toast.makeText(context, Email, Toast.LENGTH_LONG).show();
@@ -49,7 +50,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     int otp = Integer.parseInt(inputOtp.getText().toString().trim());
-                    ServiceAPI.serviceapi.verifySignup(Email, Fname, Password, otp).enqueue(new Callback<JsonObject>() {
+                    ServiceAPI.serviceapi.verifySignup(Email, Fname, Gender, Password, otp).enqueue(new Callback<JsonObject>() {
                         @Override
                         public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                             if (response.isSuccessful()) {

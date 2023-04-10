@@ -7,10 +7,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,10 +35,11 @@ public class SignupActivity extends AppCompatActivity {
     //KEY
     public static final String KEY_EMAIL = "KEY_EMAIL";
     public static final String KEY_FNAME = "KEY_FNAME";
+    public static final String KEY_GENDER = "KEY_GENDER";
     public static final String KEY_PASSWORD = "KEY_PASSWORD";
     //View
-    EditText inputEmail, inputFname, inputPassword, inputPassword2;
-    TextInputLayout textInputEmail, textInputFname, textInputPassword, textInputPassword2;
+    EditText inputEmail, inputFname, inputGender, inputPassword, inputPassword2;
+    TextInputLayout textInputEmail, textInputFname,textInputGender, textInputPassword, textInputPassword2;
     Button btnSignup;
     TextView tvLogin;
 
@@ -46,15 +49,22 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
         connectView();
         eventHandle();
+
+
     }
 
     void connectView(){
         inputEmail = (EditText) findViewById(R.id.inputEmail);
         inputFname = (EditText) findViewById(R.id.inputFname);
+        inputGender = (EditText) findViewById(R.id.inputGender);
+        inputGender.setFocusable(false);
+        inputGender.setCursorVisible(false);
+        inputGender.setKeyListener(null);
         inputPassword = (EditText) findViewById(R.id.inputPassword);
         inputPassword2 = (EditText) findViewById(R.id.inputPassword2);
         textInputEmail = (TextInputLayout) findViewById(R.id.textInputEmail);
         textInputFname = (TextInputLayout) findViewById(R.id.textInputFname);
+        textInputGender = (TextInputLayout) findViewById(R.id.textInputGender);
         textInputPassword = (TextInputLayout) findViewById(R.id.textInputPassword);
         textInputPassword2 = (TextInputLayout) findViewById(R.id.textInputPassword2);
         btnSignup = (Button) findViewById(R.id.btnSignup);
@@ -74,11 +84,13 @@ public class SignupActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String Email = inputEmail.getText().toString().trim();
                 String Fname = inputFname.getText().toString().trim();
+                String Gender = inputGender.getText().toString().trim();
                 String Password = inputPassword.getText().toString().trim();
                 String Password2 = inputPassword2.getText().toString().trim();
 
                 boolean check = true;
                 check = checkInputNull(inputEmail, textInputEmail) && check;
+                check = checkInputNull(inputGender, textInputGender) && check;
                 check = checkInputNull(inputFname, textInputFname) && check;
                 check = checkInputNull(inputPassword, textInputPassword) && check;
 
@@ -92,7 +104,7 @@ public class SignupActivity extends AppCompatActivity {
                 }
 
                 if(check){
-                    ServiceAPI.serviceapi.signup(Email, Fname, Password).enqueue(new Callback<JsonObject>() {
+                    ServiceAPI.serviceapi.signup(Email, Fname, Gender, Password).enqueue(new Callback<JsonObject>() {
                         @Override
                         public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                             if (response.isSuccessful()) {
@@ -105,6 +117,7 @@ public class SignupActivity extends AppCompatActivity {
                                         intent.putExtra("action", "signup");
                                         intent.putExtra(KEY_EMAIL, Email);
                                         intent.putExtra(KEY_FNAME, Fname);
+                                        intent.putExtra(KEY_GENDER, Gender);
                                         intent.putExtra(KEY_PASSWORD, Password);
                                         startActivity(intent);
                                     }
@@ -125,6 +138,29 @@ public class SignupActivity extends AppCompatActivity {
                     });
                 }
 
+            }
+        });
+        //khi click input gender thì hiện ra 2 lựa chọn
+        inputGender.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupMenu popupMenu = new PopupMenu(context,view);
+                popupMenu.getMenuInflater().inflate(R.menu.menu_gender, popupMenu.getMenu());
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()){
+                            case R.id.menuMale:
+                                inputGender.setText("MALE");
+                                break;
+                            case R.id.menuFemale:
+                                inputGender.setText("FEMALE");
+                                break;
+                        }
+                        return false;
+                    }
+                });
+                popupMenu.show();
             }
         });
     }
