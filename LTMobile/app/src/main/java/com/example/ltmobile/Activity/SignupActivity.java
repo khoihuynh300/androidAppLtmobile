@@ -89,10 +89,10 @@ public class SignupActivity extends AppCompatActivity {
                 String Password2 = inputPassword2.getText().toString().trim();
 
                 boolean check = true;
-                check = checkInputNull(inputEmail, textInputEmail) && check;
-                check = checkInputNull(inputGender, textInputGender) && check;
-                check = checkInputNull(inputFname, textInputFname) && check;
-                check = checkInputNull(inputPassword, textInputPassword) && check;
+                check = isInputNotEmpty(inputEmail, textInputEmail) && check;
+                check = isInputNotEmpty(inputGender, textInputGender) && check;
+                check = isInputNotEmpty(inputFname, textInputFname) && check;
+                check = isInputNotEmpty(inputPassword, textInputPassword) && check;
 
                 if(!Password.equals(Password2)){
                     check = false;
@@ -165,12 +165,11 @@ public class SignupActivity extends AppCompatActivity {
         });
     }
 
-    boolean checkInputNull(EditText editText, TextInputLayout textInputLayout){
+    boolean isInputNotEmpty(EditText editText, TextInputLayout textInputLayout){
         //nếu hợp lệ trả về true, ngược lại false
         String string = editText.getText().toString().trim();
         if(string == null || string.equals("")){
             textInputLayout.setError(context.getResources().getText(R.string.input_null));
-//            editText.requestFocus();
             return false;
         }
         else {

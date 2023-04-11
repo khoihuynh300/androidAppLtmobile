@@ -27,15 +27,22 @@ public interface ServiceAPI {
 
     @FormUrlEncoded
     @POST("login")
-    Call<JsonObject> login(@Field("email") String email, @Field("password") String password);
+    Call<JsonObject> login(@Field("email") String email,
+                           @Field("password") String password);
 
     @FormUrlEncoded
     @POST("signup")
-    Call<JsonObject> signup(@Field("email") String email,@Field("fname") String fname, @Field("gender") String gender , @Field("password") String password);
+    Call<JsonObject> signup(@Field("email") String email,@Field("fname") String fname,
+                            @Field("gender") String gender ,
+                            @Field("password") String password);
 
     @FormUrlEncoded
     @POST("signup/verify")
-    Call<JsonObject> verifySignup(@Field("email") String email,@Field("fname") String fname , @Field("gender") String gender ,@Field("password") String password, @Field("otp") int otp);
+    Call<JsonObject> verifySignup(@Field("email") String email,
+                                  @Field("fname") String fname ,
+                                  @Field("gender") String gender ,
+                                  @Field("password") String password,
+                                  @Field("otp") int otp);
 
     @Multipart
     @POST("update-profile")
@@ -46,8 +53,24 @@ public interface ServiceAPI {
     @Multipart
     @POST("update-profile")
     Call<JsonObject> updateWithoutImage(@Part("id") RequestBody id,
-                                     @Part("fname") RequestBody fname,
-                                     @Part("gender") RequestBody gender);
+                                        @Part("fname") RequestBody fname,
+                                        @Part("gender") RequestBody gender);
+
+    @FormUrlEncoded
+    @POST("forget-password")
+    Call<JsonObject> getOtpForgetPassword(@Field("email") String email);
+
+    @FormUrlEncoded
+    @POST("forget-password/verify")
+    Call<JsonObject> verifyForgetPassword(@Field("email") String email,
+                                          @Field("newpassword") String newpassword,
+                                          @Field("otp") int otp);
+
+    @FormUrlEncoded
+    @POST("change-password")
+    Call<JsonObject> changePassword(@Field("id") int id,
+                                    @Field("password") String newpassword,
+                                    @Field("oldpassword") String oldpassword);
 
     @GET("inns")
     Call<JsonArray> getAllInns();
