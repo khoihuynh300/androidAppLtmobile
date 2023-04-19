@@ -30,4 +30,20 @@
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">#625B71</item>
     </style>
+    <style name="villa_kayu_">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+    <style name="ubud_indone">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#7A7289</item>
+    </style>
+    <style name="some_id">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+    <style name="desc">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#99000000</item>
+    </style>
 </resources>

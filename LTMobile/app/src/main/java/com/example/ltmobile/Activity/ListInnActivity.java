@@ -1,5 +1,6 @@
 package com.example.ltmobile.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -49,13 +50,14 @@ public class ListInnActivity extends AppCompatActivity {
     private String[] price = {"1M - 1M5", "1M5 - 2M", "2M - 3M", "Tren 3M"};
     private Object[] searchText = new Object[]{"address", 0, 0};
     private int person = 2;
+    private int innId;
     List<Inn> inns = new ArrayList<>();
     List<Fragment> fragments = new ArrayList<>();
     InnAdapter innAdapter;
     TextView txtlocation, txtprice, txtpersion;
     AutoCompleteTextView autoCompleteLocation, autoCompletePrice;
     ArrayAdapter<String> adapterLocation, adapterPrice;
-    RelativeLayout filterMinus, filterPlus, btnBack, btnNext, continue_bu;
+    RelativeLayout filterMinus, filterPlus, btnBack, btnNext, continue_bu, btnLearnmore;
     ViewPager2 viewListInn;
 
     @Override
@@ -130,6 +132,7 @@ public class ListInnActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (viewListInn.getCurrentItem() < fragments.size()) {
                     viewListInn.setCurrentItem(viewListInn.getCurrentItem() + 1);
+                    innId = inns.get(viewListInn.getCurrentItem()).getInnId();
                 }
             }
         });
@@ -139,6 +142,7 @@ public class ListInnActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (viewListInn.getCurrentItem() > 0) {
                     viewListInn.setCurrentItem(viewListInn.getCurrentItem() - 1);
+                    innId = inns.get(viewListInn.getCurrentItem()).getInnId();
                 }
             }
         });
@@ -147,6 +151,15 @@ public class ListInnActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 searchInn();
+            }
+        });
+
+        btnLearnmore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), InnDetailActivity.class);
+                intent.putExtra("innId", innId);
+                startActivity(intent);
             }
         });
     }
@@ -161,6 +174,7 @@ public class ListInnActivity extends AppCompatActivity {
         filterPlus = (RelativeLayout) findViewById(R.id.filterPlus);
         btnBack = (RelativeLayout) findViewById(R.id.btnBack);
         btnNext = (RelativeLayout) findViewById(R.id.btnNext);
+        btnLearnmore = (RelativeLayout) findViewById(R.id.btnLearnmore);
         continue_bu = (RelativeLayout) findViewById(R.id.continue_bu);
         viewListInn = (ViewPager2) findViewById(R.id.viewListInn);
 
@@ -210,6 +224,7 @@ public class ListInnActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                     }
+                    innId = inns.get(0).getInnId();
                     innAdapter = new InnAdapter(ListInnActivity.this, fragments);
                     viewListInn.setAdapter(innAdapter);
                 }
@@ -271,6 +286,7 @@ public class ListInnActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                     }
+                    innId = inns.get(0).getInnId();
                     innAdapter = new InnAdapter(ListInnActivity.this, fragments);
                     viewListInn.setAdapter(innAdapter);
                 }

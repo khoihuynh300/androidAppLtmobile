@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/list_inn"
+    tools:context=".Activity.InnDetailActivity">
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/navigationDrawer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:titleTextColor="#ffffff"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                android:background="#546a83">
+
+                <RelativeLayout
+                    android:id="@+id/btnNavigation"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_gravity="right|center_vertical">
+
+                    <ImageView
+                        android:id="@+id/vector2"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentBottom="true"
+                        android:src="@drawable/ic_action_name"
+                        />
+
+                </RelativeLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/viewListInn"
+                        android:layout_width="match_parent"
+                        android:layout_height="260dp"
+                        android:layout_marginTop="-23.5dp"
+                        android:layout_gravity="center_horizontal" />
+
+                    <LinearLayout
+                        android:layout_width="360dp"
+                        android:layout_height="73dp"
+                        android:orientation="horizontal"
+                        android:layoutDirection="rtl"
+                        android:paddingEnd="20dp"
+                        android:paddingStart="20dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true">
+
+                        <LinearLayout
+                            android:layout_width="39dp"
+                            android:layout_height="25dp"
+                            android:orientation="horizontal"
+                            android:layoutDirection="ltr"
+                            android:layout_marginTop="10dp">
+
+                            <RelativeLayout
+                                xmlns:android="http://schemas.android.com/apk/res/android"
+                                android:id="@+id/star_filled"
+                                android:layout_gravity="center_vertical"
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:layout_marginRight="4dp"
+                                android:clipToOutline="true">
+
+                                <ImageView
+                                    android:layout_width="0dp"
+                                    android:layout_height="0dp"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_alignParentTop="true"
+                                    android:layout_alignParentBottom="true"
+                                    android:background="@drawable/baseline_comment_24"
+                                    />
+
+                            </RelativeLayout>
+
+                            <TextView
+                                android:id="@+id/some_id"
+                                android:layout_width="19dp"
+                                android:layout_height="25dp"
+                                android:text="@string/some_id"
+                                android:textAppearance="@style/some_id"
+                                android:lineSpacingExtra="7sp"
+                                android:gravity="center_vertical"
+                                />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="53dp"
+                            android:layout_gravity="center_vertical"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/villa_kayu_"
+                                android:layout_width="match_parent"
+                                android:layout_height="24dp"
+                                android:text="@string/villa_kayu_"
+                                android:textAppearance="@style/villa_kayu_"
+                                android:lineSpacingExtra="-3sp"
+                                android:gravity="top" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="24dp"
+                                android:layoutDirection="ltr"
+                                android:orientation="horizontal">
+
+                                <RelativeLayout
+                                    android:id="@+id/place"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:clipToOutline="true" >
+
+                                    <ImageView
+                                        android:id="@+id/vector"
+                                        android:layout_width="0dp"
+                                        android:layout_height="0dp"
+                                        android:layout_alignParentLeft="true"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_alignParentTop="true"
+                                        android:layout_alignParentBottom="true"
+                                        android:background="@drawable/baseline_location_on_24"
+                                        />
+
+                                </RelativeLayout>
+
+                                <TextView
+                                    android:id="@+id/ubud_indone"
+                                    android:layout_width="118dp"
+                                    android:layout_height="17dp"
+                                    android:text="@string/ubud_indone"
+                                    android:textAppearance="@style/ubud_indone"
+                                    android:layout_gravity="center_vertical"
+                                    android:lineSpacingExtra="-4sp"
+                                    android:gravity="center_vertical"
+                                    />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/frame_204"
+                        android:layout_width="360dp"
+                        android:layout_height="340dp"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:layout_gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true">
+
+                        <com.google.android.material.tabs.TabLayout
+                            android:id="@+id/tabLayout"
+                            android:layout_width="186dp"
+                            android:layout_height="27dp"
+                            android:background="@drawable/list_inn"
+                            app:tabMode="fixed"
+                            app:tabGravity="fill"
+                            app:tabIndicatorGravity="stretch"
+                            app:tabSelectedTextColor="#ffffff"
+                            app:tabIndicatorColor="#18C0C1"
+                            app:tabIndicatorAnimationMode="elastic"
+                            app:tabIndicator="@drawable/tab_indicator"/>
+
+                        <androidx.viewpager2.widget.ViewPager2
+                            android:id="@+id/viewInn"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="10dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/button"
+                        android:layout_width="match_parent"
+                        android:layout_height="76dp"
+                        android:orientation="horizontal"
+                        android:elevation="26dp"
+                        android:background="@drawable/contact_phone">
+
+                        <TextView
+                            android:id="@+id/night"
+                            android:layout_width="wrap_content"
+                            android:layout_height="51dp"
+                            android:layout_weight="1"
+                            android:text="2.000.000"
+                            android:textSize="30sp"
+                            android:textColor="#fff"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="20dp"
+                            android:gravity="center_vertical"
+                            />
+
+                        <LinearLayout
+                            android:id="@+id/contactNow"
+                            android:layout_width="136dp"
+                            android:layout_height="44dp"
+                            android:orientation="horizontal"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="20dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentBottom="true"
+                            android:background="@drawable/frame_43"
+                            android:elevation="14dp">
+
+                            <TextView
+                                android:layout_width="70dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:text="Call now"
+                                android:layout_marginLeft="17.17dp"
+                                android:textSize="14sp"
+                                android:letterSpacing="0.01"
+                                android:textColor="#fff"
+                                android:lineSpacingExtra="3sp"
+                                android:gravity="center_vertical"
+                                />
+
+                            <ImageView
+                                android:id="@+id/arrow_1"
+                                android:layout_width="14.65dp"
+                                android:layout_height="14.65dp"
+                                android:background="@drawable/baseline_phone_24"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginRight="22.7dp"
+                                />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </ScrollView>
+
+        </LinearLayout>
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/navigationView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:headerLayout="@layout/header_navigation"
+            android:layout_gravity="end"
+            app:menu="@menu/navigation_layout"
+            tools:ignore="MissingConstraints" />
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+
+
+
+</LinearLayout>
