@@ -38,6 +38,10 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        if(SharedPrefManager.getInstance(context).isLoggedIn()){
+            finish();
+            startActivity(new Intent(context, MainActivity.class));
+        }
         connectView();
         eventHandle();
     }
@@ -69,8 +73,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 boolean check = true; // true là hợp lệ --> đăng nhập
 
-                check = checkInputNull(inputPassword, txtinpPassword) && check;
-                check = checkInputNull(inputEmail, txtinpEmail) && check;
+                check = isInputNotEmpty(inputPassword, txtinpPassword) && check;
+                check = isInputNotEmpty(inputEmail, txtinpEmail) && check;
 
                 if(check){
                     //đăng nhập
@@ -89,6 +93,7 @@ public class LoginActivity extends AppCompatActivity {
                                                 userJson.getInt("userId"),
                                                 userJson.getString("email"),
                                                 userJson.getString("fullname"),
+                                                userJson.getString("gender"),
                                                 userJson.getString("avatar"),
                                                 userJson.getString("role"));
                                         SharedPrefManager.getInstance(context).userLogin(user);
@@ -110,8 +115,14 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+        tvForgetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, ForgetPasswordActivity.class));
+            }
+        });
     }
-    boolean checkInputNull(EditText editText, TextInputLayout textInputLayout){
+    boolean isInputNotEmpty(EditText editText, TextInputLayout textInputLayout){
         //nếu hợp lệ trả về true, ngược lại false
         String string = editText.getText().toString().trim();
         if(string == null || string.equals("")){
