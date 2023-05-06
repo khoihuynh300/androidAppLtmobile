@@ -13,4 +13,6 @@
     <string name="ubud_indone">Ubud, Indonesia</string>
     <string name="some_id">4</string>
     <string name="desc">Surrounded by rice fields, Villa Kayu Lama offers a peaceful retreat in Ubud. Guests can take a leisurely swim in the private</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
