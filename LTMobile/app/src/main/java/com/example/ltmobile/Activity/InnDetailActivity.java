@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ltmobile.Adapter.InnAdapter;
@@ -62,18 +63,21 @@ public class InnDetailActivity extends AppCompatActivity{
     RelativeLayout btnNavigation;
     ViewPager2 viewInn, viewListInn;
     InnTabAdapter innTabAdapter;
+    TextView some_id, ubud_indone, pricetxt;
+    String phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inn_detail);
         int innId = getIntent().getIntExtra("innId", 0);
+        String des = getIntent().getStringExtra("Describe");
 
         mapping();
         getInnDetail(innId);
 
         FragmentManager manager = getSupportFragmentManager();
-        innTabAdapter = new InnTabAdapter(manager, getLifecycle());
+        innTabAdapter = new InnTabAdapter(manager, getLifecycle(), innId, des);
         viewInn.setAdapter(innTabAdapter);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -109,7 +113,7 @@ public class InnDetailActivity extends AppCompatActivity{
         contactNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String phoneNumber = "123456789"; // Số điện thoại cần gọi
+                String phoneNumber = phone; // Số điện thoại cần gọi
                 Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber));
                 startActivity(intent);
             }
@@ -125,6 +129,9 @@ public class InnDetailActivity extends AppCompatActivity{
         viewInn = (ViewPager2) findViewById(R.id.viewInn);
         viewListInn = (ViewPager2) findViewById(R.id.viewListInn);
         contactNow = (LinearLayout) findViewById(R.id.contactNow);
+        pricetxt = (TextView) findViewById(R.id.pricetxt);
+        some_id = (TextView) findViewById(R.id.some_id);
+        ubud_indone = (TextView) findViewById(R.id.ubud_indone);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -166,6 +173,9 @@ public class InnDetailActivity extends AppCompatActivity{
                             String val = image.getString("image");
                             fragments.add(ImageInnFragment.newInstance(getApplicationContext(), val));
                         }
+                        pricetxt.setText(price.toString());
+                        ubud_indone.setText(address);
+                        phone = phoneNumber;
                     } catch (JSONException e) {
                         Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                     }

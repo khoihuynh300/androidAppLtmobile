@@ -13,6 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
@@ -25,6 +27,7 @@ import com.example.ltmobile.Model.ImageInn;
 import com.example.ltmobile.Model.Inn;
 import com.example.ltmobile.R;
 import com.example.ltmobile.Utils.ServiceAPI;
+import com.google.android.material.navigation.NavigationView;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -51,14 +54,17 @@ public class ListInnActivity extends AppCompatActivity {
     private Object[] searchText = new Object[]{"address", 0, 0};
     private int person = 2;
     private int innId;
+    private String des;
     List<Inn> inns = new ArrayList<>();
     List<Fragment> fragments = new ArrayList<>();
     InnAdapter innAdapter;
     TextView txtlocation, txtprice, txtpersion;
     AutoCompleteTextView autoCompleteLocation, autoCompletePrice;
     ArrayAdapter<String> adapterLocation, adapterPrice;
-    RelativeLayout filterMinus, filterPlus, btnBack, btnNext, continue_bu, btnLearnmore;
+    RelativeLayout filterMinus, filterPlus, btnBack, btnNext, continue_bu, btnLearnmore, avatar;
     ViewPager2 viewListInn;
+    NavigationView navigationView;
+    DrawerLayout navigationDrawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,6 +139,7 @@ public class ListInnActivity extends AppCompatActivity {
                 if (viewListInn.getCurrentItem() < fragments.size()) {
                     viewListInn.setCurrentItem(viewListInn.getCurrentItem() + 1);
                     innId = inns.get(viewListInn.getCurrentItem()).getInnId();
+                    des = inns.get(viewListInn.getCurrentItem()).getDescribe();
                 }
             }
         });
@@ -143,6 +150,7 @@ public class ListInnActivity extends AppCompatActivity {
                 if (viewListInn.getCurrentItem() > 0) {
                     viewListInn.setCurrentItem(viewListInn.getCurrentItem() - 1);
                     innId = inns.get(viewListInn.getCurrentItem()).getInnId();
+                    des = inns.get(viewListInn.getCurrentItem()).getDescribe();
                 }
             }
         });
@@ -159,7 +167,15 @@ public class ListInnActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), InnDetailActivity.class);
                 intent.putExtra("innId", innId);
+                intent.putExtra("Describe", des);
                 startActivity(intent);
+            }
+        });
+
+        avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navigationDrawer.openDrawer(GravityCompat.END);
             }
         });
     }
@@ -177,6 +193,9 @@ public class ListInnActivity extends AppCompatActivity {
         btnLearnmore = (RelativeLayout) findViewById(R.id.btnLearnmore);
         continue_bu = (RelativeLayout) findViewById(R.id.continue_bu);
         viewListInn = (ViewPager2) findViewById(R.id.viewListInn);
+        navigationDrawer = (DrawerLayout) findViewById(R.id.navigationDrawer);
+        navigationView = (NavigationView) findViewById(R.id.navigationView);
+        avatar = (RelativeLayout) findViewById(R.id.avatar);
 
         viewListInn.setUserInputEnabled(false);
     }
@@ -203,6 +222,8 @@ public class ListInnActivity extends AppCompatActivity {
                             String phoneNumber = jsonObject.getString("phoneNumber");
                             String describe = jsonObject.getString("describe");
                             Double price = jsonObject.getDouble("price");
+                            Double priceWater = jsonObject.getDouble("priceWater");
+                            Double priceELec = jsonObject.getDouble("priceELec");
                             String createdAtString = jsonObject.getString("createdAt");
                             String updatedAtString = jsonObject.getString("updatedAt");
                             String proposed = jsonObject.getString("proposed");
@@ -218,13 +239,14 @@ public class ListInnActivity extends AppCompatActivity {
 
                             ImageInn imageInn = new ImageInn(mainImage.getInt("imageInnId"), mainImage.getString("image"));
 
-                            inns.add(new Inn(id, address, phoneNumber, describe, price, createdAt, updatedAt, proposed, imageInn, null));
-                            fragments.add(InnFragment.newInstance(getApplicationContext(), describe, String.valueOf(price), imageInn.getImage()));
+                            inns.add(new Inn(id, address, phoneNumber, describe, price, priceWater, priceELec, createdAt, updatedAt, proposed, 0, imageInn, null));
+                            fragments.add(InnFragment.newInstance(getApplicationContext(), describe, String.valueOf(price), imageInn.getImage(), String.valueOf(priceWater), String.valueOf(priceELec)));
                         }
                     } catch (JSONException e) {
                         Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                     }
                     innId = inns.get(0).getInnId();
+                    des = inns.get(0).getDescribe();
                     innAdapter = new InnAdapter(ListInnActivity.this, fragments);
                     viewListInn.setAdapter(innAdapter);
                 }
@@ -265,6 +287,8 @@ public class ListInnActivity extends AppCompatActivity {
                             String phoneNumber = jsonObject.getString("phoneNumber");
                             String describe = jsonObject.getString("describe");
                             Double price = jsonObject.getDouble("price");
+                            Double priceWater = jsonObject.getDouble("priceWater");
+                            Double priceELec = jsonObject.getDouble("priceELec");
                             String createdAtString = jsonObject.getString("createdAt");
                             String updatedAtString = jsonObject.getString("updatedAt");
                             String proposed = jsonObject.getString("proposed");
@@ -280,8 +304,8 @@ public class ListInnActivity extends AppCompatActivity {
 
                             ImageInn imageInn = new ImageInn(mainImage.getInt("imageInnId"), mainImage.getString("image"));
 
-                            inns.add(new Inn(id, address, phoneNumber, describe, price, createdAt, updatedAt, proposed, imageInn, null));
-                            fragments.add(InnFragment.newInstance(getApplicationContext(), describe, String.valueOf(price), imageInn.getImage()));
+                            inns.add(new Inn(id, address, phoneNumber, describe, price, priceWater, priceELec, createdAt, updatedAt, proposed, 0, imageInn, null));
+                            fragments.add(InnFragment.newInstance(getApplicationContext(), describe, String.valueOf(price), imageInn.getImage(), String.valueOf(priceWater), String.valueOf(priceELec)));
                         }
                     } catch (JSONException e) {
                         Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();

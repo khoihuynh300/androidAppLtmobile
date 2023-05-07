@@ -1,5 +1,6 @@
 package com.example.ltmobile.Utils;
 
+import com.example.ltmobile.Model.CommentInn;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -9,11 +10,13 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -80,4 +83,10 @@ public interface ServiceAPI {
 
     @GET("inns/{id}")
     Call<JsonObject> getInnById(@Path("id") int id);
+
+    @GET("commentInn/{innId}")
+    Call<JsonArray> getAllCommentOfInn(@Path("innId") int innId);
+
+    @POST("commentInn/add")
+    Call<JsonObject> createCommentOfInn(@Body CommentInn commentInn);
 }

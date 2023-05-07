@@ -46,14 +46,89 @@
             android:textAppearance="@style/inn_price"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/txtcontent"
+        <LinearLayout
             android:layout_width="314dp"
             android:layout_height="105dp"
-            android:layout_marginTop="20dp"
-            android:gravity="center_vertical"
-            android:text="@string/content_inn"
-            android:textAppearance="@style/content_inn" />
+            android:layout_marginTop="40dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="314dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:id="@+id/iconprice"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentBottom="true"
+                        android:background="@drawable/baseline_electric_bolt_24"
+                        />
+
+                    <TextView
+                        android:id="@+id/txtelec_price"
+                        android:layout_width="320dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:gravity="center_vertical"
+                        android:lineSpacingExtra="-1sp"
+                        android:text="@string/inn_price"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:id="@+id/iconpricewater"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentBottom="true"
+                        android:background="@drawable/baseline_water_drop_24"
+                        />
+
+                    <TextView
+                        android:id="@+id/txtwater_price"
+                        android:layout_width="320dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:gravity="center_vertical"
+                        android:lineSpacingExtra="-1sp"
+                        android:text="@string/inn_price"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtcontent"
+                android:layout_width="314dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:maxLines="2"
+                android:text="@string/content_inn"
+                android:textAppearance="@style/content_inn" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 

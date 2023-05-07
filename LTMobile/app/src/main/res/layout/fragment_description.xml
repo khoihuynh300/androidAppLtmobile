@@ -20,7 +20,7 @@
             android:background="@drawable/list_inn">
 
             <TextView
-                android:id="@+id/surrounded_"
+                android:id="@+id/descriptiontxt"
                 android:layout_width="320dp"
                 android:layout_height="63dp"
                 android:layout_alignParentLeft="true"

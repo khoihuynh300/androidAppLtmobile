@@ -120,15 +120,6 @@
                             android:layout_gravity="center_vertical"
                             android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/villa_kayu_"
-                                android:layout_width="match_parent"
-                                android:layout_height="24dp"
-                                android:text="@string/villa_kayu_"
-                                android:textAppearance="@style/villa_kayu_"
-                                android:lineSpacingExtra="-3sp"
-                                android:gravity="top" />
-
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="24dp"
@@ -157,7 +148,7 @@
                                 <TextView
                                     android:id="@+id/ubud_indone"
                                     android:layout_width="118dp"
-                                    android:layout_height="17dp"
+                                    android:layout_height="match_parent"
                                     android:text="@string/ubud_indone"
                                     android:textAppearance="@style/ubud_indone"
                                     android:layout_gravity="center_vertical"
@@ -199,7 +190,7 @@
                         <androidx.viewpager2.widget.ViewPager2
                             android:id="@+id/viewInn"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="300dp"
                             android:layout_marginTop="10dp" />
 
                     </LinearLayout>
@@ -213,7 +204,7 @@
                         android:background="@drawable/contact_phone">
 
                         <TextView
-                            android:id="@+id/night"
+                            android:id="@+id/pricetxt"
                             android:layout_width="wrap_content"
                             android:layout_height="51dp"
                             android:layout_weight="1"

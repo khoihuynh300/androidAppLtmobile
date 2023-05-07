@@ -7,23 +7,53 @@ public class Inn {
     private int innId;
     private String address, phoneNumber, describe;
     private Double price;
+    private Double priceWater;
+    private Double priceELec;
     private Date createdAt;
     private Date updatedAt;
     private String proposed;
+    private int proposedId;
     private ImageInn mainImage;
     private List<ImageInn> images;
 
-    public Inn(int innId, String address, String phoneNumber, String describe, Double price, Date createdAt, Date updatedAt, String proposed, ImageInn mainImage, List<ImageInn> images) {
+    public Inn(int innId, String address, String phoneNumber, String describe, Double price, Double priceWater, Double priceELec, Date createdAt, Date updatedAt, String proposed, int proposedId, ImageInn mainImage, List<ImageInn> images) {
         this.innId = innId;
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.describe = describe;
         this.price = price;
+        this.priceWater = priceWater;
+        this.priceELec = priceELec;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.proposed = proposed;
+        this.proposedId = proposedId;
         this.mainImage = mainImage;
         this.images = images;
+    }
+
+    public Double getPriceWater() {
+        return priceWater;
+    }
+
+    public void setPriceWater(Double priceWater) {
+        this.priceWater = priceWater;
+    }
+
+    public Double getPriceELec() {
+        return priceELec;
+    }
+
+    public void setPriceELec(Double priceELec) {
+        this.priceELec = priceELec;
+    }
+
+    public int getProposedId() {
+        return proposedId;
+    }
+
+    public void setProposedId(int proposedId) {
+        this.proposedId = proposedId;
     }
 
     public int getInnId() {

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/list_inn"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.CommentFragment">
 
@@ -13,12 +14,62 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/commentLayout"
+            android:id="@+id/commentInnLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:background="@drawable/list_inn"
+            android:layout_height="240dp">
 
 
         </androidx.recyclerview.widget.RecyclerView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="240dp"
+            android:orientation="horizontal"
+            android:background="@drawable/list_inn"
+            android:layout_height="42.68dp">
+
+            <EditText
+                android:id="@+id/rvText"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="match_parent"/>
+
+            <RelativeLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/send"
+                android:layout_weight="0"
+                android:layout_width="44dp"
+                android:layout_height="42.68dp">
+
+                <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/remove"
+                    android:layout_width="30dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="9.65dp"
+                    android:clipToOutline="true">
+
+                    <ImageView
+                        android:id="@+id/vector"
+                        android:layout_width="14dp"
+                        android:layout_height="2dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:src="@drawable/baseline_send_24" />
+
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 
