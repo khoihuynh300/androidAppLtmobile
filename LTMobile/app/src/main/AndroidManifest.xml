@@ -24,6 +24,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".Activity.AdminActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.ChangePasswordActivity"
             android:exported="false" />
         <activity
@@ -40,16 +43,16 @@
             android:exported="false" />
         <activity
             android:name=".Activity.InnDetailActivity"
-            android:parentActivityName=".Activity.ListInnActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".Activity.ListInnActivity" />
         <activity
-            android:name=".Activity.MainActivity"
+            android:name=".Activity.ListInnActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.SignupActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.ListInnActivity"
+            android:name=".Activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
