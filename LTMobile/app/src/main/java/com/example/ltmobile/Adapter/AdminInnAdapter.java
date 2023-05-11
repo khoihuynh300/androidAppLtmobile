@@ -1,17 +1,27 @@
 package com.example.ltmobile.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RoundRectShape;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.example.ltmobile.Activity.InnDetailAdminActivity;
+import com.example.ltmobile.Activity.LoginActivity;
 import com.example.ltmobile.Model.Inn;
 import com.example.ltmobile.R;
+import com.example.ltmobile.Utils.Constant;
 
 import java.util.List;
 
@@ -36,6 +46,9 @@ public class AdminInnAdapter extends RecyclerView.Adapter<AdminInnAdapter.MyView
         public TextView txtAddress;
         public TextView txtPhone;
         public TextView txtPrice;
+        public ImageView imvInnImage;
+        LinearLayout layoutConfirmed;
+        LinearLayout layoutNotConfirmed;
 
         public MyViewholder(@NonNull View itemView) {
             super(itemView);
@@ -43,11 +56,15 @@ public class AdminInnAdapter extends RecyclerView.Adapter<AdminInnAdapter.MyView
             txtAddress = itemView.findViewById(R.id.txtAddress);
             txtPhone = itemView.findViewById(R.id.txtPhone);
             txtPrice = itemView.findViewById(R.id.txtPrice);
+            imvInnImage = itemView.findViewById(R.id.imvInnImage);
+
+            layoutConfirmed = itemView.findViewById(R.id.confirmed);
+            layoutNotConfirmed = itemView.findViewById(R.id.notConfirmed);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "bật trang chi tiết" + getAdapterPosition(), Toast.LENGTH_LONG).show();
+                    context.startActivity(new Intent(context, InnDetailAdminActivity.class));
                 }
             });
         }
@@ -56,10 +73,21 @@ public class AdminInnAdapter extends RecyclerView.Adapter<AdminInnAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull AdminInnAdapter.MyViewholder holder, int position) {
+        holder.itemView.setBackground(new RoundedRectShape(10));
+        holder.itemView.setClipToOutline(true);
+
         Inn inn = array.get(position);
         holder.txtAddress.setText(inn.getAddress());
         holder.txtPhone.setText(inn.getPhoneNumber());
         holder.txtPrice.setText(String.valueOf(inn.getPrice()));
+
+        if (inn.isConfirmed()) {
+            holder.layoutConfirmed.setVisibility(View.VISIBLE);
+        } else {
+            holder.layoutNotConfirmed.setVisibility(View.VISIBLE);
+        }
+
+        Glide.with(context).load(Constant.ROOT_URL + "upload/" + inn.getMainImage().getImage()).into(holder.imvInnImage);
     }
 
     @Override
@@ -78,6 +106,16 @@ public class AdminInnAdapter extends RecyclerView.Adapter<AdminInnAdapter.MyView
             return;
         array.remove(index);
         notifyItemRemoved(index);
+    }
+
+    private class RoundedRectShape extends ShapeDrawable {
+        private final float radius;
+
+        public RoundedRectShape(float radius) {
+            this.radius = radius;
+            setShape(new RoundRectShape(new float[] { radius, radius, radius, radius, radius, radius, radius, radius }, null, null));
+            getPaint().setColor(Color.WHITE);
+        }
     }
 
 }

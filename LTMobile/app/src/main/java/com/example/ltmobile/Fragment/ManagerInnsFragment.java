@@ -15,11 +15,15 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.ltmobile.Adapter.AdminInnAdapter;
+import com.example.ltmobile.Model.ImageInn;
 import com.example.ltmobile.Model.Inn;
 import com.example.ltmobile.R;
+import com.example.ltmobile.Utils.ItemMarginDecoration;
 import com.example.ltmobile.Utils.ServiceAPI;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+
+import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -55,6 +59,8 @@ public class ManagerInnsFragment extends Fragment {
     }
     private void setUpRecycleView(){
         adminInnAdapter = new AdminInnAdapter(context, innList);
+        ItemMarginDecoration itemMarginDecoration = new ItemMarginDecoration(30);
+        rvInn.addItemDecoration(itemMarginDecoration);
         rvInn.setAdapter(adminInnAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         rvInn.setLayoutManager(linearLayoutManager);
@@ -81,6 +87,16 @@ public class ManagerInnsFragment extends Fragment {
                                         Log.e("TAG", e.toString());
                                     }
 
+                                    JsonObject mainImageJson = innJson.get("mainImage").getAsJsonObject();
+                                    ImageInn mainImage = new ImageInn(mainImageJson.get("imageInnId").getAsInt(), mainImageJson.get("image").getAsString());
+
+                                    List<ImageInn> ImageInnList = new ArrayList<>();
+                                    JsonArray imageListJson = innJson.get("images").getAsJsonArray();
+                                    for(int j = 0; j < imageListJson.size(); j++){
+                                        JsonObject imageJson = imageListJson.get(j).getAsJsonObject();
+                                        ImageInn imageInn = new ImageInn(imageJson.get("imageInnId").getAsInt(), imageJson.get("image").getAsString());
+                                        ImageInnList.add(imageInn);
+                                    }
                                     Inn inn = new Inn(
                                             innJson.get("innId").getAsInt(),
                                             innJson.get("address").getAsString(),
@@ -92,9 +108,9 @@ public class ManagerInnsFragment extends Fragment {
                                             createdAt,
                                             updatedAt,
                                             "",
-                                            innJson.get("proposedById").getAsJsonObject().get("userId").getAsInt(),
-                                            null,
-                                            null
+                                            innJson.get("proposedId").getAsInt(),
+                                            mainImage,
+                                            ImageInnList
                                             );
                                     innList.add(inn);
 
