@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/menuAccountManagerment"
         android:name="com.example.ltmobile.Fragment.ManagerAccountFragment"
-        android:label="QUản lý tài khoản"
+        android:label="Quản lý tài khoản"
         tools:layout="@layout/fragment_manager_account" />
     <fragment
         android:id="@+id/menuInnsManagerment"

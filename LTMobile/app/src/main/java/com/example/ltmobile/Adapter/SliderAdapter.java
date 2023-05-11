@@ -1,22 +1,26 @@
 package com.example.ltmobile.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.example.ltmobile.Model.ImageInn;
 import com.example.ltmobile.R;
+import com.example.ltmobile.Utils.Constant;
 import com.smarteist.autoimageslider.SliderViewAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderHolder> {
     private Context context;
-    private ArrayList<Integer> arrayList;
+    private List<ImageInn> arrayList;
 
-    public SliderAdapter(Context context, ArrayList<Integer> arrayList) {
+    public SliderAdapter(Context context, List<ImageInn> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
     }
@@ -29,7 +33,10 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderHolder>
 
     @Override
     public void onBindViewHolder(SliderHolder viewHolder, int position) {
-        Glide.with(context).load(arrayList.get(position)).into(viewHolder.imageView);
+//        Glide.with(context).load(arrayList.get(position)).into(viewHolder.imageView);
+        Glide.with(context).load(Constant.ROOT_URL + "upload/" + arrayList.get(position).getImage()).into(viewHolder.imageView);
+        String s = Constant.ROOT_URL + "upload/" + arrayList.get(position).getImage();
+        Log.d("TAG", "onBindViewHolder: " + Constant.ROOT_URL + "upload/" + arrayList.get(position).getImage());
     }
 
     @Override

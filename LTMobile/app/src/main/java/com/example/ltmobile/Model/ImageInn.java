@@ -1,6 +1,8 @@
 package com.example.ltmobile.Model;
 
-public class ImageInn {
+import java.io.Serializable;
+
+public class ImageInn implements Serializable {
     private int imageInnId;
     private String image;
 

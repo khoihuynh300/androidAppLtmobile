@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
+import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +26,7 @@ import com.example.ltmobile.Model.Inn;
 import com.example.ltmobile.R;
 import com.example.ltmobile.Utils.Constant;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class AdminInnAdapter extends RecyclerView.Adapter<AdminInnAdapter.MyViewholder> {
@@ -33,6 +37,7 @@ public class AdminInnAdapter extends RecyclerView.Adapter<AdminInnAdapter.MyView
     public AdminInnAdapter(Context context, List<Inn> array) {
         this.context = context;
         this.array = array;
+        Log.e("TAG", "AdminInnAdapter: " + array.size() );
     }
 
     @NonNull
@@ -64,7 +69,14 @@ public class AdminInnAdapter extends RecyclerView.Adapter<AdminInnAdapter.MyView
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    context.startActivity(new Intent(context, InnDetailAdminActivity.class));
+                    Inn inn = array.get(getAdapterPosition());
+
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(InnDetailAdminActivity.KEY_EXTRA_INN, inn);
+
+                    Intent intent = new Intent(context, InnDetailAdminActivity.class);
+                    intent.putExtras(bundle);
+                    context.startActivity(intent);
                 }
             });
         }
@@ -80,10 +92,11 @@ public class AdminInnAdapter extends RecyclerView.Adapter<AdminInnAdapter.MyView
         holder.txtAddress.setText(inn.getAddress());
         holder.txtPhone.setText(inn.getPhoneNumber());
         holder.txtPrice.setText(String.valueOf(inn.getPrice()));
-
         if (inn.isConfirmed()) {
             holder.layoutConfirmed.setVisibility(View.VISIBLE);
+            holder.layoutNotConfirmed.setVisibility(View.GONE);
         } else {
+            holder.layoutConfirmed.setVisibility(View.GONE);
             holder.layoutNotConfirmed.setVisibility(View.VISIBLE);
         }
 

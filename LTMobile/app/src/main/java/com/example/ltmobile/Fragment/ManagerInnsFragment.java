@@ -3,6 +3,7 @@ package com.example.ltmobile.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.ltmobile.Adapter.AdminInnAdapter;
@@ -48,7 +50,7 @@ public class ManagerInnsFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_manager_inns, container, false);
         innList = new ArrayList<>();
         connectView(view);
-        renderData();
+//        renderData();
 
         setUpRecycleView();
 
@@ -64,9 +66,27 @@ public class ManagerInnsFragment extends Fragment {
         rvInn.setAdapter(adminInnAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         rvInn.setLayoutManager(linearLayoutManager);
+
+        // scroll listener
+//        rvInn.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+//                super.onScrollStateChanged(recyclerView, newState);
+//            }
+//
+//            @Override
+//            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//                LinearLayoutManager linearLayoutManager1 = (LinearLayoutManager) recyclerView.getLayoutManager();
+//
+//                if (linearLayoutManager1 != null
+//                        && linearLayoutManager1.findLastCompletelyVisibleItemPosition() == innList.size() - 1){
+//                    renderData();
+//                }
+//            }
+//        });
     }
     private void renderData(){
-
         ServiceAPI.serviceapi.getInns()
                 .enqueue(new Callback<JsonObject>() {
                     @Override
@@ -112,9 +132,10 @@ public class ManagerInnsFragment extends Fragment {
                                             mainImage,
                                             ImageInnList
                                             );
+                                    inn.setConfirmed(innJson.get("isConfirmed").getAsBoolean());
                                     innList.add(inn);
-
-                                    adminInnAdapter.addItem(inn);
+                                    adminInnAdapter.notifyDataSetChanged();
+//                                    adminInnAdapter.addItem(inn);
                                 }
                             }
 
@@ -143,5 +164,13 @@ public class ManagerInnsFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         this.context = null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        innList.clear();
+        adminInnAdapter.notifyDataSetChanged();
+        renderData();
     }
 }
