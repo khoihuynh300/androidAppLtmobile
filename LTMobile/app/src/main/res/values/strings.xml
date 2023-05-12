@@ -4,6 +4,7 @@
     <string name="password_not_equal_error">Mật khẩu nhập lại không chính xác</string>
     <string name="headline">Hello, Sourany!</string>
     <string name="location">Location</string>
+    <string name="Keyword">Keyword</string>
     <string name="price">Price</string>
     <string name="person">2 Person</string>
     <string name="txtcontinue">Search</string>
