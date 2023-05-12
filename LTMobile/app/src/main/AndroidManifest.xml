@@ -24,10 +24,16 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".Activity.AskAndAnswerActivity"
+            android:name=".Activity.InnDetailAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.AdminActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.ListInnActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.AskAndAnswerActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.ChangePasswordActivity"
@@ -49,13 +55,16 @@
             android:exported="false"
             android:parentActivityName=".Activity.ListInnActivity" />
         <activity
-            android:name=".Activity.MainActivity"
+            android:name=".Activity.RecommenInnActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.SignupActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.QAActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

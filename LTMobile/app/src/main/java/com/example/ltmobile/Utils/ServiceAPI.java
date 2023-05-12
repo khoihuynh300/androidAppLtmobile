@@ -1,9 +1,13 @@
 package com.example.ltmobile.Utils;
 
 import com.example.ltmobile.Model.CommentInn;
+import com.example.ltmobile.Model.Inn;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -11,11 +15,13 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -76,10 +82,10 @@ public interface ServiceAPI {
                                     @Field("oldpassword") String oldpassword);
 
     @GET("inns")
-    Call<JsonArray> getAllInns();
+    Call<JsonArray> getAllInnsConfirmed();
 
     @GET("inns/search")
-    Call<JsonArray> searchInns(@Query("address") String address, @Query("gtePrice") Double gtePrice, @Query("ltePrice") Double ltePrice);
+    Call<JsonArray> searchInns(@Query("address") String address, @Query("gtePrice") Double gtePrice, @Query("ltePrice") Double ltePrice, @Query("size") int size);
 
     @GET("inns/{id}")
     Call<JsonObject> getInnById(@Path("id") int id);
@@ -92,4 +98,34 @@ public interface ServiceAPI {
 
     @GET("getAllQuestion")
     Call<JsonArray> getAllQuestions();
+
+    @Multipart
+    @POST("inns/add")
+    Call<JsonObject> recommendInn(@Part("size") RequestBody size,
+                                  @Part("priceWater") RequestBody priceWater,
+                                  @Part("priceELec") RequestBody priceELec,
+                                  @Part("address") RequestBody address,
+                                  @Part("price") RequestBody price,
+                                  @Part("phoneNumber") RequestBody phoneNumber,
+                                  @Part("describe") RequestBody describe,
+                                  @Part("proposedId") RequestBody proposedId,
+                                  @Part List<MultipartBody.Part> imageFiles);
+
+    @GET("admin/inns")
+    Call<JsonObject> getInns();
+
+
+    @GET("admin/inns")
+    Call<JsonObject> getInnsFilter(@Query("offset") int offset,
+                                   @Query("ascending") boolean ascending,
+                                   @Query("isDeleted") boolean isDeleted,
+                                   @Query("Address") String Address,
+                                   @Query("isConfirmed") String isConfirmed);
+
+    @FormUrlEncoded
+    @PUT("admin/inns/confirm/{innId}")
+    Call<JsonObject> confirmInn(@Path("innId") int innId, @Field("userId") int userId);
+
+    @DELETE("admin/inns/delete/{innId}")
+    Call<JsonObject> deleteInn(@Path("innId") int innId);
 }

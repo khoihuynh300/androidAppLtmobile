@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menuAccountManagerment"
+        android:title="Quản lý tài khoản" />
+    <item
+        android:id="@+id/menuInnsManagerment"
+        android:title="Quản lý bài đăng trọ" />
+    <item android:id="@+id/menuQAManagerment"
+        android:title="Quản lý hỏi đáp"/>
+
+
+    <item android:id="@+id/menuLogout"
+        android:title="Đăng Xuất"/>
+</menu>
