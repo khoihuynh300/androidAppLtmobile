@@ -1,5 +1,6 @@
 package com.example.ltmobile.Model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class Inn implements Serializable {
     private boolean isConfirmed;
     private long confirmedById;
 
-    public Inn(int innId, String address, String phoneNumber, String describe, Double price, Double priceWater, Double priceELec, Date createdAt, Date updatedAt, String proposed, int proposedId, int size, ImageInn mainImage, List<ImageInn> images) {
+    public Inn(int innId, String address, String phoneNumber, String describe, Double price, Double priceWater, Double priceELec, Date createdAt, Date updatedAt, String proposed, int proposedId, ImageInn mainImage, List<ImageInn> images) {
         this.innId = innId;
         this.address = address;
         this.phoneNumber = phoneNumber;
@@ -31,7 +32,6 @@ public class Inn implements Serializable {
         this.updatedAt = updatedAt;
         this.proposed = proposed;
         this.proposedId = proposedId;
-        this.size = size;
         this.mainImage = mainImage;
         this.images = images;
     }
