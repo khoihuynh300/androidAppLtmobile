@@ -1,9 +1,13 @@
 package com.example.ltmobile.Utils;
 
 import com.example.ltmobile.Model.CommentInn;
+import com.example.ltmobile.Model.Inn;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -76,10 +80,10 @@ public interface ServiceAPI {
                                     @Field("oldpassword") String oldpassword);
 
     @GET("inns")
-    Call<JsonArray> getAllInns();
+    Call<JsonArray> getAllInnsConfirmed();
 
     @GET("inns/search")
-    Call<JsonArray> searchInns(@Query("address") String address, @Query("gtePrice") Double gtePrice, @Query("ltePrice") Double ltePrice);
+    Call<JsonArray> searchInns(@Query("address") String address, @Query("gtePrice") Double gtePrice, @Query("ltePrice") Double ltePrice, @Query("size") int size);
 
     @GET("inns/{id}")
     Call<JsonObject> getInnById(@Path("id") int id);
@@ -89,4 +93,16 @@ public interface ServiceAPI {
 
     @POST("commentInn/add")
     Call<JsonObject> createCommentOfInn(@Body CommentInn commentInn);
+
+    @Multipart
+    @POST("inns/add")
+    Call<JsonObject> recommendInn(@Part("size") RequestBody size,
+                                  @Part("priceWater") RequestBody priceWater,
+                                  @Part("priceELec") RequestBody priceELec,
+                                  @Part("address") RequestBody address,
+                                  @Part("price") RequestBody price,
+                                  @Part("phoneNumber") RequestBody phoneNumber,
+                                  @Part("describe") RequestBody describe,
+                                  @Part("proposedId") RequestBody proposedId,
+                                  @Part List<MultipartBody.Part> imageFiles);
 }

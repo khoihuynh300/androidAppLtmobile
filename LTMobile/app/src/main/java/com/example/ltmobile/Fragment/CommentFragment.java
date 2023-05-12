@@ -26,9 +26,6 @@ import com.example.ltmobile.Model.CommentInn;
 import com.example.ltmobile.Model.ImageInn;
 import com.example.ltmobile.R;
 import com.example.ltmobile.Utils.ServiceAPI;
-import com.github.nkzawa.emitter.Emitter;
-import com.github.nkzawa.socketio.client.IO;
-import com.github.nkzawa.socketio.client.Socket;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 

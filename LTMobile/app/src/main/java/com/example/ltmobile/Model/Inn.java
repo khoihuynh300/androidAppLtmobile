@@ -13,10 +13,11 @@ public class Inn {
     private Date updatedAt;
     private String proposed;
     private int proposedId;
+    private int size;
     private ImageInn mainImage;
     private List<ImageInn> images;
 
-    public Inn(int innId, String address, String phoneNumber, String describe, Double price, Double priceWater, Double priceELec, Date createdAt, Date updatedAt, String proposed, int proposedId, ImageInn mainImage, List<ImageInn> images) {
+    public Inn(int innId, String address, String phoneNumber, String describe, Double price, Double priceWater, Double priceELec, Date createdAt, Date updatedAt, String proposed, int proposedId, int size, ImageInn mainImage, List<ImageInn> images) {
         this.innId = innId;
         this.address = address;
         this.phoneNumber = phoneNumber;
@@ -28,8 +29,17 @@ public class Inn {
         this.updatedAt = updatedAt;
         this.proposed = proposed;
         this.proposedId = proposedId;
+        this.size = size;
         this.mainImage = mainImage;
         this.images = images;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
     }
 
     public Double getPriceWater() {
