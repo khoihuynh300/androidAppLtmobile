@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ltmobile.Adapter.SliderAdapter;
+import com.example.ltmobile.Fragment.ManagerInnsFragment;
 import com.example.ltmobile.Model.ImageInn;
 import com.example.ltmobile.Model.Inn;
 import com.example.ltmobile.R;
@@ -46,6 +47,7 @@ public class InnDetailAdminActivity extends AppCompatActivity {
     SliderAdapter sliderAdapter;
 
     Inn innObject;
+    int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +57,11 @@ public class InnDetailAdminActivity extends AppCompatActivity {
         imageList = new ArrayList<>();
         connectView();
         // get data from previous activity
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            innObject = (Inn) bundle.getSerializable(KEY_EXTRA_INN);
+        position = getIntent().getIntExtra(KEY_EXTRA_INN, -1);
+        innObject = ManagerInnsFragment.innList.get(position);
+//        Bundle bundle = getIntent().getExtras();
+//        if (bundle != null) {
+//            innObject = (Inn) bundle.getSerializable(KEY_EXTRA_INN);
             txtAddress.setText(innObject.getAddress());
             txtPhone.setText(innObject.getPhoneNumber());
             txtPrice.setText(String.valueOf(innObject.getPrice()));
@@ -72,7 +76,7 @@ public class InnDetailAdminActivity extends AppCompatActivity {
             sliderView.setIndicatorUnselectedColor(Color.GRAY);
             sliderView.startAutoCycle();
             sliderView.setScrollTimeInSec(5);
-        }
+//        }
 
         setEvent();
     }
@@ -96,6 +100,7 @@ public class InnDetailAdminActivity extends AppCompatActivity {
                             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                                 if(response.isSuccessful()) {
                                     Snackbar.make(v, "confirmed", Snackbar.LENGTH_LONG).show();
+                                    ManagerInnsFragment.innList.get(position).setConfirmed(true);
                                 }
                                 else {
                                     Toast.makeText(context, "An error occur", Toast.LENGTH_LONG).show();
@@ -119,6 +124,7 @@ public class InnDetailAdminActivity extends AppCompatActivity {
                             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                                 if(response.isSuccessful()) {
                                     Snackbar.make(v, "deleted", Snackbar.LENGTH_LONG).show();
+                                    ManagerInnsFragment.innList.remove(ManagerInnsFragment.innList.get(position));
                                 }
                                 else {
                                     Toast.makeText(context, "An error occur", Toast.LENGTH_LONG).show();

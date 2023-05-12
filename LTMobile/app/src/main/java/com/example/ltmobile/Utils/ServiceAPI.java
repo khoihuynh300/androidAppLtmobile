@@ -95,6 +95,14 @@ public interface ServiceAPI {
     @GET("admin/inns")
     Call<JsonObject> getInns();
 
+
+    @GET("admin/inns")
+    Call<JsonObject> getInnsFilter(@Query("offset") int offset,
+                                   @Query("ascending") boolean ascending,
+                                   @Query("isDeleted") boolean isDeleted,
+                                   @Query("Address") String Address,
+                                   @Query("isConfirmed") String isConfirmed);
+
     @FormUrlEncoded
     @PUT("admin/inns/confirm/{innId}")
     Call<JsonObject> confirmInn(@Path("innId") int innId, @Field("userId") int userId);

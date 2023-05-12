@@ -4,16 +4,23 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.ltmobile.Adapter.AdminInnAdapter;
@@ -39,10 +46,41 @@ import retrofit2.Response;
 
 public class ManagerInnsFragment extends Fragment {
     Context context;
-    List<Inn> innList;
 
+    // final string for dropdown list
+    private final String STRING_ASC = "Tăng dần";
+    private final String STRING_DESC = "Giảm dần";
+    private final String STRING_DELETED = "Đã xóa";
+    private final String STRING_NOTDELETED = "Chưa xóa";
+    private final String STRING_ALL = "Tất cả";
+    private final String STRING_CONFIRMED = "Đã xác nhận";
+    private final String STRING_NOTCONFIRMED = "Chưa xác nhận";
+
+
+    // recycle view
+    public static List<Inn> innList;
     AdminInnAdapter adminInnAdapter;
     RecyclerView rvInn;
+
+    //View
+    ImageButton btnShowFilter;
+    LinearLayout layoutFilter;
+    Button btnFilter;
+
+    Spinner spinnerArrange;
+    Spinner spinnerIsDeleted;
+    Spinner spinnerIsConfirmed;
+    EditText inputAddress;
+
+    //filter
+    int offset = 0;
+    boolean ascending = true;
+    boolean isDeleted = false;
+    String Address = "";
+    String isConfirmed = "all"; // all, true, false
+
+    // vi tri scroll
+    private int scrollPosition = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,14 +88,26 @@ public class ManagerInnsFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_manager_inns, container, false);
         innList = new ArrayList<>();
         connectView(view);
-//        renderData();
-
         setUpRecycleView();
+
+        renderData();
+
+        setupEvent();
+        setupSpinnerData();
 
         return view;
     }
     private void connectView(View view){
         rvInn = view.findViewById(R.id.rv_inns);
+        btnShowFilter = view.findViewById(R.id.btnShowFilter);
+        layoutFilter = view.findViewById(R.id.layoutFilter);
+        btnFilter = view.findViewById(R.id.btnFilter);
+
+        spinnerArrange = view.findViewById(R.id.spinnerArrange);
+        spinnerIsDeleted = view.findViewById(R.id.spinnerIsDeleted);
+        spinnerIsConfirmed = view.findViewById(R.id.spinnerIsConfirmed);
+        inputAddress = view.findViewById(R.id.inputAddress);
+
     }
     private void setUpRecycleView(){
         adminInnAdapter = new AdminInnAdapter(context, innList);
@@ -67,27 +117,31 @@ public class ManagerInnsFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         rvInn.setLayoutManager(linearLayoutManager);
 
-        // scroll listener
-//        rvInn.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-//                super.onScrollStateChanged(recyclerView, newState);
-//            }
-//
-//            @Override
-//            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-//                super.onScrolled(recyclerView, dx, dy);
-//                LinearLayoutManager linearLayoutManager1 = (LinearLayoutManager) recyclerView.getLayoutManager();
-//
-//                if (linearLayoutManager1 != null
-//                        && linearLayoutManager1.findLastCompletelyVisibleItemPosition() == innList.size() - 1){
-//                    renderData();
-//                }
-//            }
-//        });
+        // khi cuộn xuống cuối cùng
+        rvInn.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                layoutFilter.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                LinearLayoutManager linearLayoutManager1 = (LinearLayoutManager) recyclerView.getLayoutManager();
+                Log.e("TAG", "" + linearLayoutManager1.findLastCompletelyVisibleItemPosition() + " : " +  innList.size());
+                if (linearLayoutManager1 != null
+                        && linearLayoutManager1.findLastCompletelyVisibleItemPosition() == innList.size() - 1){
+                    Toast.makeText(context, "load more", Toast.LENGTH_LONG);
+                    offset++;
+                    renderData();
+                }
+            }
+        });
     }
     private void renderData(){
-        ServiceAPI.serviceapi.getInns()
+
+        ServiceAPI.serviceapi.getInnsFilter(offset, ascending, isDeleted, Address, isConfirmed)
                 .enqueue(new Callback<JsonObject>() {
                     @Override
                     public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -135,11 +189,10 @@ public class ManagerInnsFragment extends Fragment {
                                     inn.setConfirmed(innJson.get("isConfirmed").getAsBoolean());
                                     innList.add(inn);
                                     adminInnAdapter.notifyDataSetChanged();
+                                    rvInn.scrollToPosition(scrollPosition);
 //                                    adminInnAdapter.addItem(inn);
                                 }
                             }
-
-
                         }
                         else {
                             Toast.makeText(context, "an error occur", Toast.LENGTH_LONG).show();
@@ -169,8 +222,84 @@ public class ManagerInnsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        innList.clear();
+        // lấy vị trí cũ
+        scrollPosition = ((LinearLayoutManager) rvInn.getLayoutManager()).findLastVisibleItemPosition() - 1;
+
+        // xóa dữ liệu cũ rồi đặt lại dữ liệu mới
+//        innList.clear();
         adminInnAdapter.notifyDataSetChanged();
-        renderData();
+//        renderData();
+
+        // đặt lại vị trí cũ
+        rvInn.scrollToPosition(scrollPosition);
+    }
+
+    private void setupEvent(){
+        btnShowFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(layoutFilter.getVisibility() == View.GONE){
+                    layoutFilter.setVisibility(View.VISIBLE);
+                }
+                else {
+                    layoutFilter.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        btnFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                offset = 0;
+                ascending = spinnerArrange.getSelectedItem().toString().equals(STRING_ASC);
+                isDeleted = spinnerIsDeleted.getSelectedItem().toString().equals(STRING_DELETED);
+                Address = inputAddress.getText().toString();
+                String isConfimedString = spinnerIsConfirmed.getSelectedItem().toString();
+                if(isConfimedString.equals(STRING_ALL)){
+                    isConfirmed = "all";
+                }
+                else if(isConfimedString.equals(STRING_CONFIRMED)){
+                    isConfirmed = "true";
+                }
+                else if(isConfimedString.equals(STRING_NOTCONFIRMED)){
+                    isConfirmed = "false";
+                }
+
+
+                // xóa dữ liệu cũ rồi đặt lại dữ liệu mới
+                innList.clear();
+                adminInnAdapter.notifyDataSetChanged();
+                renderData();
+                adminInnAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    private void setupSpinnerData(){
+        List<String> arrange = new ArrayList<String>();
+        arrange.add(STRING_ASC);
+        arrange.add(STRING_DESC);
+
+        List<String> isDeleted = new ArrayList<String>();
+        isDeleted.add(STRING_NOTDELETED);
+        isDeleted.add(STRING_DELETED);
+
+        List<String> isConfirmed = new ArrayList<String>();
+        isConfirmed.add(STRING_ALL);
+        isConfirmed.add(STRING_CONFIRMED);
+        isConfirmed.add(STRING_NOTCONFIRMED);
+
+        ArrayAdapter<String> dataAdapterArrange = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, arrange);
+        dataAdapterArrange.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerArrange.setAdapter(dataAdapterArrange);
+
+        ArrayAdapter<String> dataAdapterIsDeleted = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, isDeleted);
+        dataAdapterIsDeleted.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerIsDeleted.setAdapter(dataAdapterIsDeleted);
+
+        ArrayAdapter<String> dataAdapterIsConfirmed = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, isConfirmed);
+        dataAdapterIsConfirmed.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerIsConfirmed.setAdapter(dataAdapterIsConfirmed);
+
     }
 }
