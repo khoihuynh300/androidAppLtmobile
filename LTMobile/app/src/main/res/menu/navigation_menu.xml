@@ -7,7 +7,9 @@
         android:id="@+id/menuProfile"
         android:title="Profile" />
     <item android:id="@+id/menuQA"
-        android:title="HOI DAP"/>
+        android:title="Hỏi đáp"/>
     <item android:id="@+id/menuInn"
-        android:title="TIM TRO"/>
+        android:title="Tìm trọ"/>
+    <item android:id="@+id/menuLogout"
+        android:title="Đăng Xuất"/>
 </menu>

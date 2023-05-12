@@ -3,7 +3,7 @@ package com.example.ltmobile.Model;
 import java.util.Date;
 import java.util.List;
 
-public class Inn {
+public class Inn implements Serializable {
     private int innId;
     private String address, phoneNumber, describe;
     private Double price;
@@ -16,6 +16,8 @@ public class Inn {
     private int size;
     private ImageInn mainImage;
     private List<ImageInn> images;
+    private boolean isConfirmed;
+    private long confirmedById;
 
     public Inn(int innId, String address, String phoneNumber, String describe, Double price, Double priceWater, Double priceELec, Date createdAt, Date updatedAt, String proposed, int proposedId, int size, ImageInn mainImage, List<ImageInn> images) {
         this.innId = innId;
@@ -144,6 +146,22 @@ public class Inn {
 
     public void setImages(List<ImageInn> images) {
         this.images = images;
+    }
+
+    public boolean isConfirmed() {
+        return isConfirmed;
+    }
+
+    public void setConfirmed(boolean confirmed) {
+        isConfirmed = confirmed;
+    }
+
+    public long getConfirmedById() {
+        return confirmedById;
+    }
+
+    public void setConfirmedById(long confirmedById) {
+        this.confirmedById = confirmedById;
     }
 }
 

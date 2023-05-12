@@ -15,11 +15,13 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -105,4 +107,22 @@ public interface ServiceAPI {
                                   @Part("describe") RequestBody describe,
                                   @Part("proposedId") RequestBody proposedId,
                                   @Part List<MultipartBody.Part> imageFiles);
+
+    @GET("admin/inns")
+    Call<JsonObject> getInns();
+
+
+    @GET("admin/inns")
+    Call<JsonObject> getInnsFilter(@Query("offset") int offset,
+                                   @Query("ascending") boolean ascending,
+                                   @Query("isDeleted") boolean isDeleted,
+                                   @Query("Address") String Address,
+                                   @Query("isConfirmed") String isConfirmed);
+
+    @FormUrlEncoded
+    @PUT("admin/inns/confirm/{innId}")
+    Call<JsonObject> confirmInn(@Path("innId") int innId, @Field("userId") int userId);
+
+    @DELETE("admin/inns/delete/{innId}")
+    Call<JsonObject> deleteInn(@Path("innId") int innId);
 }

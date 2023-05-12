@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/admin"
+    app:startDestination="@id/menuAccountManagerment">
+
+    <fragment
+        android:id="@+id/menuAccountManagerment"
+        android:name="com.example.ltmobile.Fragment.ManagerAccountFragment"
+        android:label="Quản lý tài khoản"
+        tools:layout="@layout/fragment_manager_account" />
+    <fragment
+        android:id="@+id/menuInnsManagerment"
+        android:name="com.example.ltmobile.Fragment.ManagerInnsFragment"
+        android:label="Quản lý bài đăng trọ"
+        tools:layout="@layout/fragment_manager_inns" />
+    <fragment
+        android:id="@+id/menuQAManagerment"
+        android:name="com.example.ltmobile.Fragment.ManagerQAFragment"
+        android:label="Quản lý hỏi đáp"
+        tools:layout="@layout/fragment_manager_q_a" />
+</navigation>

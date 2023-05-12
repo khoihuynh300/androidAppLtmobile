@@ -117,7 +117,7 @@ public class ProfileFragment extends Fragment {
         inputGender.setFocusable(false);
         inputGender.setCursorVisible(false);
         inputGender.setKeyListener(null);
-//        Glide.with(context).load(user.getAvatar()).into(imageView);
+        Glide.with(context).load(user.getAvatar()).into(imageView);
     }
 
     private void eventHandle() {
