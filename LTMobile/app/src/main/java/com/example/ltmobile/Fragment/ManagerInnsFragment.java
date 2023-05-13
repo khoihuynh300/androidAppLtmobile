@@ -29,6 +29,7 @@ import com.example.ltmobile.Model.Inn;
 import com.example.ltmobile.R;
 import com.example.ltmobile.Utils.ItemMarginDecoration;
 import com.example.ltmobile.Utils.ServiceAPI;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -66,10 +67,8 @@ public class ManagerInnsFragment extends Fragment {
     ImageButton btnShowFilter;
     LinearLayout layoutFilter;
     Button btnFilter;
-
-    Spinner spinnerArrange;
-    Spinner spinnerIsDeleted;
-    Spinner spinnerIsConfirmed;
+    FloatingActionButton fabAddInn;
+    Spinner spinnerArrange, spinnerIsDeleted, spinnerIsConfirmed;
     EditText inputAddress;
 
     //filter
@@ -102,6 +101,7 @@ public class ManagerInnsFragment extends Fragment {
         btnShowFilter = view.findViewById(R.id.btnShowFilter);
         layoutFilter = view.findViewById(R.id.layoutFilter);
         btnFilter = view.findViewById(R.id.btnFilter);
+        fabAddInn = view.findViewById(R.id.fabAddInn);
 
         spinnerArrange = view.findViewById(R.id.spinnerArrange);
         spinnerIsDeleted = view.findViewById(R.id.spinnerIsDeleted);
@@ -189,9 +189,10 @@ public class ManagerInnsFragment extends Fragment {
                                     inn.setConfirmed(innJson.get("isConfirmed").getAsBoolean());
                                     innList.add(inn);
                                     adminInnAdapter.notifyDataSetChanged();
-                                    rvInn.scrollToPosition(scrollPosition);
 //                                    adminInnAdapter.addItem(inn);
                                 }
+
+                                rvInn.scrollToPosition(scrollPosition);
                             }
                         }
                         else {
@@ -271,6 +272,13 @@ public class ManagerInnsFragment extends Fragment {
                 adminInnAdapter.notifyDataSetChanged();
                 renderData();
                 adminInnAdapter.notifyDataSetChanged();
+            }
+        });
+
+        fabAddInn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }
