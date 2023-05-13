@@ -132,7 +132,6 @@ public class ManagerInnsFragment extends Fragment {
                 Log.e("TAG", "" + linearLayoutManager1.findLastCompletelyVisibleItemPosition() + " : " +  innList.size());
                 if (linearLayoutManager1 != null
                         && linearLayoutManager1.findLastCompletelyVisibleItemPosition() == innList.size() - 1){
-                    Toast.makeText(context, "load more", Toast.LENGTH_LONG);
                     offset++;
                     renderData();
                 }

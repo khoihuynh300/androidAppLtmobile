@@ -241,7 +241,7 @@ public class ListInnActivity extends AppCompatActivity {
 
                             ImageInn imageInn = new ImageInn(mainImage.getInt("imageInnId"), mainImage.getString("image"));
 
-                            inns.add(new Inn(id, address, phoneNumber, describe, price, priceWater, priceELec, createdAt, updatedAt, proposed, 0, 0, imageInn, null));
+                            inns.add(new Inn(id, address, phoneNumber, describe, price, priceWater, priceELec, createdAt, updatedAt, proposed, 0, imageInn, null));
                             fragments.add(InnFragment.newInstance(getApplicationContext(), describe, String.valueOf(price), imageInn.getImage(), String.valueOf(priceWater), String.valueOf(priceELec)));
                         }
                     } catch (JSONException e) {
@@ -306,7 +306,7 @@ public class ListInnActivity extends AppCompatActivity {
 
                             ImageInn imageInn = new ImageInn(mainImage.getInt("imageInnId"), mainImage.getString("image"));
 
-                            inns.add(new Inn(id, address, phoneNumber, describe, price, priceWater, priceELec, createdAt, updatedAt, proposed, 0, 0, imageInn, null));
+                            inns.add(new Inn(id, address, phoneNumber, describe, price, priceWater, priceELec, createdAt, updatedAt, proposed, 0, imageInn, null));
                             fragments.add(InnFragment.newInstance(getApplicationContext(), describe, String.valueOf(price), imageInn.getImage(), String.valueOf(priceWater), String.valueOf(priceELec)));
                         }
                     } catch (JSONException e) {

@@ -106,7 +106,6 @@ public class ManagerAccountFragment extends Fragment {
 
                                     userList.add(user);
                                     adminAccountAdapter.notifyDataSetChanged();
-                                    Log.e("TAG", "onResponse: " + userList.size() );
                                 }
                             }
                             else{
