@@ -25,6 +25,7 @@ import com.example.ltmobile.Activity.LoginActivity;
 import com.example.ltmobile.Model.Inn;
 import com.example.ltmobile.R;
 import com.example.ltmobile.Utils.Constant;
+import com.example.ltmobile.Utils.MyClickListener;
 
 import java.io.Serializable;
 import java.util.List;
@@ -33,10 +34,17 @@ public class AdminInnAdapter extends RecyclerView.Adapter<AdminInnAdapter.MyView
     Context context;
     List<Inn> array;
 
+    private MyClickListener mListener;
 
     public AdminInnAdapter(Context context, List<Inn> array) {
         this.context = context;
         this.array = array;
+    }
+
+    public AdminInnAdapter(Context context, List<Inn> array, MyClickListener listener) {
+        this.context = context;
+        this.array = array;
+        mListener = listener;
     }
 
     @NonNull
@@ -68,15 +76,19 @@ public class AdminInnAdapter extends RecyclerView.Adapter<AdminInnAdapter.MyView
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (mListener != null) {
+                        mListener.onItemClick(getAdapterPosition());
+                    }
+                    else{
 //                    Inn inn = array.get(getAdapterPosition());
 //
 //                    Bundle bundle = new Bundle();
 //                    bundle.putSerializable(InnDetailAdminActivity.KEY_EXTRA_INN, inn);
-//
                     Intent intent = new Intent(context, InnDetailAdminActivity.class);
 //                    intent.putExtras(bundle);
                     intent.putExtra(InnDetailAdminActivity.KEY_EXTRA_INN, getAdapterPosition());
                     context.startActivity(intent);
+                    }
                 }
             });
         }
@@ -89,7 +101,7 @@ public class AdminInnAdapter extends RecyclerView.Adapter<AdminInnAdapter.MyView
         holder.itemView.setClipToOutline(true);
 
         Inn inn = array.get(position);
-        holder.txtAddress.setText(inn.getAddress() + " " + inn.getInnId());
+        holder.txtAddress.setText(inn.getAddress());
         holder.txtPhone.setText(inn.getPhoneNumber());
         holder.txtPrice.setText(String.valueOf(inn.getPrice()));
         if (inn.isConfirmed()) {
@@ -131,4 +143,7 @@ public class AdminInnAdapter extends RecyclerView.Adapter<AdminInnAdapter.MyView
         }
     }
 
+    public void setClickListener(MyClickListener mListener) {
+        this.mListener = mListener;
+    }
 }

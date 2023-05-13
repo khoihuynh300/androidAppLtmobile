@@ -2,14 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menuHome"
-        android:title="Home" />
+        android:title="Home"/>
     <item
         android:id="@+id/menuProfile"
-        android:title="Profile" />
+        android:title="Profile"/>
     <item android:id="@+id/menuQA"
         android:title="Hỏi đáp"/>
     <item android:id="@+id/menuInn"
         android:title="Tìm trọ"/>
+    <item android:id="@+id/menuChangePassword"
+        android:title="Đổi mật khẩu"/>
     <item android:id="@+id/menuLogout"
         android:title="Đăng Xuất"/>
 </menu>
