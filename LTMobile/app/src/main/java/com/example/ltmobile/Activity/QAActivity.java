@@ -1,22 +1,23 @@
-package com.example.ltmobile.Fragment;
+package com.example.ltmobile.Activity;
 
-import android.content.Context;
-import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.ltmobile.Adapter.InnAdapter;
+import com.example.ltmobile.Adapter.OnItemClickListener;
 import com.example.ltmobile.Adapter.QuestionAdapter;
+import com.example.ltmobile.Fragment.InnFragment;
+import com.example.ltmobile.Model.ImageInn;
+import com.example.ltmobile.Model.Inn;
 import com.example.ltmobile.Model.Question;
 import com.example.ltmobile.Model.User;
 import com.example.ltmobile.R;
@@ -24,6 +25,7 @@ import com.example.ltmobile.Utils.ServiceAPI;
 import com.example.ltmobile.Utils.SharedPrefManager;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,12 +41,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link QAFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class QAFragment extends Fragment {
+public class QAActivity extends AppCompatActivity {
 
     Context context;
     private RecyclerView rcvQuestion;
@@ -55,77 +52,41 @@ public class QAFragment extends Fragment {
     private QuestionAdapter questionAdapter;
     List<Question> questions = new ArrayList<>();
 
-    public QAFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment QAFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static QAFragment newInstance(String param1, String param2) {
-        QAFragment fragment = new QAFragment();
-        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-//        }
-    }
+        setContentView(R.layout.activity_qaactivity);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_q_a, container, false);
-        anhXa(view);
+        context = this;
+        anhXa();
         getData();
         addQuestions();
 
         questionAdapter = new QuestionAdapter(context, questions);
         rcvQuestion.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, RecyclerView.VERTICAL, false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         rcvQuestion.setLayoutManager(linearLayoutManager);
         rcvQuestion.setAdapter(questionAdapter);
         questionAdapter.notifyDataSetChanged();
-        return view;
+//        questionAdapter.setOnItemClickListener(new OnItemClickListener() {
+//            @Override
+//            public void onItemClick(Question item) {
+//                Toast.makeText(QAActivity.this, ""+item.getTitle(), Toast.LENGTH_LONG).show();
+//            }
+//        });
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        this.context = context;
-    }
+    public void anhXa() {
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        this.context = null;
+        rcvQuestion = (RecyclerView) findViewById(R.id.rcv_question);
+        headline = (TextView) findViewById(R.id.headline);
+        imageView = (ImageView) findViewById(R.id.imageView);
     }
 
     private void getData() {
         User user = SharedPrefManager.getInstance(context).getUser();
         headline.setText("Hi! " + user.getFullname());
         Glide.with(context).load(user.getAvatar()).into(imageView);
-    }
-
-    public void anhXa(View view) {
-
-        rcvQuestion = (RecyclerView) view.findViewById(R.id.rcv_question);
-        headline = (TextView) view.findViewById(R.id.headline);
-        imageView = (ImageView) view.findViewById(R.id.imageView);
     }
 
     private void addQuestions() {
@@ -173,7 +134,7 @@ public class QAFragment extends Fragment {
 //                            fragments.add(InnFragment.newInstance(getApplicationContext(), describe, String.valueOf(price), imageInn.getImage(), String.valueOf(priceWater), String.valueOf(priceELec)));
                         }
                     } catch (JSONException e) {
-                        Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                     }
 //                    innId = inns.get(0).getInnId();
 //                    des = inns.get(0).getDescribe();
@@ -185,13 +146,13 @@ public class QAFragment extends Fragment {
             @Override
             public void onFailure(Call<JsonArray> call, Throwable t) {
                 Log.e("TAG", t.toString());
-                Toast.makeText(context, "failed connect API", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "failed connect API", Toast.LENGTH_LONG).show();
             }
         });
     }
 
     @Override
-    public void onDestroy() {
+    protected void onDestroy() {
         super.onDestroy();
         if (questionAdapter != null) {
             questionAdapter.release();

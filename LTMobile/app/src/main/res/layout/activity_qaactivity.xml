@@ -9,7 +9,7 @@
     android:clipToOutline="true"
     android:elevation="80dp"
     android:orientation="vertical"
-    tools:context=".Fragment.QAFragment">
+    tools:context=".Activity.QAActivity">
 
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/navigationDrawer"

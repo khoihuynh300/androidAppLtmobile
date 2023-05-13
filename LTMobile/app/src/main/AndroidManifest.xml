@@ -39,6 +39,9 @@
 <!--            android:name=".Activity.ChangePasswordActivity"-->
 <!--            android:exported="false" />-->
         <activity
+            android:name=".Activity.AskAndAnswerActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.ForgetPasswordActivity"
             android:exported="false" />
 <!--        <activity-->
@@ -59,6 +62,9 @@
             android:exported="false" />
         <activity
             android:name=".Activity.SignupActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.QAActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.MainActivity"

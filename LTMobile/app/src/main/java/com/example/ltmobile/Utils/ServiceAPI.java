@@ -96,6 +96,9 @@ public interface ServiceAPI {
     @POST("commentInn/add")
     Call<JsonObject> createCommentOfInn(@Body CommentInn commentInn);
 
+    @GET("getAllQuestion")
+    Call<JsonArray> getAllQuestions();
+
     @Multipart
     @POST("inns/add")
     Call<JsonObject> recommendInn(@Part("size") RequestBody size,
