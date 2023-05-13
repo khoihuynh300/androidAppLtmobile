@@ -26,13 +26,13 @@ import com.example.ltmobile.Utils.ImagePicker;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.QuestionviewHolder>{
+public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.QuestionviewHolder> {
 
     private Context mContext;
     public static final String KEY_QuestionID = "QuestionID";
 
     private LayoutInflater layout;
-//    private OnItemClickListener onItemClickListener;
+    //    private OnItemClickListener onItemClickListener;
     private List<Question> mListQuestion;
 
     public QuestionAdapter(Context mContext, List<Question> mListQuestion) {
@@ -40,7 +40,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
         this.mListQuestion = mListQuestion;
     }
 
-    public void setData(List<Question> list){
+    public void setData(List<Question> list) {
         this.mListQuestion = list;
         notifyDataSetChanged();
     }
@@ -55,7 +55,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
     @Override
     public void onBindViewHolder(@NonNull QuestionviewHolder holder, int position) {
         final Question question = mListQuestion.get(position);
-        if(question == null){
+        if (question == null) {
             return;
         }
         holder.tvName.setText(question.getAskedFullname());
@@ -71,27 +71,9 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
                 onClickGoToMessage(question);
             }
         });
-//        View.OnClickListener listener = new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                onItemClickListener.onItemClick(question);
-//            }
-//        };
-//
-//        holder.tvName.setOnClickListener(listener);
-//        holder.tvDate.setOnClickListener(listener);
-//        holder.tvTitle.setOnClickListener(listener);
-//        holder.imgUser.setOnClickListener(listener);
     }
 
-//    public OnItemClickListener getOnItemClickListener() {
-//        return onItemClickListener;
-//    }
-//
-//    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-//        this.onItemClickListener = onItemClickListener;
-//    }
-    private void onClickGoToMessage(Question question){
+    private void onClickGoToMessage(Question question) {
         Intent intent = new Intent(mContext, AskAndAnswerActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("object_question", question);
@@ -105,10 +87,10 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
 
     @Override
     public int getItemCount() {
-        return mListQuestion == null? 0 :mListQuestion.size();
+        return mListQuestion == null ? 0 : mListQuestion.size();
     }
 
-    public class QuestionviewHolder extends RecyclerView.ViewHolder{
+    public class QuestionviewHolder extends RecyclerView.ViewHolder {
 
         protected ImageView imgUser;
         protected TextView tvName, tvDate, tvTitle, tvQuestionId;

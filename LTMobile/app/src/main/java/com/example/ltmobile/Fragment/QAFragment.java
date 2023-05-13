@@ -50,7 +50,7 @@ public class QAFragment extends Fragment {
     private RecyclerView rcvQuestion;
     private ImageView imageView;
     private TextInputEditText etKeyword;
-    private TextView headline;
+    private TextView headline, find, add;
     private ImageView ivSearch;
     private QuestionAdapter questionAdapter;
     List<Question> questions = new ArrayList<>();
@@ -100,7 +100,36 @@ public class QAFragment extends Fragment {
         rcvQuestion.setLayoutManager(linearLayoutManager);
         rcvQuestion.setAdapter(questionAdapter);
         questionAdapter.notifyDataSetChanged();
+
+        String keyword = etKeyword.getText().toString();
+
+        find.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!checkEmpty(keyword)){
+
+                }
+            }
+        });
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!checkEmpty(keyword)){
+
+                }
+            }
+        });
+
         return view;
+
+    }
+
+    public boolean checkEmpty(String keyword){
+        if(keyword.isEmpty()){
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -126,6 +155,9 @@ public class QAFragment extends Fragment {
         rcvQuestion = (RecyclerView) view.findViewById(R.id.rcv_question);
         headline = (TextView) view.findViewById(R.id.headline);
         imageView = (ImageView) view.findViewById(R.id.imageView);
+        etKeyword = (TextInputEditText) view.findViewById(R.id.textInputEditText);
+        find = (TextView) view.findViewById(R.id.txtcontinue);
+        add = (TextView) view.findViewById(R.id.txtAdd);
     }
 
     private void addQuestions() {
@@ -145,9 +177,11 @@ public class QAFragment extends Fragment {
                             JSONObject askedUser = jsonObject.getJSONObject("askedId");
                             int answererId = 0;
                             String avatarAnswered = "";
+                            String answeredFullname = "";
                             if (!jsonObject.isNull("answererId")) {
                                 JSONObject answererUser = jsonObject.getJSONObject("answererId");
                                 answererId = answererUser.getInt("userId");
+                                answeredFullname = askedUser.getString("fullname");
                                 String roleAnswered = answererUser.getString("role");
                                 avatarAnswered = answererUser.getString("avatar");
                             }
@@ -165,20 +199,15 @@ public class QAFragment extends Fragment {
                                 Log.e("TAG", e.toString());
                             }
 
-//                            ImageInn imageInn = new ImageInn(mainImage.getInt("imageInnId"), mainImage.getString("image"));
-
-                            questions.add(new Question(id, createdAt, updatedAt, title, avatarAsked, askedId, answererId, askedFullname));
+                            questions.add(new Question(id, createdAt, updatedAt, title, avatarAsked, askedId, answererId, askedFullname, answeredFullname));
 
                             questionAdapter.notifyDataSetChanged();
-//                            fragments.add(InnFragment.newInstance(getApplicationContext(), describe, String.valueOf(price), imageInn.getImage(), String.valueOf(priceWater), String.valueOf(priceELec)));
+
                         }
                     } catch (JSONException e) {
                         Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();
                     }
-//                    innId = inns.get(0).getInnId();
-//                    des = inns.get(0).getDescribe();
-//                    innAdapter = new InnAdapter(ListInnActivity.this, fragments);
-//                    viewListInn.setAdapter(innAdapter);
+
                 }
             }
 

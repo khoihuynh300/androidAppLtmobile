@@ -2,6 +2,7 @@ package com.example.ltmobile.Utils;
 
 import com.example.ltmobile.Model.CommentInn;
 import com.example.ltmobile.Model.Inn;
+import com.example.ltmobile.Model.Messages;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -138,4 +139,13 @@ public interface ServiceAPI {
     @FormUrlEncoded
     @PUT("admin/users/lock")
     Call<JsonObject> lockUser(@Field("id") int userId);
+
+    @FormUrlEncoded
+    @POST("addMessage")
+    Call<JsonObject> addMessage(@Field("message") String message,
+                                @Field("userId") int userId,
+                                @Field("questionId") int questionId);
+
+    @GET("getAllMessageByQuestionId/{id}")
+    Call<JsonArray> loadMessages(@Path("id") int questionId);
 }

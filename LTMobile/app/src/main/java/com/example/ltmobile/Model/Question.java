@@ -14,8 +14,9 @@ public class Question implements Serializable {
     private int askedId;
     private int answererId;
     private String askedFullname;
+    private String answeredFullname;
 
-    public Question(int questionId, Date createdAt, Date updatedAt, String title, String avatar, int askedId, int answererId, String askedFullname) {
+    public Question(int questionId, Date createdAt, Date updatedAt, String title, String avatar, int askedId, int answererId, String askedFullname, String answeredFullname) {
         this.questionId = questionId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -24,6 +25,14 @@ public class Question implements Serializable {
         this.askedId = askedId;
         this.answererId = answererId;
         this.askedFullname = askedFullname;
+        this.answeredFullname = answeredFullname;
+    }
+    public String getAnsweredFullname() {
+        return answeredFullname;
+    }
+
+    public void setAnsweredFullname(String answeredFullname) {
+        this.answeredFullname = answeredFullname;
     }
 
     public String getAskedFullname() {

@@ -106,10 +106,12 @@ public class QAActivity extends AppCompatActivity {
                             JSONObject askedUser = jsonObject.getJSONObject("askedId");
                             int answererId = 0;
                             String avatarAnswered = "";
+                            String answeredFullname = "";
                             if (!jsonObject.isNull("answererId")) {
                                 JSONObject answererUser = jsonObject.getJSONObject("answererId");
                                 answererId = answererUser.getInt("userId");
                                 String roleAnswered = answererUser.getString("role");
+                                answeredFullname = askedUser.getString("fullname");
                                 avatarAnswered = answererUser.getString("avatar");
                             }
                             String avatarAsked = "";
@@ -126,20 +128,15 @@ public class QAActivity extends AppCompatActivity {
                                 Log.e("TAG", e.toString());
                             }
 
-//                            ImageInn imageInn = new ImageInn(mainImage.getInt("imageInnId"), mainImage.getString("image"));
 
-                            questions.add(new Question(id, createdAt, updatedAt, title, avatarAsked, askedId, answererId, askedFullname));
+                            questions.add(new Question(id, createdAt, updatedAt, title, avatarAsked, askedId, answererId, askedFullname, answeredFullname));
 
                             questionAdapter.notifyDataSetChanged();
-//                            fragments.add(InnFragment.newInstance(getApplicationContext(), describe, String.valueOf(price), imageInn.getImage(), String.valueOf(priceWater), String.valueOf(priceELec)));
+
                         }
                     } catch (JSONException e) {
                         Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                     }
-//                    innId = inns.get(0).getInnId();
-//                    des = inns.get(0).getDescribe();
-//                    innAdapter = new InnAdapter(ListInnActivity.this, fragments);
-//                    viewListInn.setAdapter(innAdapter);
                 }
             }
 

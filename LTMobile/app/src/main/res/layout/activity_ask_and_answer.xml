@@ -1,17 +1,200 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ECE5DD"
     tools:context=".Activity.AskAndAnswerActivity">
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/layout_header"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="115dp"
-        tools:layout_editor_absoluteY="116dp" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/top_app_bar"
+            android:layout_width="320dp"
+            android:layout_height="64dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/top_app_bar_inside"
+                android:layout_width="320dp"
+                android:layout_height="36dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="18dp"
+                android:layoutDirection="rtl"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:id="@+id/notification"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:clipToOutline="true">
+
+                    <View
+                        android:id="@+id/ellipse_342"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/ellipse_342" />
+
+                    <FrameLayout
+                        android:id="@+id/group_2930"
+                        android:layout_width="15.24dp"
+                        android:layout_height="17.93dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="10.74dp"
+                        android:layout_marginTop="8.8dp"
+                        android:background="#00000000">
+
+                        <ImageView
+                            android:id="@+id/ellipse_340"
+                            android:layout_width="6dp"
+                            android:layout_height="6dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_gravity="right"
+                            android:background="@drawable/ellipse_340" />
+
+                        <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+                            android:id="@+id/frame"
+                            android:layout_width="17.24dp"
+                            android:layout_height="18.73dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentTop="true"
+                            android:background="@drawable/baseline_notifications_none_24"
+                            android:clipToOutline="true" />
+
+                    </FrameLayout>
+
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/frame_155"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:layoutDirection="ltr"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:id="@+id/avatar"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/imageView"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:src="@mipmap/ic_launcher" />
+
+                        <View
+                            android:id="@+id/ellipse_343"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:background="@drawable/ellipse_343" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/headline"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="30dp"
+                        android:gravity="top"
+                        android:text="Xin chào, User"
+                        android:textAppearance="@style/headline"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:gravity="top"
+            android:text="Tiêu đề câu hỏi"
+            android:textAppearance="@style/headline"
+            android:textColor="#0C134F"
+            android:textSize="22dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcv_askedUser"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout_header"
+        android:layout_above="@id/getMessage"
+        android:layout_marginTop="15dp"
+        android:padding="5dp"></androidx.recyclerview.widget.RecyclerView>
+
+    <EditText
+        android:id="@+id/getMessage"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="55dp"
+        android:layout_marginBottom="5dp"
+        android:hint="Nhập tin nhắn"
+        android:paddingLeft="20dp"
+        android:paddingRight="10dp"
+        android:textAlignment="textStart"
+        android:textColor="@color/black"
+        android:textColorHint="#A8A7A7"
+        android:textSize="18dp"></EditText>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:id="@+id/carviewofsendmessage"
+        android:layout_toRightOf="@id/getMessage"
+        android:layout_marginLeft="-50dp"
+        android:layout_marginBottom="5dp"
+        android:backgroundTint="#0D8F80"
+        android:layout_alignParentBottom="true"
+        app:cardCornerRadius="45dp">
+
+
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_baseline_arrow_forward_24"
+            android:padding="5dp"
+            android:backgroundTint="@android:color/transparent"
+            android:background="@android:color/transparent"
+            android:id="@+id/imageviewsendmessage"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            app:tint="@color/white">
+
+        </ImageButton>
+
+
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>
