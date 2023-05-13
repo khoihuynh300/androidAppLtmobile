@@ -128,4 +128,14 @@ public interface ServiceAPI {
 
     @DELETE("admin/inns/delete/{innId}")
     Call<JsonObject> deleteInn(@Path("innId") int innId);
+
+    @GET("admin/users")
+    Call<JsonObject> getUserFilter(@Query("offset") int offset,
+                                   @Query("ascending") boolean ascending,
+                                   @Query("isActive") boolean isActive,
+                                   @Query("name") String name);
+
+    @FormUrlEncoded
+    @PUT("admin/users/lock")
+    Call<JsonObject> lockUser(@Field("id") int userId);
 }
