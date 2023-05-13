@@ -30,6 +30,9 @@
             android:name=".Activity.AdminActivity"
             android:exported="false" />
         <activity
+            android:name=".Activity.ListInnActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.ChangePasswordActivity"
             android:exported="false" />
         <activity
@@ -49,7 +52,7 @@
             android:exported="false"
             android:parentActivityName=".Activity.ListInnActivity" />
         <activity
-            android:name=".Activity.ListInnActivity"
+            android:name=".Activity.RecommenInnActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.SignupActivity"

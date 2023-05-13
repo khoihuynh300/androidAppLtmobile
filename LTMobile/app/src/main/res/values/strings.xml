@@ -3,9 +3,9 @@
     <string name="input_null">Vui lòng nhập ô này</string>
     <string name="password_not_equal_error">Mật khẩu nhập lại không chính xác</string>
     <string name="headline">Hello, Sourany!</string>
-    <string name="location">Location</string>
-    <string name="price">Price</string>
-    <string name="person">2 Person</string>
+    <string name="location">Địa điểm</string>
+    <string name="price">Giá</string>
+    <string name="person">2 Người</string>
     <string name="txtcontinue">Search</string>
     <string name="inn_price">9.999.999 d</string>
     <string name="content_inn">Thailand, one of Asia"'"s most popular travel destinations, has been badly git a pandemic-induced tourim slump, with about 200,00 arrivals last year, compared to nearly 40 million in 2019.</string>

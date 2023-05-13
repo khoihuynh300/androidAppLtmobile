@@ -14,9 +14,9 @@ public class Inn implements Serializable {
     private Date updatedAt;
     private String proposed;
     private int proposedId;
+    private int size;
     private ImageInn mainImage;
     private List<ImageInn> images;
-
     private boolean isConfirmed;
     private long confirmedById;
 
@@ -34,6 +34,14 @@ public class Inn implements Serializable {
         this.proposedId = proposedId;
         this.mainImage = mainImage;
         this.images = images;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
     }
 
     public Double getPriceWater() {

@@ -51,7 +51,7 @@ public class ListInnActivity extends AppCompatActivity {
 
     private String[] location = {"Quan 1", "Quan 2", "Quan 3", "Quan 4", "Quan 5", "Quan 6", "Quan 7", "Quan 8", "Quan 9"};
     private String[] price = {"1M - 1M5", "1M5 - 2M", "2M - 3M", "Tren 3M"};
-    private Object[] searchText = new Object[]{"address", 0, 0};
+    private Object[] searchText = new Object[]{"address", 0, 0, 2};
     private int person = 2;
     private int innId;
     private String des;
@@ -117,6 +117,7 @@ public class ListInnActivity extends AppCompatActivity {
                 if(person > 1)
                 {
                     person--;
+                    searchText[3] = person;
                     txtpersion.setText(String.valueOf(person) + " Person");
                 }
             }
@@ -128,6 +129,7 @@ public class ListInnActivity extends AppCompatActivity {
                 if(person < 5)
                 {
                     person++;
+                    searchText[3] = person;
                     txtpersion.setText(String.valueOf(person) + " Person");
                 }
             }
@@ -208,7 +210,7 @@ public class ListInnActivity extends AppCompatActivity {
     }
 
     private void addInn() {
-        ServiceAPI.serviceapi.getAllInns().enqueue(new Callback<JsonArray>() {
+        ServiceAPI.serviceapi.getAllInnsConfirmed().enqueue(new Callback<JsonArray>() {
             @Override
             public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
                 if (response.isSuccessful()) {
@@ -239,7 +241,7 @@ public class ListInnActivity extends AppCompatActivity {
 
                             ImageInn imageInn = new ImageInn(mainImage.getInt("imageInnId"), mainImage.getString("image"));
 
-                            inns.add(new Inn(id, address, phoneNumber, describe, price, priceWater, priceELec, createdAt, updatedAt, proposed, 0, imageInn, null));
+                            inns.add(new Inn(id, address, phoneNumber, describe, price, priceWater, priceELec, createdAt, updatedAt, proposed, 0, 0, imageInn, null));
                             fragments.add(InnFragment.newInstance(getApplicationContext(), describe, String.valueOf(price), imageInn.getImage(), String.valueOf(priceWater), String.valueOf(priceELec)));
                         }
                     } catch (JSONException e) {
@@ -271,7 +273,7 @@ public class ListInnActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Vui long chon dia diem va muc gia", Toast.LENGTH_SHORT).show();
             return;
         }
-        ServiceAPI.serviceapi.searchInns(searchText[0].toString().trim(), Double.valueOf(searchText[1].toString()), Double.valueOf(searchText[2].toString())).enqueue(new Callback<JsonArray>() {
+        ServiceAPI.serviceapi.searchInns(searchText[0].toString().trim(), Double.valueOf(searchText[1].toString()), Double.valueOf(searchText[2].toString()), Integer.valueOf(searchText[3].toString())).enqueue(new Callback<JsonArray>() {
             @Override
             public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
                 if (response.isSuccessful()) {
@@ -304,7 +306,7 @@ public class ListInnActivity extends AppCompatActivity {
 
                             ImageInn imageInn = new ImageInn(mainImage.getInt("imageInnId"), mainImage.getString("image"));
 
-                            inns.add(new Inn(id, address, phoneNumber, describe, price, priceWater, priceELec, createdAt, updatedAt, proposed, 0, imageInn, null));
+                            inns.add(new Inn(id, address, phoneNumber, describe, price, priceWater, priceELec, createdAt, updatedAt, proposed, 0, 0, imageInn, null));
                             fragments.add(InnFragment.newInstance(getApplicationContext(), describe, String.valueOf(price), imageInn.getImage(), String.valueOf(priceWater), String.valueOf(priceELec)));
                         }
                     } catch (JSONException e) {
