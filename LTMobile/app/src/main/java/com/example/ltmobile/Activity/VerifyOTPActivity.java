@@ -61,6 +61,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
                                     if(!responseJson.getBoolean("error")){
 
                                         // trở về đăng nhập
+                                        startActivity(new Intent(context, LoginActivity.class));
                                     }
 
 

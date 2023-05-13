@@ -129,7 +129,6 @@ public class ManagerInnsFragment extends Fragment {
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 LinearLayoutManager linearLayoutManager1 = (LinearLayoutManager) recyclerView.getLayoutManager();
-                Log.e("TAG", "" + linearLayoutManager1.findLastCompletelyVisibleItemPosition() + " : " +  innList.size());
                 if (linearLayoutManager1 != null
                         && linearLayoutManager1.findLastCompletelyVisibleItemPosition() == innList.size() - 1){
                     offset++;

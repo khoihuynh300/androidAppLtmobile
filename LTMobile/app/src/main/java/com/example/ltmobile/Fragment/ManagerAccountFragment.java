@@ -1,6 +1,7 @@
 package com.example.ltmobile.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,13 +13,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.ltmobile.Activity.AdminAddUserActivity;
 import com.example.ltmobile.Adapter.AdminAccountAdapter;
 import com.example.ltmobile.Model.User;
 import com.example.ltmobile.R;
 import com.example.ltmobile.Utils.ItemMarginDecoration;
 import com.example.ltmobile.Utils.ServiceAPI;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -35,19 +45,28 @@ public class ManagerAccountFragment extends Fragment {
     // final string for dropdown list
     private final String STRING_ASC = "Tăng dần";
     private final String STRING_DESC = "Giảm dần";
-    private final String STRING_ACTIVE = "Đã xóa";
-    private final String STRING_NOTACTIVE = "Chưa xóa";
+    private final String STRING_ACTIVE = "Hoạt động";
+    private final String STRING_NOTACTIVE = "Khóa";
 
     // recycle view
-    List<User> userList;
+    public static List<User> userList;
     AdminAccountAdapter adminAccountAdapter;
     RecyclerView rvUser;
+
+    //View
+    ImageButton btnShowFilter;
+    LinearLayout layoutFilter;
+    Button btnFilter;
+    FloatingActionButton fabAddUser;
+    Spinner spinnerArrange, spinnerIsActive;
+    EditText inputName;
 
     //filter
     int offset = 0;
     boolean ascending = true;
     boolean isActive = true;
     String name = "";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -57,11 +76,19 @@ public class ManagerAccountFragment extends Fragment {
         connectView(view);
         setUpRecycleView();
         renderData();
-
+        setupSpinnerData();
+        setupEvent();
         return view;
     }
     private void connectView(View view){
         rvUser = view.findViewById(R.id.rv_accounts);
+        btnShowFilter = view.findViewById(R.id.btnShowFilter);
+        layoutFilter = view.findViewById(R.id.layoutFilter);
+        btnFilter = view.findViewById(R.id.btnFilter);
+        fabAddUser = view.findViewById(R.id.fabAddAccount);
+        spinnerArrange = view.findViewById(R.id.spinnerArrange);
+        spinnerIsActive = view.findViewById(R.id.spinnerIsActive);
+        inputName = view.findViewById(R.id.inputFullname);
     }
 
     private void setUpRecycleView(){
@@ -76,16 +103,25 @@ public class ManagerAccountFragment extends Fragment {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
+                layoutFilter.setVisibility(View.GONE);
             }
 
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+                LinearLayoutManager linearLayoutManager1 = (LinearLayoutManager) recyclerView.getLayoutManager();
+                if (linearLayoutManager1 != null
+                        && linearLayoutManager1.findLastCompletelyVisibleItemPosition() == userList.size() - 1
+                        && userList.size() != 0){
+                    offset++;
+                    renderData();
+                }
             }
         });
     }
 
     private void renderData(){
+
         ServiceAPI.serviceapi.getUserFilter(offset, ascending, isActive, name)
                 .enqueue(new Callback<JsonObject>() {
                     @Override
@@ -136,5 +172,65 @@ public class ManagerAccountFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         this.context = null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        adminAccountAdapter.notifyDataSetChanged();
+    }
+
+    private void setupEvent(){
+        btnShowFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(layoutFilter.getVisibility() == View.GONE){
+                    layoutFilter.setVisibility(View.VISIBLE);
+                }
+                else {
+                    layoutFilter.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        btnFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                offset = 0;
+                ascending = spinnerArrange.getSelectedItem().toString().equals(STRING_ASC);
+                isActive = spinnerIsActive.getSelectedItem().toString().equals(STRING_ACTIVE);
+                name = inputName.getText().toString();
+
+                userList.clear();
+                adminAccountAdapter.notifyDataSetChanged();
+                renderData();
+                adminAccountAdapter.notifyDataSetChanged();
+            }
+        });
+
+        fabAddUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, AdminAddUserActivity.class));
+            }
+        });
+    }
+
+    private void setupSpinnerData(){
+        List<String> arrangeList = new ArrayList<String>();
+        arrangeList.add(STRING_ASC);
+        arrangeList.add(STRING_DESC);
+
+        List<String> activeList = new ArrayList<String>();
+        activeList.add(STRING_ACTIVE);
+        activeList.add(STRING_NOTACTIVE);
+
+        ArrayAdapter<String> dataAdapterArrange = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, arrangeList);
+        dataAdapterArrange.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerArrange.setAdapter(dataAdapterArrange);
+
+        ArrayAdapter<String> dataAdapterIsDeleted = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, activeList);
+        dataAdapterIsDeleted.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerIsActive.setAdapter(dataAdapterIsDeleted);
     }
 }
