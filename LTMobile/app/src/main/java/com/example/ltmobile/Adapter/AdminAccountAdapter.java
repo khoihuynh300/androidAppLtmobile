@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.ltmobile.Activity.AdminUserDetailActivity;
+import com.example.ltmobile.Activity.UserDetailActivity;
 import com.example.ltmobile.Model.User;
 import com.example.ltmobile.R;
 
@@ -55,6 +56,11 @@ public class AdminAccountAdapter extends RecyclerView.Adapter<AdminAccountAdapte
                     Intent intent = new Intent(context, AdminUserDetailActivity.class);
                     intent.putExtra(AdminUserDetailActivity.KEY_EXTRA_USER, getAdapterPosition());
                     context.startActivity(intent);
+//                    int userID = 2;
+//
+//                    Intent intent = new Intent(context, UserDetailActivity.class);
+//                    intent.putExtra(UserDetailActivity.KEY_EXTRA_USER, userID);
+//                    context.startActivity(intent);
                 }
             });
         }

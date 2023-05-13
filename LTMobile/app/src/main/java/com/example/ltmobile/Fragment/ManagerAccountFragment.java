@@ -1,6 +1,7 @@
 package com.example.ltmobile.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.ltmobile.Activity.AdminAddUserActivity;
 import com.example.ltmobile.Adapter.AdminAccountAdapter;
 import com.example.ltmobile.Model.User;
 import com.example.ltmobile.R;
@@ -203,6 +205,13 @@ public class ManagerAccountFragment extends Fragment {
                 adminAccountAdapter.notifyDataSetChanged();
                 renderData();
                 adminAccountAdapter.notifyDataSetChanged();
+            }
+        });
+
+        fabAddUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, AdminAddUserActivity.class));
             }
         });
     }
