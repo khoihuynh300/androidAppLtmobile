@@ -41,7 +41,7 @@ public class AdminUserDetailActivity extends AppCompatActivity {
 
     //View
     ImageView imvAvt;
-    TextView tvEmail, tvFullName, tvGender;
+    TextView tvEmail, tvFullName, tvGender, tvRole;
     Button btnLock;
 
     private TabLayout mTablayout;
@@ -67,6 +67,7 @@ public class AdminUserDetailActivity extends AppCompatActivity {
         btnLock = findViewById(R.id.btnLock);
         mTablayout = findViewById(R.id.tabLayout);
         mViewPager = findViewById(R.id.viewPager);
+        tvRole = findViewById(R.id.tvRole);
     }
     private void setViewPager(){
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(
@@ -112,6 +113,7 @@ public class AdminUserDetailActivity extends AppCompatActivity {
         tvEmail.setText(user.getEmail());
         tvFullName.setText(user.getFullname());
         tvGender.setText(user.getGender());
+        tvRole.setText(user.getRole());
 
         Glide.with(context).load(user.getAvatar()).into(imvAvt);
     }

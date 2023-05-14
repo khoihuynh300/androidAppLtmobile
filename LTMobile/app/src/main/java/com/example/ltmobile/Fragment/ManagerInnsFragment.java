@@ -185,12 +185,13 @@ public class ManagerInnsFragment extends Fragment {
                                             ImageInnList
                                             );
                                     inn.setConfirmed(innJson.get("isConfirmed").getAsBoolean());
+                                    inn.setSize(innJson.get("size").getAsInt());
                                     innList.add(inn);
                                     adminInnAdapter.notifyDataSetChanged();
 //                                    adminInnAdapter.addItem(inn);
                                 }
 
-                                rvInn.scrollToPosition(scrollPosition);
+//                                rvInn.scrollToPosition(scrollPosition);
                             }
                         }
                         else {
@@ -230,7 +231,7 @@ public class ManagerInnsFragment extends Fragment {
 //        renderData();
 
         // đặt lại vị trí cũ
-        rvInn.scrollToPosition(scrollPosition);
+//        rvInn.scrollToPosition(scrollPosition);
     }
 
     private void setupEvent(){

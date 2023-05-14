@@ -35,10 +35,7 @@ public class InnDetailAdminActivity extends AppCompatActivity {
     Context context = this;
     public static final String KEY_EXTRA_INN = "KEY_EXTRA_INN";
 
-    private TextView txtAddress;
-    private TextView txtPhone;
-    private TextView txtPrice;
-    private TextView txtDesc;
+    private TextView txtAddress,txtPriceElec ,txtPriceWater ,txtSize, txtPhone, txtPrice, txtDesc;
     private Button btnConfirm;
     private Button btnDelete;
 
@@ -66,6 +63,9 @@ public class InnDetailAdminActivity extends AppCompatActivity {
             txtPhone.setText(innObject.getPhoneNumber());
             txtPrice.setText(String.valueOf(innObject.getPrice()));
             txtDesc.setText(innObject.getDescribe());
+            txtPriceElec.setText(innObject.getPriceELec().toString());
+            txtPriceWater.setText(innObject.getPriceWater().toString());
+            txtSize.setText(String.valueOf(innObject.getSize()));
             imageList = innObject.getImages();
             sliderAdapter = new SliderAdapter(getApplicationContext(), imageList);
 //            sliderAdapter = new SliderAdapter(getApplicationContext(), imageList);
@@ -89,6 +89,9 @@ public class InnDetailAdminActivity extends AppCompatActivity {
         sliderView = findViewById(R.id.imageSlider);
         btnConfirm = findViewById(R.id.btnConfirm);
         btnDelete = findViewById(R.id.btnDelete);
+        txtPriceElec = findViewById(R.id.txtPriceElec);
+        txtPriceWater = findViewById(R.id.txtPriceWater);
+        txtSize = findViewById(R.id.txtSize);
     }
     private void setEvent(){
         btnConfirm.setOnClickListener(new View.OnClickListener() {
