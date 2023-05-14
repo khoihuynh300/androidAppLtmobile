@@ -221,7 +221,7 @@ public class ManagerQAFragment extends Fragment {
                             } catch (ParseException e) {
                                 Log.e("TAG", e.toString());
                             }
-
+                            Log.e("TAG", "onResponse: " + avatarAsked );
                             questionList.add(new Question(id, createdAt, updatedAt, title, avatarAsked, askedId, answererId, askedFullname, answeredFullname));
 
                             questionAdapter.notifyDataSetChanged();

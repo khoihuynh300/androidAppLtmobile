@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    app:startDestination="@id/menuHome">
+    app:startDestination="@id/menuQA">
 
-    <fragment
-        android:id="@+id/menuHome"
-        android:name="com.example.ltmobile.Fragment.HomePageFragment"
-        android:label="Home"
-        tools:layout="@layout/fragment_home_page" />
+<!--    <fragment-->
+<!--        android:id="@+id/menuHome"-->
+<!--        android:name="com.example.ltmobile.Fragment.HomePageFragment"-->
+<!--        android:label="Home"-->
+<!--        tools:layout="@layout/fragment_home_page" />-->
     <fragment
         android:id="@+id/menuProfile"
         android:name="com.example.ltmobile.Fragment.ProfileFragment"
@@ -20,11 +20,11 @@
         android:name="com.example.ltmobile.Fragment.QAFragment"
         android:label="Hỏi đáp"
         tools:layout="@layout/fragment_q_a" />
-    <fragment
-        android:id="@+id/menuInn"
-        android:name="com.example.ltmobile.Fragment.InnPageFragment"
-        android:label="Tìm trọ"
-        tools:layout="@layout/fragment_inn_page" />
+<!--    <fragment-->
+<!--        android:id="@+id/menuInn"-->
+<!--        android:name="com.example.ltmobile.Fragment.InnPageFragment"-->
+<!--        android:label="Tìm trọ"-->
+<!--        tools:layout="@layout/fragment_inn_page" />-->
     <fragment
         android:id="@+id/menuChangePassword"
         android:name="com.example.ltmobile.Fragment.ChangePasswordFragment"

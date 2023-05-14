@@ -34,6 +34,19 @@ public class Question implements Serializable {
         this.answeredRole = answeredRole;
     }
 
+    public Question(int questionId, Date createdAt, Date updatedAt, String title, String avatar, int askedId, int answererId,String askedFullname,String answeredFullname) {
+        this.questionId = questionId;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.title = title;
+        this.avatar = avatar;
+        this.askedId = askedId;
+        this.answererId = answererId;
+        this.askedFullname = askedFullname;
+        this.answeredFullname = answeredFullname;
+    }
+
+
     public String getAskedRole() {
         return askedRole;
     }

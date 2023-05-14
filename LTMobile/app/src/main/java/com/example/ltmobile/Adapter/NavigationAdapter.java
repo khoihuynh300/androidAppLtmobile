@@ -24,11 +24,12 @@ public class NavigationAdapter implements NavigationView.OnNavigationItemSelecte
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         User user = SharedPrefManager.getInstance(context).getUser();
+        Intent intent;
         switch (item.getItemId()) {
-            case R.id.menuHome:
-                Intent intent = new Intent(context, MainActivity.class);
-                context.startActivity(intent);
-                return true;
+//            case R.id.menuHome:
+//                intent = new Intent(context, MainActivity.class);
+//                context.startActivity(intent);
+//                return true;
             case R.id.menuProfile:
                 intent = new Intent(context, ProfileActivity.class);
                 context.startActivity(intent);

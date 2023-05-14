@@ -47,7 +47,7 @@ public class CommentInnAdapter extends RecyclerView.Adapter<CommentInnAdapter.Co
         holder.comment_content.setText(cmt.getContent());
 
         Glide.with(context)
-                .load(Constant.ROOT_URL + "upload/" + cmt.getAvatar())
+                .load(cmt.getAvatar())
                 .into(holder.imageView);
     }
 
