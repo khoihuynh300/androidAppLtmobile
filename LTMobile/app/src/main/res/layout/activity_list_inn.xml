@@ -42,7 +42,7 @@
                     android:layout_marginTop="18dp">
 
                     <RelativeLayout
-                        android:id="@+id/notificatio"
+                        android:id="@+id/recommendInn"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:clipToOutline="true">
@@ -85,7 +85,7 @@
                                 android:layout_height="18.73dp"
                                 android:layout_alignParentLeft="true"
                                 android:layout_alignParentTop="true"
-                                android:background="@drawable/baseline_notifications_none_24"
+                                android:background="@drawable/baseline_library_add_24"
                                 android:clipToOutline="true"/>
 
                         </FrameLayout>
@@ -127,6 +127,7 @@
                             android:layout_gravity="center"
                             android:layout_marginStart="60dp"
                             android:text="@string/headline"
+                            android:lines="1"
                             android:textSize="18dp"
                             android:textStyle="bold"
                             android:textAppearance="@style/headline"
@@ -182,7 +183,7 @@
                         <LinearLayout
                             android:id="@+id/frame_146"
                             android:layout_width="215dp"
-                            android:layout_height="24dp"
+                            android:layout_height="30dp"
                             android:orientation="horizontal"
                             android:layout_gravity="center"
                             android:clipToOutline="true"
@@ -193,6 +194,7 @@
                                 android:id="@+id/icons_searc"
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
+                                android:layout_gravity="center_vertical"
                                 android:layout_marginEnd="10dp">
 
                                 <View
@@ -211,7 +213,7 @@
                             <TextView
                                 android:id="@+id/txtlocation"
                                 android:layout_width="wrap_content"
-                                android:layout_height="20dp"
+                                android:layout_height="30dp"
                                 android:text="@string/location"
                                 android:textAppearance="@style/location"
                                 android:lineSpacingExtra="-4sp"
@@ -306,7 +308,7 @@
                         <LinearLayout
                             android:id="@+id/frame_147"
                             android:layout_width="215dp"
-                            android:layout_height="24dp"
+                            android:layout_height="30dp"
                             android:orientation="horizontal"
                             android:layout_gravity="center"
                             android:layout_marginStart="20dp">
@@ -316,6 +318,7 @@
                                 android:id="@+id/icons_price"
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
+                                android:layout_gravity="center_vertical"
                                 android:layout_marginEnd="10dp">
 
                                 <View
@@ -334,7 +337,7 @@
                             <TextView
                                 android:id="@+id/txtprice"
                                 android:layout_width="wrap_content"
-                                android:layout_height="20dp"
+                                android:layout_height="30dp"
                                 android:text="@string/price"
                                 android:textAppearance="@style/location"
                                 android:lineSpacingExtra="-4sp"
@@ -358,7 +361,7 @@
                     <LinearLayout
                         android:id="@+id/frame_148"
                         android:layout_width="160dp"
-                        android:layout_height="24dp"
+                        android:layout_height="30dp"
                         android:orientation="horizontal"
                         android:layout_gravity="center"
                         android:layout_marginStart="20dp">
@@ -368,6 +371,7 @@
                             android:id="@+id/icons_person"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
+                            android:layout_gravity="center_vertical"
                             android:layout_marginEnd="10dp">
 
                             <View
@@ -386,7 +390,7 @@
                         <TextView
                             android:id="@+id/txtpersion"
                             android:layout_width="wrap_content"
-                            android:layout_height="20dp"
+                            android:layout_height="30dp"
                             android:text="@string/person"
                             android:textAppearance="@style/location"
                             android:lineSpacingExtra="-4sp"
@@ -547,7 +551,7 @@
                             android:textSize="14sp"
                             android:letterSpacing="0.01"
                             android:textColor="#313033"
-                            android:text="Back"
+                            android:text="Trước"
                             android:textStyle="bold"
                             android:lineSpacingExtra="-1sp"
                             android:gravity="center_horizontal|center_vertical"
@@ -572,7 +576,7 @@
                             android:textSize="14sp"
                             android:letterSpacing="0.01"
                             android:textColor="#313033"
-                            android:text="Learn more"
+                            android:text="Xem thêm"
                             android:textStyle="bold"
                             android:lineSpacingExtra="-1sp"
                             android:gravity="center_horizontal|center_vertical"
@@ -594,7 +598,7 @@
                             android:textSize="14sp"
                             android:letterSpacing="0.01"
                             android:textColor="#313033"
-                            android:text="Next"
+                            android:text="Sau"
                             android:textStyle="bold"
                             android:lineSpacingExtra="-1sp"
                             android:gravity="center_horizontal|center_vertical"
@@ -609,12 +613,13 @@
         </LinearLayout>
 
         <com.google.android.material.navigation.NavigationView
+            android:layout_marginTop="40dp"
             android:id="@+id/navigationView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            app:headerLayout="@layout/header_navigation"
-            android:layout_gravity="end"
-            app:menu="@menu/navigation_layout"
+            app:headerLayout="@layout/layout_navigation_header"
+            android:layout_gravity="start"
+            app:menu="@menu/navigation_menu"
             tools:ignore="MissingConstraints" />
 
     </androidx.drawerlayout.widget.DrawerLayout>

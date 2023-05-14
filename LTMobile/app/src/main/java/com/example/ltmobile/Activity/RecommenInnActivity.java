@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.Manifest;
 import android.app.Activity;
@@ -31,13 +33,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
+import com.bumptech.glide.Glide;
 import com.example.ltmobile.Adapter.InnAdapter;
+import com.example.ltmobile.Adapter.NavigationAdapter;
 import com.example.ltmobile.Fragment.InnFragment;
 import com.example.ltmobile.Model.ImageInn;
 import com.example.ltmobile.Model.Inn;
+import com.example.ltmobile.Model.User;
 import com.example.ltmobile.R;
+import com.example.ltmobile.Utils.Constant;
 import com.example.ltmobile.Utils.RealPathUtil;
 import com.example.ltmobile.Utils.ServiceAPI;
+import com.example.ltmobile.Utils.SharedPrefManager;
+import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -54,6 +62,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -62,7 +71,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RecommenInnActivity extends AppCompatActivity {
-    private String[] location = {"Quan 1", "Quan 2", "Quan 3", "Quan 4", "Quan 5", "Quan 6", "Quan 7", "Quan 8", "Quan 9"};
+    private String[] location = {"Quan 1", "Quan 2", "Quan 4", "Quan 9", "Bình Thạnh", "Thủ Đức"};
     private String locationStr = "address";
     private int person = 2;
     private ArrayList<Uri> imageUris;
@@ -88,12 +97,16 @@ public class RecommenInnActivity extends AppCompatActivity {
         }
         return p;
     }
-    TextView txtlocation, txtpersion;
+    TextView txtlocation, txtpersion, headline, fullname;
     AutoCompleteTextView autoCompleteLocation;
     ImageSwitcher imagesIs;
     ArrayAdapter<String> adapterLocation;
-    RelativeLayout filterMinus, filterPlus, btnBack, btnUpload, btnNext, continue_bu;
+    RelativeLayout filterMinus, filterPlus, btnBack, btnUpload, btnNext, continue_bu, avatar;
     EditText txtAddress, txtPhone, txtPrice, txtPriceWater, txtPriceElec, txtDes;
+    CircleImageView imageView;
+    ImageView imvAvatar;
+    NavigationView navigationView;
+    DrawerLayout navigationDrawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +116,7 @@ public class RecommenInnActivity extends AppCompatActivity {
 
         mapping();
         adapter();
+        getDataFromSharedPref();
 
         autoCompleteLocation.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
@@ -176,14 +190,25 @@ public class RecommenInnActivity extends AppCompatActivity {
                 recommendInn();
             }
         });
+
+        avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navigationDrawer.openDrawer(GravityCompat.START);
+            }
+        });
+
+        navigationView.setNavigationItemSelectedListener(new NavigationAdapter(this));
     }
 
     private void mapping() {
         txtlocation = (TextView) findViewById(R.id.txtlocation);
         txtpersion = (TextView) findViewById(R.id.txtpersion);
+        headline = (TextView) findViewById(R.id.headline);
         autoCompleteLocation = (AutoCompleteTextView) findViewById(R.id.autoCompleteLocation);
         filterMinus = (RelativeLayout) findViewById(R.id.filterMinus);
         filterPlus = (RelativeLayout) findViewById(R.id.filterPlus);
+        avatar = (RelativeLayout) findViewById(R.id.avatar);
         imagesIs = (ImageSwitcher) findViewById(R.id.imagesIs);
         btnBack = (RelativeLayout) findViewById(R.id.btnBack);
         btnNext = (RelativeLayout) findViewById(R.id.btnNext);
@@ -195,11 +220,26 @@ public class RecommenInnActivity extends AppCompatActivity {
         txtPriceWater = (EditText) findViewById(R.id.txtPriceWater);
         txtPriceElec = (EditText) findViewById(R.id.txtPriceElec);
         txtDes = (EditText) findViewById(R.id.txtDes);
+        imageView = (CircleImageView) findViewById(R.id.imageView);
+        navigationDrawer = (DrawerLayout) findViewById(R.id.navigationDrawer);
+        navigationView = (NavigationView) findViewById(R.id.navigationView);
+        View headerView = navigationView.getHeaderView(0);
+        imvAvatar = headerView.findViewById(R.id.imvAvatar);
+        fullname = headerView.findViewById(R.id.tvFullName);
     }
+
 
     private void adapter() {
         adapterLocation = new ArrayAdapter<String>(this, R.layout.list_item, location);
         autoCompleteLocation.setAdapter(adapterLocation);
+    }
+
+    void getDataFromSharedPref(){
+        User user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
+        headline.setText("Hello, " + user.getFullname() + "!");
+        fullname.setText(user.getFullname());
+        Glide.with(getApplicationContext()).load(Constant.ROOT_URL + "upload/" + user.getAvatar()).into(imvAvatar);
+        Glide.with(getApplicationContext()).load(Constant.ROOT_URL + "upload/" + user.getAvatar()).into(imageView);
     }
 
     private void CheckPermissions() {
@@ -334,7 +374,8 @@ public class RecommenInnActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "API", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "OKE", Toast.LENGTH_LONG).show();
+//                    User user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
                 }
             }
             @Override

@@ -10,24 +10,23 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.ltmobile.Fragment.CommentFragment;
 import com.example.ltmobile.Fragment.DescriptionFragment;
+import com.example.ltmobile.Model.Inn;
 
 public class InnTabAdapter extends FragmentStateAdapter {
-    private int innId;
-    private String des;
+    private Inn inn;
     private Context context;
 
-    public InnTabAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle, @NonNull int innId, String des) {
+    public InnTabAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle, Inn inn) {
         super(fragmentManager, lifecycle);
-        this.innId = innId;
-        this.des = des;
+        this.inn = inn;
     }
 
     @NonNull
     @Override
     public Fragment createFragment(int position) {
         if (position == 1)
-            return CommentFragment.newInstance(innId);
-        return DescriptionFragment.newInstance(des);
+            return CommentFragment.newInstance(inn.getInnId());
+        return DescriptionFragment.newInstance(inn);
     }
 
     @Override

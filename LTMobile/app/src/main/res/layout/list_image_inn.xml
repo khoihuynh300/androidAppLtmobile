@@ -10,7 +10,6 @@
         android:layout_height="260dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:elevation="20dp"
         app:srcCompat="@drawable/cho_thue_phong_tro_thu_duc_3" />
 
 </RelativeLayout>

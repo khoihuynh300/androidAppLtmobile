@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@drawable/list_inn"
     tools:context=".Activity.InnDetailActivity">
 
@@ -65,7 +66,7 @@
 
                     <LinearLayout
                         android:layout_width="360dp"
-                        android:layout_height="73dp"
+                        android:layout_height="33dp"
                         android:orientation="horizontal"
                         android:layoutDirection="rtl"
                         android:paddingEnd="20dp"
@@ -78,8 +79,7 @@
                             android:layout_width="39dp"
                             android:layout_height="25dp"
                             android:orientation="horizontal"
-                            android:layoutDirection="ltr"
-                            android:layout_marginTop="10dp">
+                            android:layoutDirection="ltr">
 
                             <RelativeLayout
                                 xmlns:android="http://schemas.android.com/apk/res/android"
@@ -94,11 +94,10 @@
                                     android:layout_width="0dp"
                                     android:layout_height="0dp"
                                     android:layout_alignParentLeft="true"
-                                    android:layout_alignParentRight="true"
                                     android:layout_alignParentTop="true"
+                                    android:layout_alignParentRight="true"
                                     android:layout_alignParentBottom="true"
-                                    android:background="@drawable/baseline_comment_24"
-                                    />
+                                    android:background="@drawable/baseline_comment_24" />
 
                             </RelativeLayout>
 
@@ -116,7 +115,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="53dp"
+                            android:layout_height="33dp"
                             android:layout_gravity="center_vertical"
                             android:orientation="vertical">
 
@@ -125,25 +124,6 @@
                                 android:layout_height="24dp"
                                 android:layoutDirection="ltr"
                                 android:orientation="horizontal">
-
-                                <RelativeLayout
-                                    android:id="@+id/place"
-                                    android:layout_width="24dp"
-                                    android:layout_height="24dp"
-                                    android:clipToOutline="true" >
-
-                                    <ImageView
-                                        android:id="@+id/vector"
-                                        android:layout_width="0dp"
-                                        android:layout_height="0dp"
-                                        android:layout_alignParentLeft="true"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_alignParentTop="true"
-                                        android:layout_alignParentBottom="true"
-                                        android:background="@drawable/baseline_location_on_24"
-                                        />
-
-                                </RelativeLayout>
 
                                 <TextView
                                     android:id="@+id/ubud_indone"
@@ -266,9 +246,10 @@
             android:id="@+id/navigationView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            app:headerLayout="@layout/header_navigation"
-            android:layout_gravity="end"
-            app:menu="@menu/navigation_layout"
+            android:layout_marginTop="40dp"
+            app:headerLayout="@layout/layout_navigation_header"
+            android:layout_gravity="start"
+            app:menu="@menu/navigation_menu"
             tools:ignore="MissingConstraints" />
 
     </androidx.drawerlayout.widget.DrawerLayout>

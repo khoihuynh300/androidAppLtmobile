@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,11 +23,15 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
 import com.example.ltmobile.Adapter.InnAdapter;
+import com.example.ltmobile.Adapter.NavigationAdapter;
 import com.example.ltmobile.Fragment.InnFragment;
 import com.example.ltmobile.Model.ImageInn;
 import com.example.ltmobile.Model.Inn;
+import com.example.ltmobile.Model.User;
 import com.example.ltmobile.R;
+import com.example.ltmobile.Utils.Constant;
 import com.example.ltmobile.Utils.ServiceAPI;
+import com.example.ltmobile.Utils.SharedPrefManager;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -49,7 +54,7 @@ import retrofit2.Response;
 
 public class ListInnActivity extends AppCompatActivity {
 
-    private String[] location = {"Quan 1", "Quan 2", "Quan 3", "Quan 4", "Quan 5", "Quan 6", "Quan 7", "Quan 8", "Quan 9"};
+    private String[] location = {"Quan 1", "Quan 2", "Quan 4", "Quan 9", "Bình Thạnh", "Thủ Đức"};
     private String[] price = {"1M - 1M5", "1M5 - 2M", "2M - 3M", "Tren 3M"};
     private Object[] searchText = new Object[]{"address", 0, 0, 2};
     private int person = 2;
@@ -58,21 +63,25 @@ public class ListInnActivity extends AppCompatActivity {
     List<Inn> inns = new ArrayList<>();
     List<Fragment> fragments = new ArrayList<>();
     InnAdapter innAdapter;
-    TextView txtlocation, txtprice, txtpersion;
+    TextView txtlocation, txtprice, txtpersion, headline, fullname;
     AutoCompleteTextView autoCompleteLocation, autoCompletePrice;
     ArrayAdapter<String> adapterLocation, adapterPrice;
-    RelativeLayout filterMinus, filterPlus, btnBack, btnNext, continue_bu, btnLearnmore, avatar;
+    RelativeLayout filterMinus, filterPlus, btnBack, btnNext, continue_bu, btnLearnmore, avatar, recommendInn;
+    CircleImageView imageView;
     ViewPager2 viewListInn;
     NavigationView navigationView;
     DrawerLayout navigationDrawer;
+    ImageView imvAvatar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_inn);
 
+
         mapping();
         adapter();
+        getDataFromSharedPref();
         addInn();
 
         //Events
@@ -169,7 +178,6 @@ public class ListInnActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), InnDetailActivity.class);
                 intent.putExtra("innId", innId);
-                intent.putExtra("Describe", des);
                 startActivity(intent);
             }
         });
@@ -177,7 +185,17 @@ public class ListInnActivity extends AppCompatActivity {
         avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navigationDrawer.openDrawer(GravityCompat.END);
+                navigationDrawer.openDrawer(GravityCompat.START);
+            }
+        });
+
+        navigationView.setNavigationItemSelectedListener(new NavigationAdapter(this));
+
+        recommendInn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), RecommenInnActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -186,6 +204,7 @@ public class ListInnActivity extends AppCompatActivity {
         txtlocation = (TextView) findViewById(R.id.txtlocation);
         txtprice = (TextView) findViewById(R.id.txtprice);
         txtpersion = (TextView) findViewById(R.id.txtpersion);
+        headline = (TextView) findViewById(R.id.headline);
         autoCompleteLocation = (AutoCompleteTextView) findViewById(R.id.autoCompleteLocation);
         autoCompletePrice = (AutoCompleteTextView) findViewById(R.id.autoCompletePrice);
         filterMinus = (RelativeLayout) findViewById(R.id.filterMinus);
@@ -198,6 +217,11 @@ public class ListInnActivity extends AppCompatActivity {
         navigationDrawer = (DrawerLayout) findViewById(R.id.navigationDrawer);
         navigationView = (NavigationView) findViewById(R.id.navigationView);
         avatar = (RelativeLayout) findViewById(R.id.avatar);
+        recommendInn = (RelativeLayout) findViewById(R.id.recommendInn);
+        imageView = (CircleImageView) findViewById(R.id.imageView);
+        View headerView = navigationView.getHeaderView(0);
+        imvAvatar = headerView.findViewById(R.id.imvAvatar);
+        fullname = headerView.findViewById(R.id.tvFullName);
 
         viewListInn.setUserInputEnabled(false);
     }
@@ -209,6 +233,14 @@ public class ListInnActivity extends AppCompatActivity {
         autoCompletePrice.setAdapter(adapterPrice);
     }
 
+    void getDataFromSharedPref(){
+        User user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
+        headline.setText("Hello, " + user.getFullname() + "!");
+        fullname.setText(user.getFullname());
+        Glide.with(getApplicationContext()).load(Constant.ROOT_URL + "upload/" + user.getAvatar()).into(imvAvatar);
+        Glide.with(getApplicationContext()).load(Constant.ROOT_URL + "upload/" + user.getAvatar()).into(imageView);
+    }
+
     private void addInn() {
         ServiceAPI.serviceapi.getAllInnsConfirmed().enqueue(new Callback<JsonArray>() {
             @Override
@@ -216,33 +248,36 @@ public class ListInnActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     try {
                         JSONArray jsonArray = new JSONArray(response.body().toString());
-                        for(int i=0; i<jsonArray.length(); i++)
-                        {
-                            JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            int id = jsonObject.getInt("innId");
-                            String address = jsonObject.getString("address");
-                            String phoneNumber = jsonObject.getString("phoneNumber");
-                            String describe = jsonObject.getString("describe");
-                            Double price = jsonObject.getDouble("price");
-                            Double priceWater = jsonObject.getDouble("priceWater");
-                            Double priceELec = jsonObject.getDouble("priceELec");
-                            String createdAtString = jsonObject.getString("createdAt");
-                            String updatedAtString = jsonObject.getString("updatedAt");
-                            String proposed = jsonObject.getString("proposed");
-                            JSONObject mainImage = jsonObject.getJSONObject("mainImage");
-                            Date createdAt = null;
-                            Date updatedAt = null;
-                            try{
-                                createdAt = new SimpleDateFormat("yyyy-MM-dd").parse(createdAtString);
-                                updatedAt = new SimpleDateFormat("yyyy-MM-dd").parse(updatedAtString);
-                            } catch (ParseException e) {
-                                Log.e("TAG", e.toString());
+                        if (jsonArray.length() == 0) {
+                            Toast.makeText(getApplicationContext(), "Không có kết quả phù hợp", Toast.LENGTH_LONG).show();
+                        } else {
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                int id = jsonObject.getInt("innId");
+                                String address = jsonObject.getString("address");
+                                String phoneNumber = jsonObject.getString("phoneNumber");
+                                String describe = jsonObject.getString("describe");
+                                Double price = jsonObject.getDouble("price");
+                                Double priceWater = jsonObject.getDouble("priceWater");
+                                Double priceELec = jsonObject.getDouble("priceELec");
+                                String createdAtString = jsonObject.getString("createdAt");
+                                String updatedAtString = jsonObject.getString("updatedAt");
+                                String proposed = jsonObject.getString("proposed");
+                                JSONObject mainImage = jsonObject.getJSONObject("mainImage");
+                                Date createdAt = null;
+                                Date updatedAt = null;
+                                try {
+                                    createdAt = new SimpleDateFormat("yyyy-MM-dd").parse(createdAtString);
+                                    updatedAt = new SimpleDateFormat("yyyy-MM-dd").parse(updatedAtString);
+                                } catch (ParseException e) {
+                                    Log.e("TAG", e.toString());
+                                }
+
+                                ImageInn imageInn = new ImageInn(mainImage.getInt("imageInnId"), mainImage.getString("image"));
+
+                                inns.add(new Inn(id, address, phoneNumber, describe, price, priceWater, priceELec, createdAt, updatedAt, proposed, 0, imageInn, null));
+                                fragments.add(InnFragment.newInstance(getApplicationContext(), describe, String.valueOf(price.intValue()), imageInn.getImage(), String.valueOf(priceWater.intValue()), String.valueOf(priceELec.intValue())));
                             }
-
-                            ImageInn imageInn = new ImageInn(mainImage.getInt("imageInnId"), mainImage.getString("image"));
-
-                            inns.add(new Inn(id, address, phoneNumber, describe, price, priceWater, priceELec, createdAt, updatedAt, proposed, 0, 0, imageInn, null));
-                            fragments.add(InnFragment.newInstance(getApplicationContext(), describe, String.valueOf(price), imageInn.getImage(), String.valueOf(priceWater), String.valueOf(priceELec)));
                         }
                     } catch (JSONException e) {
                         Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
@@ -281,33 +316,36 @@ public class ListInnActivity extends AppCompatActivity {
                         JSONArray jsonArray = new JSONArray(response.body().toString());
                         inns = new ArrayList<>();
                         fragments = new ArrayList<>();
-                        for(int i=0; i<jsonArray.length(); i++)
-                        {
-                            JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            int id = jsonObject.getInt("innId");
-                            String address = jsonObject.getString("address");
-                            String phoneNumber = jsonObject.getString("phoneNumber");
-                            String describe = jsonObject.getString("describe");
-                            Double price = jsonObject.getDouble("price");
-                            Double priceWater = jsonObject.getDouble("priceWater");
-                            Double priceELec = jsonObject.getDouble("priceELec");
-                            String createdAtString = jsonObject.getString("createdAt");
-                            String updatedAtString = jsonObject.getString("updatedAt");
-                            String proposed = jsonObject.getString("proposed");
-                            JSONObject mainImage = jsonObject.getJSONObject("mainImage");
-                            Date createdAt = null;
-                            Date updatedAt = null;
-                            try{
-                                createdAt = new SimpleDateFormat("yyyy-MM-dd").parse(createdAtString);
-                                updatedAt = new SimpleDateFormat("yyyy-MM-dd").parse(updatedAtString);
-                            } catch (ParseException e) {
-                                Log.e("TAG", e.toString());
+                        if (jsonArray.length() == 0) {
+                            Toast.makeText(getApplicationContext(), "Không có kết quả phù hợp", Toast.LENGTH_LONG).show();
+                        } else {
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                int id = jsonObject.getInt("innId");
+                                String address = jsonObject.getString("address");
+                                String phoneNumber = jsonObject.getString("phoneNumber");
+                                String describe = jsonObject.getString("describe");
+                                Double price = jsonObject.getDouble("price");
+                                Double priceWater = jsonObject.getDouble("priceWater");
+                                Double priceELec = jsonObject.getDouble("priceELec");
+                                String createdAtString = jsonObject.getString("createdAt");
+                                String updatedAtString = jsonObject.getString("updatedAt");
+                                String proposed = jsonObject.getString("proposed");
+                                JSONObject mainImage = jsonObject.getJSONObject("mainImage");
+                                Date createdAt = null;
+                                Date updatedAt = null;
+                                try {
+                                    createdAt = new SimpleDateFormat("yyyy-MM-dd").parse(createdAtString);
+                                    updatedAt = new SimpleDateFormat("yyyy-MM-dd").parse(updatedAtString);
+                                } catch (ParseException e) {
+                                    Log.e("TAG", e.toString());
+                                }
+
+                                ImageInn imageInn = new ImageInn(mainImage.getInt("imageInnId"), mainImage.getString("image"));
+
+                                inns.add(new Inn(id, address, phoneNumber, describe, price, priceWater, priceELec, createdAt, updatedAt, proposed, 0, imageInn, null));
+                                fragments.add(InnFragment.newInstance(getApplicationContext(), describe, String.valueOf(price.intValue()), imageInn.getImage(), String.valueOf(priceWater.intValue()), String.valueOf(priceELec.intValue())));
                             }
-
-                            ImageInn imageInn = new ImageInn(mainImage.getInt("imageInnId"), mainImage.getString("image"));
-
-                            inns.add(new Inn(id, address, phoneNumber, describe, price, priceWater, priceELec, createdAt, updatedAt, proposed, 0, 0, imageInn, null));
-                            fragments.add(InnFragment.newInstance(getApplicationContext(), describe, String.valueOf(price), imageInn.getImage(), String.valueOf(priceWater), String.valueOf(priceELec)));
                         }
                     } catch (JSONException e) {
                         Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
@@ -316,6 +354,8 @@ public class ListInnActivity extends AppCompatActivity {
                     innAdapter = new InnAdapter(ListInnActivity.this, fragments);
                     viewListInn.setAdapter(innAdapter);
                 }
+                else
+                    Toast.makeText(getApplicationContext(), "Không có kết quả phù hợp", Toast.LENGTH_LONG).show();
             }
             @Override
             public void onFailure(Call<JsonArray> call, Throwable t) {

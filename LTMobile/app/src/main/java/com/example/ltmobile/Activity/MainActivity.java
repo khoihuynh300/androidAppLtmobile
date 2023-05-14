@@ -21,8 +21,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.ltmobile.Adapter.NavigationAdapter;
 import com.example.ltmobile.Model.User;
 import com.example.ltmobile.R;
+import com.example.ltmobile.Utils.Constant;
 import com.example.ltmobile.Utils.SharedPrefManager;
 import com.google.android.material.navigation.NavigationView;
 
@@ -56,16 +58,16 @@ public class MainActivity extends AppCompatActivity {
         });
         NavigationView navigationView = findViewById(R.id.navigationView);
 
-        NavController navController = Navigation.findNavController(this, R.id.navHostFragment);
-        NavigationUI.setupWithNavController(navigationView, navController);
+//        NavController navController = Navigation.findNavController(this, R.id.navHostFragment);
+//        NavigationUI.setupWithNavController(navigationView, navController);
 
         TextView txtTitle = findViewById(R.id.textTitle);
-        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
-            @Override
-            public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
-                txtTitle.setText(destination.getLabel());
-            }
-        });
+//        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+//            @Override
+//            public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
+//                txtTitle.setText(destination.getLabel());
+//            }
+//        });
 
         View headerView = navigationView.getHeaderView(0);
         ImageView avatar = headerView.findViewById(R.id.imvAvatar);
@@ -73,13 +75,15 @@ public class MainActivity extends AppCompatActivity {
 
         User user = SharedPrefManager.getInstance(context).getUser();
         fullname.setText(user.getFullname());
-        Glide.with(context).load(user.getAvatar()).into(avatar);
-        navigationView.getMenu().findItem(R.id.menuLogout).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(@NonNull MenuItem item) {
-                SharedPrefManager.getInstance(context).logout();
-                return false;
-            }
-        });
+        Glide.with(context).load(Constant.ROOT_URL + "upload/" + user.getAvatar()).into(avatar);
+//        navigationView.getMenu().findItem(R.id.menuLogout).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(@NonNull MenuItem item) {
+//                SharedPrefManager.getInstance(context).logout();
+//                return false;
+//            }
+//        });
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationAdapter(this));
     }
 }

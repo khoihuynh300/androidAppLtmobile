@@ -13,7 +13,6 @@
         android:layout_height="200dp"
         android:clipToOutline="true"
         android:background="@drawable/image"
-        android:elevation="40dp"
         tools:ignore="MissingConstraints">
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -22,7 +21,6 @@
             android:layout_height="200dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:elevation="20dp"
             app:srcCompat="@drawable/cho_thue_phong_tro_thu_duc_3"
             app:shapeAppearanceOverlay="@style/RoundedSquare"/>
 

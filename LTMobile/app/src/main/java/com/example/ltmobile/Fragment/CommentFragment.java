@@ -18,14 +18,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.ltmobile.Activity.InnDetailActivity;
 import com.example.ltmobile.Activity.VerifyOTPActivity;
 import com.example.ltmobile.Adapter.CommentInnAdapter;
 import com.example.ltmobile.Adapter.InnAdapter;
 import com.example.ltmobile.Model.CommentInn;
 import com.example.ltmobile.Model.ImageInn;
+import com.example.ltmobile.Model.User;
 import com.example.ltmobile.R;
+import com.example.ltmobile.Utils.Constant;
 import com.example.ltmobile.Utils.ServiceAPI;
+import com.example.ltmobile.Utils.SharedPrefManager;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -52,6 +56,7 @@ public class CommentFragment extends Fragment {
     private static final String INN_ID = "0";
 
     private int innId;
+    private int userId;
     RecyclerView commentInnLayout;
     CommentInnAdapter commentInnAdapter;
     List<CommentInn> commentInns = new ArrayList<>();
@@ -65,18 +70,13 @@ public class CommentFragment extends Fragment {
 
     public static CommentFragment newInstance(int innId) {
         CommentFragment fragment = new CommentFragment();
-        Bundle args = new Bundle();
-        args.putInt(INN_ID, innId);
-        fragment.setArguments(args);
+        fragment.innId = innId;
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            innId = getArguments().getInt(INN_ID);
-        }
     }
 
     @Override
@@ -88,6 +88,7 @@ public class CommentFragment extends Fragment {
         send = (RelativeLayout) view.findViewById(R.id.send);
         some_id = (TextView) getActivity().findViewById(R.id.some_id);
 
+        getDataFromSharedPref();
         getAllCommentOfInn(innId);
 
         send.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +103,11 @@ public class CommentFragment extends Fragment {
         });
 
         return view;
+    }
+
+    void getDataFromSharedPref(){
+        User user = SharedPrefManager.getInstance(getContext()).getUser();
+        userId = user.getUserId();
     }
 
     private void getAllCommentOfInn(int innId) {
@@ -144,6 +150,9 @@ public class CommentFragment extends Fragment {
                     commentInnLayout.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
                     commentInnLayout.scrollToPosition(commentInnAdapter.getItemCount() - 1);
                 }
+                else {
+                    some_id.setText("0");
+                }
             }
             @Override
             public void onFailure(Call<JsonArray> call, Throwable t) {
@@ -154,10 +163,7 @@ public class CommentFragment extends Fragment {
     }
 
     private void addCommentOfInn() {
-        CommentInn commentInn = new CommentInn(rvText.getText().toString(), 1, innId);
-        RequestBody content = RequestBody.create(MediaType.parse("multipart/form-data"), rvText.getText().toString());
-        RequestBody userId = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(innId));
-        RequestBody tinnId = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(1));
+        CommentInn commentInn = new CommentInn(rvText.getText().toString(), userId, innId);
         ServiceAPI.serviceapi.createCommentOfInn(commentInn).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {

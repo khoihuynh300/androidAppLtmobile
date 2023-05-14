@@ -36,6 +36,19 @@ public class Inn implements Serializable {
         this.images = images;
     }
 
+    public Inn(int id, String address, String describe, Double price, Double priceWater, Double priceELec, Date createdAt, Date updatedAt, String proposed, int size) {
+        this.innId = id;
+        this.address = address;
+        this.describe = describe;
+        this.price = price;
+        this.priceWater = priceWater;
+        this.priceELec = priceELec;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.proposed = proposed;
+        this.size = size;
+    }
+
     public int getSize() {
         return size;
     }
