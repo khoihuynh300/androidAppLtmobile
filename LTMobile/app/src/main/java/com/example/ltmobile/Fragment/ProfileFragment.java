@@ -67,7 +67,7 @@ public class ProfileFragment extends Fragment {
     ImagePicker imagePicker;
     //View
     ImageView imageView;
-    TextView tvId, tvEmail;
+    TextView tvId, tvEmail, tvRole;
     EditText inputFname, inputGender;
     Button btnChooseFile, btnUploadFile;
     private Uri uriImageAvatar;
@@ -104,6 +104,7 @@ public class ProfileFragment extends Fragment {
         inputGender = (EditText) view.findViewById(R.id.inputGender);
         btnChooseFile = (Button) view.findViewById(R.id.btnChooseImage);
         btnUploadFile = (Button) view.findViewById(R.id.btnSave);
+        tvRole = view.findViewById(R.id.tvRole);
 
         imagePicker = new ImagePicker((Activity) context, mActivityResuItLauncher);
     }
@@ -117,6 +118,7 @@ public class ProfileFragment extends Fragment {
         inputGender.setFocusable(false);
         inputGender.setCursorVisible(false);
         inputGender.setKeyListener(null);
+        tvRole.setText(user.getRole());
         Glide.with(context).load(user.getAvatar()).into(imageView);
     }
 

@@ -76,8 +76,6 @@
                     android:textSize="20dp"/>
             </LinearLayout>
 
-
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -99,8 +97,29 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="9"
                     android:textSize="20dp"/>
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginVertical="8dp"
+                >
 
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:text="Role: "
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/tvRole"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="9"
+                    android:textSize="20dp"/>
             </LinearLayout>
 
             <com.google.android.material.tabs.TabLayout

@@ -37,7 +37,7 @@ public class UserDetailActivity extends AppCompatActivity {
 
     //View
     ImageView imvAvt;
-    TextView tvEmail, tvFullName, tvGender;
+    TextView tvEmail, tvFullName, tvGender, tvRole;
 
     private TabLayout mTablayout;
     private ViewPager mViewPager;
@@ -56,6 +56,7 @@ public class UserDetailActivity extends AppCompatActivity {
         tvEmail = findViewById(R.id.tvEmail);
         tvFullName = findViewById(R.id.tvFullName);
         tvGender = findViewById(R.id.tvGender);
+        tvRole = findViewById(R.id.tvRole);
         mTablayout = findViewById(R.id.tabLayout);
         mViewPager = findViewById(R.id.viewPager);
     }
@@ -91,6 +92,7 @@ public class UserDetailActivity extends AppCompatActivity {
                                     tvEmail.setText(user.getEmail());
                                     tvFullName.setText(user.getFullname());
                                     tvGender.setText(user.getGender());
+                                    tvRole.setText(user.getRole());
 
                                     Glide.with(context).load(user.getAvatar()).into(imvAvt);
 
