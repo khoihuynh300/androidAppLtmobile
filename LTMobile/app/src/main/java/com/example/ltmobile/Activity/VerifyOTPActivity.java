@@ -45,7 +45,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
             String Gender = getIntent().getStringExtra(SignupActivity.KEY_GENDER);
             String Password = getIntent().getStringExtra(SignupActivity.KEY_PASSWORD);
 
-            Toast.makeText(context, Email, Toast.LENGTH_LONG).show();
+//            Toast.makeText(context, Email, Toast.LENGTH_LONG).show();
             btnConfirm.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

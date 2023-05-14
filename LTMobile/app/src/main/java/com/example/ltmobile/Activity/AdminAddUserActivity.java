@@ -69,11 +69,11 @@ public class AdminAddUserActivity extends AppCompatActivity {
                 String Email = inputEmail.getText().toString().trim();
                 String Fname = inputFname.getText().toString().trim();
                 String Gender = inputGender.getText().toString().trim();
-                String Role = inputGender.getText().toString().trim();
+                String Role = inputRole.getText().toString().trim();
                 String Password = inputPassword.getText().toString().trim();
                 String Password2 = inputPassword2.getText().toString().trim();
 
-                String RoleCode;
+                String RoleCode = "sinhvien";
                 if(Role.equals("Manager")){
                     RoleCode = "manager";
                 }
@@ -101,7 +101,7 @@ public class AdminAddUserActivity extends AppCompatActivity {
                 }
 
                 if(check){
-                    User user = new User(0, Email, Fname, Gender, null, Role);
+                    User user = new User(0, Email, Fname, Gender, null, RoleCode);
                     user.setPassword(Password);
                     ServiceAPI.serviceapi.addUser(user)
                             .enqueue(new Callback<JsonObject>() {

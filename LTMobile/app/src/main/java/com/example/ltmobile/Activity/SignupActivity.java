@@ -112,15 +112,15 @@ public class SignupActivity extends AppCompatActivity {
                                     JSONObject responseJson = new JSONObject(response.body().toString());
                                     String message = responseJson.getString("message");
                                     Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-//                                    if(!responseJson.getBoolean("error")){
-//                                        Intent intent = new Intent(context, VerifyOTPActivity.class);
-//                                        intent.putExtra("action", "signup");
-//                                        intent.putExtra(KEY_EMAIL, Email);
-//                                        intent.putExtra(KEY_FNAME, Fname);
-//                                        intent.putExtra(KEY_GENDER, Gender);
-//                                        intent.putExtra(KEY_PASSWORD, Password);
-//                                        startActivity(intent);
-//                                    }
+                                    if(!responseJson.getBoolean("error")){
+                                        Intent intent = new Intent(context, VerifyOTPActivity.class);
+                                        intent.putExtra("action", "signup");
+                                        intent.putExtra(KEY_EMAIL, Email);
+                                        intent.putExtra(KEY_FNAME, Fname);
+                                        intent.putExtra(KEY_GENDER, Gender);
+                                        intent.putExtra(KEY_PASSWORD, Password);
+                                        startActivity(intent);
+                                    }
 
                                     // reset text
 
@@ -133,17 +133,24 @@ public class SignupActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(Call<JsonObject> call, Throwable t) {
                             Log.e("TAG", t.toString());
-                            Toast.makeText(context, "failed connect API", Toast.LENGTH_LONG).show();
+//                            Toast.makeText(context, "failed connect API", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(context, VerifyOTPActivity.class);
+                            intent.putExtra("action", "signup");
+                            intent.putExtra(KEY_EMAIL, Email);
+                            intent.putExtra(KEY_FNAME, Fname);
+                            intent.putExtra(KEY_GENDER, Gender);
+                            intent.putExtra(KEY_PASSWORD, Password);
+                            startActivity(intent);
                         }
                     });
 
-                    Intent intent = new Intent(context, VerifyOTPActivity.class);
-                    intent.putExtra("action", "signup");
-                    intent.putExtra(KEY_EMAIL, Email);
-                    intent.putExtra(KEY_FNAME, Fname);
-                    intent.putExtra(KEY_GENDER, Gender);
-                    intent.putExtra(KEY_PASSWORD, Password);
-                    startActivity(intent);
+//                    Intent intent = new Intent(context, VerifyOTPActivity.class);
+//                    intent.putExtra("action", "signup");
+//                    intent.putExtra(KEY_EMAIL, Email);
+//                    intent.putExtra(KEY_FNAME, Fname);
+//                    intent.putExtra(KEY_GENDER, Gender);
+//                    intent.putExtra(KEY_PASSWORD, Password);
+//                    startActivity(intent);
                 }
             }
         });
