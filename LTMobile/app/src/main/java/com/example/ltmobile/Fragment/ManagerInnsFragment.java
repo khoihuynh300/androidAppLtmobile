@@ -1,6 +1,7 @@
 package com.example.ltmobile.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.ltmobile.Activity.RecommenInnActivity;
 import com.example.ltmobile.Adapter.AdminInnAdapter;
 import com.example.ltmobile.Model.ImageInn;
 import com.example.ltmobile.Model.Inn;
@@ -277,7 +279,8 @@ public class ManagerInnsFragment extends Fragment {
         fabAddInn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(context, RecommenInnActivity.class);
+                startActivity(intent);
             }
         });
     }
