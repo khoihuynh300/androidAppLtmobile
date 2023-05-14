@@ -24,6 +24,7 @@ import com.example.ltmobile.Model.Messages;
 import com.example.ltmobile.Model.Question;
 import com.example.ltmobile.Model.User;
 import com.example.ltmobile.R;
+import com.example.ltmobile.Utils.ItemMarginDecoration;
 import com.example.ltmobile.Utils.ServiceAPI;
 import com.example.ltmobile.Utils.SharedPrefManager;
 import com.google.gson.JsonArray;
@@ -101,10 +102,12 @@ public class AskAndAnswerActivity extends AppCompatActivity {
         calendar = Calendar.getInstance();
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
         loadMessages(questionId);
-        askAndAnswerAdapter = new AskAndAnswerAdapter(context, messages);
+        askAndAnswerAdapter = new AskAndAnswerAdapter(context, messages, senderId);
         messageRecyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         messageRecyclerView.setLayoutManager(linearLayoutManager);
+        ItemMarginDecoration itemMarginDecoration = new ItemMarginDecoration(30);
+        messageRecyclerView.addItemDecoration(itemMarginDecoration);
         messageRecyclerView.setAdapter(askAndAnswerAdapter);
         askAndAnswerAdapter.notifyDataSetChanged();
 

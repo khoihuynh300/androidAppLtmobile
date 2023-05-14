@@ -42,21 +42,42 @@ public class AskAndAnswerAdapter extends RecyclerView.Adapter<AskAndAnswerAdapte
     private List<Messages> mListMessages = new ArrayList<>();
     private Bundle bundle;
 
+    private int senderId;
+
+
     public AskAndAnswerAdapter(Context mContext, List<Messages> mListMessages) {
         this.mContext = mContext;
         this.mListMessages = mListMessages;
+    }
+
+    public AskAndAnswerAdapter(Context mContext, List<Messages> mListMessages,int senderId) {
+        this.mContext = mContext;
+        this.mListMessages = mListMessages;
+        this.senderId = senderId;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        //0 = ask, 1 = answer
+        return mListMessages.get(position).getUserId() == senderId?1:0;
     }
 
     @NonNull
     @Override
     public AskAndAnswerAdapter.AAAviewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 //        question = AskAndAnswerAdapter.getQuestion();
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.receiverchatlayout, null);
 //        if(question.getAskedRole().equals("sinhvien")) {
 //            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.receiverchatlayout, null);
 //        } else if (question.getAskedRole().equals("tuvanvien")) {
 //            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.senderchatlayout, null);
 //        }
+
+        //0 = ask, 1 = answer
+        if(viewType == 1){
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.receiverchatlayout, null);
+            return new AAAviewHolder(view);
+        }
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.senderchatlayout, null);
         return new AAAviewHolder(view);
     }
 

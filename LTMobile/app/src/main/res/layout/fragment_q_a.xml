@@ -17,9 +17,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="12dp"
+            >
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/top_app_bar"
                 android:layout_width="320dp"
                 android:layout_height="64dp"
