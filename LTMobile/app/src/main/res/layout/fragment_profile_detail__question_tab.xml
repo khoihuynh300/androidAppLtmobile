@@ -5,10 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".Fragment.ProfileDetail_QuestionTabFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvQuestions"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
+        android:clipToPadding="false"
+        />
 </FrameLayout>

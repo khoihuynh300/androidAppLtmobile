@@ -163,4 +163,7 @@ public interface ServiceAPI {
     Call<JsonObject> addQuestion(@Field("title") String title,
                                  @Field("askedId") int askedId,
                                  @Field("message") String message);
+
+    @GET("users/{user_id}/questions")
+    Call<JsonObject> findQuestionsByUserProposed(@Path("user_id") int userId);
 }

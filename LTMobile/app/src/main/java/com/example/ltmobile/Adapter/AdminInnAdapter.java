@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.ltmobile.Activity.InnDetailActivity;
 import com.example.ltmobile.Activity.InnDetailAdminActivity;
 import com.example.ltmobile.Activity.LoginActivity;
 import com.example.ltmobile.Model.Inn;
@@ -77,7 +78,16 @@ public class AdminInnAdapter extends RecyclerView.Adapter<AdminInnAdapter.MyView
                 @Override
                 public void onClick(View v) {
                     if (mListener != null) {
-                        mListener.onItemClick(getAdapterPosition());
+//                        mListener.onItemClick(getAdapterPosition());
+//                        Intent intent = new Intent(context, InnDetailAdminActivity.class);
+//                        intent.putExtra(InnDetailAdminActivity.KEY_EXTRA_INN, getAdapterPosition());
+//                        context.startActivity(intent);
+
+                        Inn inn = array.get(getAdapterPosition());
+                        Intent intent = new Intent(context, InnDetailActivity.class);
+                        intent.putExtra("innId", inn.getInnId());
+                        intent.putExtra("Describe", inn.getDescribe());
+                        context.startActivity(intent);
                     }
                     else{
 //                    Inn inn = array.get(getAdapterPosition());

@@ -20,4 +20,9 @@
         android:name="com.example.ltmobile.Fragment.ManagerQAFragment"
         android:label="Quản lý hỏi đáp"
         tools:layout="@layout/fragment_manager_q_a" />
+    <fragment
+        android:id="@+id/menuChangePassword"
+        android:name="com.example.ltmobile.Fragment.ChangePasswordFragment"
+        android:label="Đổi mật khẩu"
+        tools:layout="@layout/fragment_change_password" />
 </navigation>

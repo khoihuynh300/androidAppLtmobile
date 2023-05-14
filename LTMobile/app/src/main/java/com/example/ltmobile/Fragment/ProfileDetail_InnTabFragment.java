@@ -18,6 +18,7 @@ import com.example.ltmobile.Model.ImageInn;
 import com.example.ltmobile.Model.Inn;
 import com.example.ltmobile.R;
 import com.example.ltmobile.Utils.ItemMarginDecoration;
+import com.example.ltmobile.Utils.MyClickListener;
 import com.example.ltmobile.Utils.ServiceAPI;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -51,8 +52,15 @@ public class ProfileDetail_InnTabFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile_detail__inn_tab, container, false);
         innList = new ArrayList<>();
         rvInn = view.findViewById(R.id.rv_inns);
+        MyClickListener myClickListener = new MyClickListener() {
+            @Override
+            public void onItemClick(int position) {
+//                startActivity();
+                Toast.makeText(context, "abc", Toast.LENGTH_SHORT).show();
+            }
+        };
 
-        adminInnAdapter = new AdminInnAdapter(context, innList);
+        adminInnAdapter = new AdminInnAdapter(context, innList, myClickListener);
         ItemMarginDecoration itemMarginDecoration = new ItemMarginDecoration(30);
         rvInn.addItemDecoration(itemMarginDecoration);
         rvInn.setAdapter(adminInnAdapter);

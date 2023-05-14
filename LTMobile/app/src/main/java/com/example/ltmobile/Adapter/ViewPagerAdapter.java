@@ -24,11 +24,11 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position){
             case 0:
-                return new ProfileDetail_QuestionTabFragment();
+                return new ProfileDetail_QuestionTabFragment(userId);
             case 1:
                 return new ProfileDetail_InnTabFragment(userId);
             default:
-                return new ManagerAccountFragment();
+                return new ProfileDetail_QuestionTabFragment(userId);
         }
     }
 
@@ -49,7 +49,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
                 title = "Bài đăng";
                 break;
             default:
-                title = "Home";
+                title = "Câu hỏi";
                 break;
         }
         return title;
