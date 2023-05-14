@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,8 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
 
     private Context mContext;
     public static final String KEY_QuestionID = "QuestionID";
+
+    private AskAndAnswerAdapter askAndAnswerAdapter;
 
     private LayoutInflater layout;
     //    private OnItemClickListener onItemClickListener;
@@ -78,6 +81,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
         Bundle bundle = new Bundle();
         bundle.putSerializable("object_question", question);
         intent.putExtras(bundle);
+//        askAndAnswerAdapter = new AskAndAnswerAdapter(question);
         mContext.startActivity(intent);
     }
 

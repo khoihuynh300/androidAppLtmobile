@@ -157,4 +157,10 @@ public interface ServiceAPI {
     Call<JsonObject> getUserById(@Path("user_id") int userId);
     @GET("users/{user_id}/inns")
     Call<JsonObject> findInnByUserProposed(@Path("user_id") int userId);
+
+    @FormUrlEncoded
+    @POST("addQuestion")
+    Call<JsonObject> addQuestion(@Field("title") String title,
+                                 @Field("askedId") int askedId,
+                                 @Field("message") String message);
 }

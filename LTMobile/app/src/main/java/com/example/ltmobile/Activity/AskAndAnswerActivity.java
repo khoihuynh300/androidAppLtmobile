@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -77,6 +78,7 @@ public class AskAndAnswerActivity extends AppCompatActivity {
             return;
         }
         Question question = (Question) bundle.get("object_question");
+
         int questionId = question.getQuestionId();
         String title = question.getTitle();
         tvtitle.setText("Tiêu đề câu hỏi: "+title);
@@ -84,6 +86,18 @@ public class AskAndAnswerActivity extends AppCompatActivity {
         receiverName = question.getAnsweredFullname();
         senderId = question.getAskedId();
         receiverId = question.getAnswererId();
+        //kiem tra ask id , answer id
+        User user = SharedPrefManager.getInstance(context).getUser();
+        int currentUserId = user.getUserId();
+        // chỗ này kiểm tra receiverId khác null && currentUser.Role == "tuvanvien" nữa
+//        System.out.println("c :" + currentUserId + " s: " + senderId + " r : " + receiverId);
+//        System.out.println("ask :" + question.getAskedRole() + " ans: " + question.getAnsweredRole() + " cur:"+user.getRole());
+        if(((currentUserId != senderId)  && (currentUserId != receiverId)) &&
+                !(user.getRole().equals("tuvanvien") && receiverId==0)){
+            getMessage.setVisibility(View.GONE);
+        }else{
+            getMessage.setVisibility(View.VISIBLE);
+        }
         calendar = Calendar.getInstance();
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
         loadMessages(questionId);
@@ -128,7 +142,7 @@ public class AskAndAnswerActivity extends AppCompatActivity {
     private void getData() {
         User user = SharedPrefManager.getInstance(context).getUser();
         headline.setText("Hi! " + user.getFullname());
-//        Glide.with(context).load(user.getAvatar()).into(imageView);
+        Glide.with(context).load(user.getAvatar()).into(imageView);
     }
 
     public void anhXa() {
@@ -189,7 +203,7 @@ public class AskAndAnswerActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<JsonArray> call, Throwable t) {
                 Log.e("TAG", t.toString());
-                Toast.makeText(getApplicationContext(), "failed connect API", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "failed connect API", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -197,9 +211,7 @@ public class AskAndAnswerActivity extends AppCompatActivity {
     public void addMessage(int senderId, int receiverId, String enteredMessage, int questionIdTest) throws JSONException {
         User user = SharedPrefManager.getInstance(context).getUser();
 
-        if ((user.getUserId() == senderId) || (user.getUserId() == receiverId)) {
-
-
+        if ((user.getUserId() == senderId) || (user.getUserId() == receiverId) || (user.getRole().equals("tuvanvien") && receiverId==0)) {
             int userIdTest = user.getUserId();
             ServiceAPI.serviceapi.addMessage(enteredMessage, userIdTest, questionIdTest).enqueue(new Callback<JsonObject>() {
                 @Override
@@ -240,7 +252,9 @@ public class AskAndAnswerActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<JsonObject> call, Throwable t) {
                     Log.e("TAG", t.toString());
-                    Toast.makeText(context, "failed connect API", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Đã thêm!", Toast.LENGTH_LONG).show();
+                    getMessage.setText("");
+                    askAndAnswerAdapter.notifyDataSetChanged();
                 }
             });
         }

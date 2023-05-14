@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.ltmobile.Adapter.QuestionAdapter;
+import com.example.ltmobile.Model.CommentInn;
 import com.example.ltmobile.Model.Question;
 import com.example.ltmobile.Model.User;
 import com.example.ltmobile.R;
@@ -24,6 +25,7 @@ import com.example.ltmobile.Utils.ServiceAPI;
 import com.example.ltmobile.Utils.SharedPrefManager;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,7 +51,7 @@ public class QAFragment extends Fragment {
     Context context;
     private RecyclerView rcvQuestion;
     private ImageView imageView;
-    private TextInputEditText etKeyword;
+    private TextInputEditText etKeyword, etMessage;
     private TextView headline, find, add;
     private ImageView ivSearch;
     private QuestionAdapter questionAdapter;
@@ -106,30 +108,33 @@ public class QAFragment extends Fragment {
         find.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!checkEmpty(keyword)){
 
-                }
             }
         });
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!checkEmpty(keyword)){
-
+                String keyword = etKeyword.getText().toString();
+                String message = etMessage.getText().toString();
+                if (keyword.isEmpty()) {
+                    Toast.makeText(context, "Vui lòng nhập tiêu đề!", Toast.LENGTH_SHORT).show();
+                } else if (message.isEmpty()) {
+                    Toast.makeText(context, "Vui lòng nhập tin nhắn!", Toast.LENGTH_SHORT).show();
+                } else {
+                    try {
+                        User user = SharedPrefManager.getInstance(context).getUser();
+                        int askedId = user.getUserId();
+                        addNewQuestion(keyword, askedId, message);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         });
 
         return view;
 
-    }
-
-    public boolean checkEmpty(String keyword){
-        if(keyword.isEmpty()){
-            return true;
-        }
-        return false;
     }
 
     @Override
@@ -156,8 +161,70 @@ public class QAFragment extends Fragment {
         headline = (TextView) view.findViewById(R.id.headline);
         imageView = (ImageView) view.findViewById(R.id.imageView);
         etKeyword = (TextInputEditText) view.findViewById(R.id.textInputEditText);
+        etMessage = (TextInputEditText) view.findViewById(R.id.textInputEditText2);
         find = (TextView) view.findViewById(R.id.txtcontinue);
         add = (TextView) view.findViewById(R.id.txtAdd);
+    }
+
+    private void addNewQuestion(String title, int askedId, String message) throws JSONException {
+        ServiceAPI.serviceapi.addQuestion(title, askedId, message).enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.body().toString());
+                        int id = jsonObject.getInt("questionId");
+                        String title = jsonObject.getString("title");
+                        Double view = jsonObject.getDouble("view");
+                        String createdAtString = jsonObject.getString("createdAt");
+                        String updatedAtString = jsonObject.getString("updatedAt");
+                        JSONObject askedUser = jsonObject.getJSONObject("askedId");
+                        int answererId = 0;
+                        String avatarAnswered = "";
+                        String answeredFullname = "";
+                        String roleAnswered = "";
+                        if (!jsonObject.isNull("answererId")) {
+                            JSONObject answererUser = jsonObject.getJSONObject("answererId");
+                            answererId = answererUser.getInt("userId");
+                            answeredFullname = askedUser.getString("fullname");
+                            roleAnswered = answererUser.getString("role");
+                            avatarAnswered = answererUser.getString("avatar");
+                        }
+                        String avatarAsked = "";
+                        int askedId = askedUser.getInt("userId");
+                        String askedFullname = askedUser.getString("fullname");
+                        String roleAsked = askedUser.getString("role");
+                        avatarAsked = askedUser.getString("avatar");
+                        Date createdAt = null;
+                        Date updatedAt = null;
+                        try {
+                            createdAt = new SimpleDateFormat("yyyy-MM-dd").parse(createdAtString);
+                            updatedAt = new SimpleDateFormat("yyyy-MM-dd").parse(updatedAtString);
+                        } catch (ParseException e) {
+                            Log.e("TAG", e.toString());
+                        }
+
+                        questions.add(new Question(id, createdAt, updatedAt, title, avatarAsked, askedId, answererId, askedFullname, answeredFullname, roleAsked, roleAnswered));
+
+                        questionAdapter.notifyDataSetChanged();
+                    } catch (JSONException e) {
+                        Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(context, "An error occur" + response.code(), Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.e("TAG", t.toString());
+                Toast.makeText(context, "Đã thêm!", Toast.LENGTH_LONG).show();
+                etKeyword.setText("");
+                etMessage.setText("");
+                questionAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     private void addQuestions() {
@@ -178,11 +245,12 @@ public class QAFragment extends Fragment {
                             int answererId = 0;
                             String avatarAnswered = "";
                             String answeredFullname = "";
+                            String roleAnswered = "";
                             if (!jsonObject.isNull("answererId")) {
                                 JSONObject answererUser = jsonObject.getJSONObject("answererId");
                                 answererId = answererUser.getInt("userId");
                                 answeredFullname = askedUser.getString("fullname");
-                                String roleAnswered = answererUser.getString("role");
+                                roleAnswered = answererUser.getString("role");
                                 avatarAnswered = answererUser.getString("avatar");
                             }
                             String avatarAsked = "";
@@ -199,7 +267,7 @@ public class QAFragment extends Fragment {
                                 Log.e("TAG", e.toString());
                             }
 
-                            questions.add(new Question(id, createdAt, updatedAt, title, avatarAsked, askedId, answererId, askedFullname, answeredFullname));
+                            questions.add(new Question(id, createdAt, updatedAt, title, avatarAsked, askedId, answererId, askedFullname, answeredFullname, roleAsked, roleAnswered));
 
                             questionAdapter.notifyDataSetChanged();
 

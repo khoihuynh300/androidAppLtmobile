@@ -1,6 +1,8 @@
 package com.example.ltmobile.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +25,22 @@ import java.util.List;
 public class AskAndAnswerAdapter extends RecyclerView.Adapter<AskAndAnswerAdapter.AAAviewHolder> {
 
     private Context mContext;
+    private static Question question;
+
+    public AskAndAnswerAdapter(Question question) {
+        this.question = question;
+    }
+
+    public static Question getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
 
     private List<Messages> mListMessages = new ArrayList<>();
+    private Bundle bundle;
 
     public AskAndAnswerAdapter(Context mContext, List<Messages> mListMessages) {
         this.mContext = mContext;
@@ -34,7 +50,13 @@ public class AskAndAnswerAdapter extends RecyclerView.Adapter<AskAndAnswerAdapte
     @NonNull
     @Override
     public AskAndAnswerAdapter.AAAviewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+//        question = AskAndAnswerAdapter.getQuestion();
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.receiverchatlayout, null);
+//        if(question.getAskedRole().equals("sinhvien")) {
+//            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.receiverchatlayout, null);
+//        } else if (question.getAskedRole().equals("tuvanvien")) {
+//            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.senderchatlayout, null);
+//        }
         return new AAAviewHolder(view);
     }
 

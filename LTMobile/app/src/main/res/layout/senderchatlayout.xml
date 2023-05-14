@@ -12,6 +12,27 @@
         android:layout_alignParentEnd="true"
         android:background="@drawable/senderchatdrawable">
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_user"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/ic_launcher_background" />
+
+        <TextView
+            android:id="@+id/senderName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="7dp"
+            android:paddingTop="7dp"
+            android:paddingRight="40dp"
+            android:paddingBottom="7dp"
+            android:layout_toEndOf="@+id/img_user"
+            android:text="Sender UserName "
+            android:textColor="#FC4F00"
+            android:textSize="20sp">
+
+        </TextView>
+
         <TextView
             android:id="@+id/sendermessage"
             android:layout_width="wrap_content"
@@ -20,9 +41,11 @@
             android:paddingTop="7dp"
             android:paddingRight="40dp"
             android:paddingBottom="7dp"
+            android:layout_below="@+id/senderName"
+            android:layout_toEndOf="@+id/img_user"
             android:text="Sender Message Display Here "
             android:textColor="@color/black"
-            android:textSize="18sp">
+            android:textSize="15sp">
 
         </TextView>
 
@@ -36,7 +59,7 @@
             android:padding="7dp"
             android:text="20:09"
             android:textColor="#434343"
-            android:textSize="10sp" />
+            android:textSize="10sp"/>
 
 
     </RelativeLayout>

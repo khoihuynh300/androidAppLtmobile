@@ -107,11 +107,12 @@ public class QAActivity extends AppCompatActivity {
                             int answererId = 0;
                             String avatarAnswered = "";
                             String answeredFullname = "";
+                            String roleAnswered = "";
                             if (!jsonObject.isNull("answererId")) {
                                 JSONObject answererUser = jsonObject.getJSONObject("answererId");
                                 answererId = answererUser.getInt("userId");
-                                String roleAnswered = answererUser.getString("role");
                                 answeredFullname = askedUser.getString("fullname");
+                                roleAnswered = answererUser.getString("role");
                                 avatarAnswered = answererUser.getString("avatar");
                             }
                             String avatarAsked = "";
@@ -128,8 +129,7 @@ public class QAActivity extends AppCompatActivity {
                                 Log.e("TAG", e.toString());
                             }
 
-
-                            questions.add(new Question(id, createdAt, updatedAt, title, avatarAsked, askedId, answererId, askedFullname, answeredFullname));
+                            questions.add(new Question(id, createdAt, updatedAt, title, avatarAsked, askedId, answererId, askedFullname, answeredFullname, roleAsked, roleAnswered));
 
                             questionAdapter.notifyDataSetChanged();
 

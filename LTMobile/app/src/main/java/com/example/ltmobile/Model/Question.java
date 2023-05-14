@@ -1,6 +1,8 @@
 package com.example.ltmobile.Model;
 
 
+import android.os.Parcelable;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -15,8 +17,10 @@ public class Question implements Serializable {
     private int answererId;
     private String askedFullname;
     private String answeredFullname;
+    private String askedRole;
+    private String answeredRole;
 
-    public Question(int questionId, Date createdAt, Date updatedAt, String title, String avatar, int askedId, int answererId, String askedFullname, String answeredFullname) {
+    public Question(int questionId, Date createdAt, Date updatedAt, String title, String avatar, int askedId, int answererId, String askedFullname, String answeredFullname, String askedRole, String answeredRole) {
         this.questionId = questionId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -26,7 +30,26 @@ public class Question implements Serializable {
         this.answererId = answererId;
         this.askedFullname = askedFullname;
         this.answeredFullname = answeredFullname;
+        this.askedRole = askedRole;
+        this.answeredRole = answeredRole;
     }
+
+    public String getAskedRole() {
+        return askedRole;
+    }
+
+    public void setAskedRole(String askedRole) {
+        this.askedRole = askedRole;
+    }
+
+    public String getAnsweredRole() {
+        return answeredRole;
+    }
+
+    public void setAnsweredRole(String answeredRole) {
+        this.answeredRole = answeredRole;
+    }
+
     public String getAnsweredFullname() {
         return answeredFullname;
     }
