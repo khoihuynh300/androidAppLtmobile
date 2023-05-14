@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -101,6 +102,10 @@ public class QAFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, RecyclerView.VERTICAL, false);
         rcvQuestion.setLayoutManager(linearLayoutManager);
         rcvQuestion.setAdapter(questionAdapter);
+
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(context,DividerItemDecoration.VERTICAL);
+        rcvQuestion.addItemDecoration(itemDecoration);
+
         questionAdapter.notifyDataSetChanged();
 
         String keyword = etKeyword.getText().toString();
