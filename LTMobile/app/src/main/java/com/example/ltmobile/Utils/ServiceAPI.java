@@ -2,6 +2,8 @@ package com.example.ltmobile.Utils;
 
 import com.example.ltmobile.Model.CommentInn;
 import com.example.ltmobile.Model.Inn;
+import com.example.ltmobile.Model.User;
+import com.example.ltmobile.Model.Messages;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -96,6 +98,9 @@ public interface ServiceAPI {
     @POST("commentInn/add")
     Call<JsonObject> createCommentOfInn(@Body CommentInn commentInn);
 
+    @GET("getAllQuestion")
+    Call<JsonArray> getAllQuestions();
+
     @Multipart
     @POST("inns/add")
     Call<JsonObject> recommendInn(@Part("size") RequestBody size,
@@ -125,4 +130,37 @@ public interface ServiceAPI {
 
     @DELETE("admin/inns/delete/{innId}")
     Call<JsonObject> deleteInn(@Path("innId") int innId);
+
+    @GET("admin/users")
+    Call<JsonObject> getUserFilter(@Query("offset") int offset,
+                                   @Query("ascending") boolean ascending,
+                                   @Query("isActive") boolean isActive,
+                                   @Query("name") String name);
+
+    @FormUrlEncoded
+    @PUT("admin/users/lock")
+    Call<JsonObject> lockUser(@Field("id") int userId);
+
+    @FormUrlEncoded
+    @POST("addMessage")
+    Call<JsonObject> addMessage(@Field("message") String message,
+                                @Field("userId") int userId,
+                                @Field("questionId") int questionId);
+
+    @GET("getAllMessageByQuestionId/{id}")
+    Call<JsonArray> loadMessages(@Path("id") int questionId);
+
+    @POST("admin/users/create")
+    Call<JsonObject> addUser(@Body User user);
+
+    @GET("users/{user_id}")
+    Call<JsonObject> getUserById(@Path("user_id") int userId);
+    @GET("users/{user_id}/inns")
+    Call<JsonObject> findInnByUserProposed(@Path("user_id") int userId);
+
+    @FormUrlEncoded
+    @POST("addQuestion")
+    Call<JsonObject> addQuestion(@Field("title") String title,
+                                 @Field("askedId") int askedId,
+                                 @Field("message") String message);
 }

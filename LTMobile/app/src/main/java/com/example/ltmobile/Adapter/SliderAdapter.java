@@ -35,8 +35,7 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderHolder>
     public void onBindViewHolder(SliderHolder viewHolder, int position) {
 //        Glide.with(context).load(arrayList.get(position)).into(viewHolder.imageView);
         Glide.with(context).load(Constant.ROOT_URL + "upload/" + arrayList.get(position).getImage()).into(viewHolder.imageView);
-        String s = Constant.ROOT_URL + "upload/" + arrayList.get(position).getImage();
-        Log.d("TAG", "onBindViewHolder: " + Constant.ROOT_URL + "upload/" + arrayList.get(position).getImage());
+        String s = Constant.ROOT_URL + "upload/" + arrayList.get(position).getImage();;
     }
 
     @Override

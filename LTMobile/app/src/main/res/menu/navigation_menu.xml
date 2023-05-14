@@ -9,6 +9,8 @@
             android:title="HỎI ĐÁP"/>
         <item android:id="@+id/menuInn"
             android:title="TÌM TRỌ"/>
+        <item android:id="@+id/menuChangePassword"
+            android:title="ĐỔI MẬT KHẨU"/>
         <item android:id="@+id/menuLogout"
             android:title="DĂNG XUẤT"/>
     </group>

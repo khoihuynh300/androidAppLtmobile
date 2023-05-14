@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class User implements Serializable {
     private int userId;
-    private String email, fullname,avatar, role, gender;
+    private String email, fullname,avatar, role, gender, password;
 
     public User(int userId, String email, String fullname, String gender, String avatar, String role) {
         this.userId = userId;
@@ -61,5 +61,9 @@ public class User implements Serializable {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

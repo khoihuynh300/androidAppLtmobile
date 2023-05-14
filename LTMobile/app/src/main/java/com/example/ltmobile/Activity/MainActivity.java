@@ -41,9 +41,7 @@ public class MainActivity extends AppCompatActivity {
             finish();
             startActivity(new Intent(context, LoginActivity.class));
         }
-
-
-        if(SharedPrefManager.getInstance(context).getUser().getRole().equals("manager")){
+        else if(SharedPrefManager.getInstance(context).getUser().getRole().equals("manager")){
             finish();
             startActivity(new Intent(context, AdminActivity.class));
         }

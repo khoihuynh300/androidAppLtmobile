@@ -78,7 +78,6 @@ public class ListInnActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_inn);
 
-
         mapping();
         adapter();
         getDataFromSharedPref();
@@ -178,6 +177,7 @@ public class ListInnActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), InnDetailActivity.class);
                 intent.putExtra("innId", innId);
+                intent.putExtra("Describe", des);
                 startActivity(intent);
             }
         });
