@@ -172,4 +172,7 @@ public interface ServiceAPI {
 
     @GET("question/{id}")
     Call<JsonObject> getQuestionById(@Path("id") int id);
+
+    @GET("notify/viewed/{id}")
+    Call<JsonObject> viewed(@Path("id") int id);
 }

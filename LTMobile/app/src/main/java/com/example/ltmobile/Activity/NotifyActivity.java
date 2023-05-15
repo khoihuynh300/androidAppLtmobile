@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.example.ltmobile.Adapter.NotifyAdapter;
 import com.example.ltmobile.Model.Notify;
@@ -36,6 +37,13 @@ public class NotifyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notify);
+
+        findViewById(R.id.imageBack).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         rv_notify = findViewById(R.id.rv_notify);
         notifyList = new ArrayList<>();

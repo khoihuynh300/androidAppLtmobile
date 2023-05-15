@@ -61,7 +61,21 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.MyViewhold
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    array.get(getAdapterPosition()).setViewed(true);
+
+
                     Notify notify = array.get(getAdapterPosition());
+                    ServiceAPI.serviceapi.viewed(notify.getId()).enqueue(new Callback<JsonObject>() {
+                        @Override
+                        public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<JsonObject> call, Throwable t) {
+
+                        }
+                    });
                     String link = notify.getLink();
 
                     String[] parts = link.split("/");
@@ -158,6 +172,11 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.MyViewhold
     public void onBindViewHolder(@NonNull NotifyAdapter.MyViewholder holder, int position) {
 
         holder.tvNot.setText(array.get(position).getContent());
+        if(!array.get(position).isViewed()){
+            int backgroundColor = 0xFFE7F3FF; // mã màu HEX #E7F3FF
+            View itemView = holder.itemView;
+            itemView.setBackgroundColor(backgroundColor);
+        }
     }
 
     @Override
