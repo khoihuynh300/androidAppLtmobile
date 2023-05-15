@@ -166,4 +166,10 @@ public interface ServiceAPI {
 
     @GET("users/{user_id}/questions")
     Call<JsonObject> findQuestionsByUserProposed(@Path("user_id") int userId);
+
+    @GET("notify/{user_id}")
+    Call<JsonObject> getAllNotifyByUser(@Path("user_id") int userId);
+
+    @GET("question/{id}")
+    Call<JsonObject> getQuestionById(@Path("id") int id);
 }

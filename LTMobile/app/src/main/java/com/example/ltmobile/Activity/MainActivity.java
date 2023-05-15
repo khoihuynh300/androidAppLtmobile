@@ -3,6 +3,7 @@ package com.example.ltmobile.Activity;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -10,9 +11,15 @@ import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,9 +34,15 @@ import com.example.ltmobile.R;
 import com.example.ltmobile.Utils.Constant;
 import com.example.ltmobile.Utils.SharedPrefManager;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import ua.naiksoftware.stomp.Stomp;
+import ua.naiksoftware.stomp.StompClient;
 
 public class MainActivity extends AppCompatActivity {
     Context context = this;
+    StompClient stompClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,5 +104,61 @@ public class MainActivity extends AppCompatActivity {
         });
 //        navigationView.setNavigationItemSelectedListener(
 //                new NavigationAdapter(this));
+
+        findViewById(R.id.notify).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, NotifyActivity.class));
+            }
+        });
+        setupWebSocketListener();
+    }
+
+    private void setupWebSocketListener(){
+        stompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://" + Constant.host+"/our-websocket/websocket");
+        stompClient.connect();
+
+        stompClient.topic("/topic/notify/" +SharedPrefManager.getInstance(context).getUser().getUserId()).subscribe(topicMessage -> {
+            Log.d("TAG", topicMessage.getPayload());
+
+            JsonObject jsonObject = new JsonParser().parse(topicMessage.getPayload()).getAsJsonObject();
+            String contentMessage = jsonObject.get("notificationContent").getAsString();
+            runOnUiThread(() -> {
+                NotificationManager mNotificationManager;
+
+                NotificationCompat.Builder mBuilder =
+                        new NotificationCompat.Builder(context.getApplicationContext(), "notify_001");
+                Intent ii = new Intent(context.getApplicationContext(), NotifyActivity.class);
+                PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, ii, 0);
+
+                NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
+                bigText.bigText(contentMessage);
+                bigText.setBigContentTitle("Thông báo mới");
+
+                mBuilder.setContentIntent(pendingIntent);
+                mBuilder.setSmallIcon(R.mipmap.ic_launcher_round);
+                mBuilder.setContentTitle("Thông báo mới");
+                mBuilder.setContentText("ABC đã trả lời tin nhắn của bạn");
+                mBuilder.setPriority(Notification.PRIORITY_MAX);
+                mBuilder.setStyle(bigText);
+
+                mNotificationManager =
+                        (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                {
+                    String channelId = "notify_001";
+                    NotificationChannel channel = new NotificationChannel(
+                            channelId,
+                            "Thông báo mới",
+                            NotificationManager.IMPORTANCE_HIGH);
+                    mNotificationManager.createNotificationChannel(channel);
+                    mBuilder.setChannelId(channelId);
+                }
+
+                mNotificationManager.notify(0, mBuilder.build());
+
+            });
+        });
     }
 }
